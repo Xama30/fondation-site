@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Solage Capitale">
+  <!--
+    Le sujet du site, dessiné littéralement : une coupe de fondation.
+    La semelle (rouille) porte le mur (crème), et le sol l'entoure (ardoise).
+    C'est le même vocabulaire visuel que `src/components/EraDiagram.astro`,
+    qui sert de hero aux 49 hubs de secteur — la marque et le contenu disent
+    la même chose.
+
+    Palette de docs/DESIGN.md : #22333F ardoise, #9C3D26 rouille, #F6F5F2 crème.
+
+    Contrainte de lisibilité à 16 px : trois formes, aucun détail sous 6 px de
+    large, aucun texte. Des initiales « SC » seraient illisibles à cette taille.
+  -->
+  <rect width="64" height="64" rx="10" fill="#22333F"/>
+  <!-- La ligne de sol, discrète : ce qui distingue une coupe d'un pictogramme. -->
+  <rect x="6" y="26" width="52" height="3" fill="#F6F5F2" opacity="0.28"/>
+  <!-- Le mur de fondation. -->
+  <rect x="24" y="14" width="16" height="30" fill="#F6F5F2"/>
+  <!-- La semelle, plus large que le mur : c'est ce qui rend la coupe lisible. -->
+  <rect x="14" y="44" width="36" height="8" rx="1" fill="#9C3D26"/>
+</svg>

@@ -1,0 +1,37 @@
+{
+  "slug": "shannon",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "la base de Valcartier devient permanente au début des années 1950, premier lotissement civil de Shannon construit dans cette cohorte en tuile d'argile déjà en fin de vie; plusieurs maisons toujours desservies par un puits privé signalent un solage antérieur au réseau municipal, aggravé par la proximité de la rivière Jacques-Cartier"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé de la cohorte fondatrice 1945-1975 sur de grands lots ruraux, fissures de retrait typiques de l'âge du solage sans désordre aigu rapporté"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "La base de Valcartier devient une installation permanente au début des années 1950, et le premier lotissement civil de Shannon s'articule autour de ce moment, le long du boulevard Jacques-Cartier et du chemin de Gosford. Plusieurs de ces maisons sur grand terrain rural sont toujours desservies par un puits privé plutôt qu'un réseau municipal — signe d'un solage posé avant que le drain de tuile d'argile en sections ne soit remplacé par le PVC. Les terrains les plus près de la rivière Jacques-Cartier, en bordure des boisés d'entraînement de la base, gardent une nappe plus capricieuse d'une saison à l'autre.",
+    "en": "Valcartier base became a permanent installation in the early 1950s, and Shannon's first civilian subdivision grew up around that moment, along boulevard Jacques-Cartier and chemin de Gosford. Several of these homes on large rural lots are still served by a private well rather than a municipal system — a sign of a foundation poured before clay-tile drain sections were replaced by PVC. Lots closest to the Jacques-Cartier River, next to the base's wooded training grounds, keep a water table that swings more from season to season."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

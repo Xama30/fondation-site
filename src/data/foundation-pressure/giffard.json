@@ -1,0 +1,37 @@
+{
+  "slug": "giffard",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1960-1970",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "1970-1989",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "tuiles d'argile d'origine des bungalows quart-acre des années 1960, longues sections courant jusqu'à la berge de la rivière Beauport"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages à demi-niveau des split-levels des années 1970 en mouvement différentiel, compensés par les bungalows voisins en simple retrait vertical"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le long du boulevard des Chutes, les bungalows sur terrain d'un quart d'acre des années 1960 gardent leurs tuiles d'argile d'origine, dont les longues sections filent jusqu'à la berge de la rivière Beauport en bordure du Parc linéaire — c'est là, aux joints multipliés par la distance, qu'elles cèdent d'abord. Les maisons split-level des années 1970 qui les complètent ajoutent un solage à demi-niveau, un point de jonction structurel plus sujet au mouvement différentiel qu'à la fissure de retrait verticale classique des bungalows voisins.",
+    "en": "Along boulevard des Chutes, the quarter-acre 1960s bungalows still run their original clay-tile drains, in long sections that stretch all the way to the rivière Beauport bank by the Parc linéaire — it's there, at the joints multiplied by that distance, that they fail first. The 1970s split-levels filling in around them add a half-level footing, a structural joint more prone to differential movement than the straightforward vertical shrinkage cracking of the bungalows next door."
+  },
+  "sources": [],
+  "todo": "ocre : aucune source primaire pour la nappe près de la berge de la rivière Beauport (ancien lit, sédiments) — à vérifier avant d'assigner un niveau non nul",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

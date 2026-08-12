@@ -1,0 +1,31 @@
+{
+  "slug": "la-cite-limoilou",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1900-1940",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "parc dominant 1900-1940 en solage de pierre sans drain d'origine ; la densité de murs mitoyens sur lot étroit empêche une excavation périphérique complète autour de chaque bâtiment, ce qui concentre l'eau contre la seule face de solage restée accessible, aggravée par la proximité de la rivière Saint-Charles qui borde Vieux-Limoilou et Maizerets"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre et de moellons — les désordres typiques de cette cohorte sont des joints de mortier de chaux qui s'effritent, pas des fissures de retrait de béton armé, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le triplex et le duplex de brique qui dominent La Cité-Limoilou datent en majorité de 1900 à 1940, une époque où le solage se montait en moellons de pierre sans drain périphérique. Dans Vieux-Limoilou et le long du chemin de la Canardière, ces bâtiments partagent un mur mitoyen qui empêche l'entrepreneur d'excaver tout le pourtour d'un solage sans toucher au voisin, laissant l'eau stagner contre la seule face encore dégagée. La proximité de la rivière Saint-Charles, qui borde Maizerets et le Domaine de Maizerets, maintient en plus une nappe phréatique haute sur cette portion du territoire.",
+    "en": "Brick triplexes and duplexes dominate La Cité-Limoilou, most of them built between 1900 and 1940, when foundations were laid in fieldstone with no perimeter drain at all. In Vieux-Limoilou and along chemin de la Canardière, these buildings share party walls that keep a contractor from excavating the full perimeter of one foundation without disturbing the next, so water pools against whatever face stays exposed. The nearby rivière Saint-Charles, which runs past Maizerets and the Domaine de Maizerets, keeps the water table high across that stretch of the borough."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,76 @@
+---
+/**
+ * Index de la section service, FR. Jumelle : `src/pages/en/foundation/index.astro`.
+ *
+ * Rôle SEO : c'est la page qui donne à chaque hub ses liens entrants. Sans elle,
+ * `link-audit` signale « 1 inbound internal link » sur les 11 hubs.
+ *
+ * La grille est pilotée par `getCollection`, jamais par `services.fr.json` :
+ * un service dont la page n'est pas écrite resterait dans le JSON et deviendrait
+ * un lien mort permanent que la dérogation « planifié » couvrirait à vie.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'serviceIndex' } as const;
+
+const written = await getCollection('services', (e) => e.data.locale === locale);
+const items = written
+  .map((e) => {
+    const key = e.data.service as ServiceKey;
+    return { key, data: serviceData[locale][key], order: e.data.order };
+  })
+  .sort((a, b) => a.order - b.order);
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Réparation de fondation : les services — Solage Capitale"
+  description="Drain français, fissure, imperméabilisation, ocre ferreuse, vide sanitaire : ce que couvre chaque intervention sur une fondation résidentielle à Québec."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Fondation", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Les interventions sur une fondation résidentielle</h1>
+      <p>
+        Un sous-sol humide a rarement une seule cause, et deux problèmes qui se ressemblent
+        de l'intérieur se règlent parfois par deux métiers différents. Chaque page ci-dessous
+        explique un type d'intervention : ce qu'on observe, ce que fait l'entrepreneur, et ce
+        que la réglementation publique vous permet d'exiger avant de signer.
+      </p>
+
+      {
+        items.length === 0 ? (
+          <p>Les pages de service sont en cours de rédaction.</p>
+        ) : (
+          <ul>
+            {items.map((s) => (
+              <li>
+                <a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.data.name}</a>
+                {" — "}
+                {s.data.shortDescription}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <p>
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Fourchettes de prix</a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,178 @@
+---
+/**
+ * Prix, FR. Jumelle : `src/pages/en/pricing.astro`.
+ *
+ * LA PAGE LA PLUS FACILE À RATER DU SITE. La tentation est de publier les
+ * chiffres qui circulent (15 000-35 000 $, 190-325 $ du pied linéaire) : ils
+ * viennent tous de sites de génération de prospects — la couche C de
+ * COMPETITION.md — et la donnée au pied linéaire vise Montréal, pas la CMQ.
+ * Les reprendre violerait le standard de source primaire ET citerait des
+ * concurrents. Voir `pricing.json['$research_note']`.
+ *
+ * La page est donc pilotée par les données : elle LIT `pricing.json` et affiche
+ * une fourchette si `range` existe, « aucune fourchette publiée » sinon. Le jour
+ * où une source primaire s'ouvre, on remplit le JSON et la page suit — personne
+ * n'a à réécrire de la prose.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { pricing, services as serviceData } from '@lib/data.ts';
+import { SERVICE_SLUGS } from '@data/slugs.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'pricing' } as const;
+
+const keys = Object.keys(SERVICE_SLUGS) as ServiceKey[];
+const rows = keys
+  .map((k) => ({ key: k, name: serviceData[locale][k].name, price: pricing[k] }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+const published = rows.filter((r) => r.price.range !== null);
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Prix d'une réparation de fondation à Québec"
+  description="Pourquoi ce site ne publie aucune fourchette de prix pour la région de Québec, et ce qu'il faut exiger d'une soumission pour comparer deux offres."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Prix", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Ce que coûte une réparation de fondation dans la région de Québec</h1>
+
+      <p class="chapeau">
+        Réponse honnête : <strong>personne ne publie de fourchette fiable pour ce territoire</strong>,
+        et ce site n'en inventera pas. Voici pourquoi, et ce qui vous sert davantage qu'un chiffre.
+      </p>
+
+      <h2>Pourquoi aucun prix n'est affiché ici</h2>
+      <p>
+        Les chiffres qui circulent pour la réparation de fondation au Québec viennent presque
+        tous de sites de génération de prospects et de blogues d'entrepreneurs. Ce ne sont pas
+        des sources primaires : personne n'y explique l'échantillon, l'année, ni le territoire.
+        La donnée la plus souvent recopiée — un prix au pied linéaire pour le remplacement d'un
+        drain — vise en plus le Grand Montréal, pas la Communauté métropolitaine de Québec.
+      </p>
+      <p>
+        Recopier ces chiffres donnerait à la page l'air d'être renseignée tout en vous exposant à
+        arriver en soumission avec une attente fausse. La règle du site est simple : un chiffre
+        sans source publique vérifiable vaut <strong>zéro</strong>, et la page l'écrit.
+      </p>
+
+      {
+        published.length === 0 ? (
+          <p>
+            <strong>Au moment d'écrire ces lignes, aucune des onze interventions du site n'a de
+            fourchette publiée par une source primaire.</strong> La recherche est consignée et
+            datée dans les données du site pour ne pas être refaite à l'identique ; dès qu'une
+            source s'ouvre, elle apparaîtra ici.
+          </p>
+        ) : (
+          <>
+            <h2>Les fourchettes réellement sourcées</h2>
+            <ul>
+              {published.map((r) => (
+                <li>
+                  <a href={pathFor({ type: 'service', service: r.key }, locale)}>{r.name}</a>
+                  {" — "}{r.price.range![0]} à {r.price.range![1]} $
+                  {r.price.unit ? ` ${r.price.unit}` : ''}
+                  {r.price.sourceUrl && (
+                    <>
+                      {" ("}
+                      <a href={r.price.sourceUrl} rel="nofollow noopener">
+                        {r.price.sourceLabel ?? 'source'}
+                      </a>
+                      {`, vérifié le ${r.price.checkedOn})`}
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>Ce qui fait vraiment varier la facture</h2>
+      <p>
+        Un devis de fondation se joue sur l'accès et sur l'état réel de l'ouvrage, pas sur un
+        tarif au pied. Deux maisons voisines peuvent être séparées par un facteur trois.
+      </p>
+      <ul>
+        <li>
+          <strong>L'accès à la machinerie.</strong> Un terrain dégagé et un lot étroit coincé
+          entre deux voisins ne demandent pas la même excavation, ni la même remise en état.
+        </li>
+        <li>
+          <strong>La profondeur de la semelle</strong> et la hauteur du mur à dégager.
+        </li>
+        <li>
+          <strong>Ce qu'il faut défaire et refaire</strong> : terrasse, escalier, asphalte,
+          aménagement, haie mature.
+        </li>
+        <li>
+          <strong>L'état constaté une fois le mur exposé</strong>, qui n'est connu qu'à ce
+          moment-là. C'est la principale raison pour laquelle un prix ferme donné au téléphone,
+          sans inspection, doit vous rendre méfiant.
+        </li>
+        <li>
+          <strong>La présence d'ocre ferreuse</strong>, qui change la nature de l'ouvrage et son
+          entretien.
+        </li>
+      </ul>
+
+      <h2>Ce qu'il faut exiger pour comparer deux soumissions</h2>
+      <p>
+        C'est ici que vous récupérez le pouvoir qu'un chiffre approximatif ne vous donnerait pas.
+        Une soumission comparable doit nommer, noir sur blanc :
+      </p>
+      <ul>
+        <li>
+          <strong>le numéro de licence RBQ</strong> et les sous-catégories couvertes — un
+          chantier de fondation en touche souvent trois, et creuser n'autorise pas à
+          imperméabiliser ;
+        </li>
+        <li>
+          <strong>la norme employée et sa partie</strong> — « un drain BNQ », sans numéro ni
+          partie, ne veut rien dire ;
+        </li>
+        <li>
+          <strong>le type de tuyau</strong> posé et sa conformité ;
+        </li>
+        <li>
+          <strong>ce qui est inclus dans la remise en état</strong> du terrain, et ce qui ne
+          l'est pas ;
+        </li>
+        <li>
+          <strong>ce qui déclencherait un supplément</strong>, et sur quelle base il serait
+          calculé.
+        </li>
+      </ul>
+      <p>
+        Deux soumissions qui répondent à ces cinq points se comparent réellement. Deux montants
+        seuls ne se comparent pas. Les
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>
+        détaillent la vérification de la licence au registre.
+      </p>
+
+      <h2>Commencer par le diagnostic</h2>
+      <p>
+        Sur presque tous les problèmes décrits ici, l'écart de coût le plus important n'est pas
+        entre deux entrepreneurs : il est entre <em>diagnostiquer</em> et <em>excaver</em>. Une
+        <a href={pathFor({ type: 'service', service: 'inspection' }, locale)}>inspection de drain
+        par caméra</a> dit si le drain est colmaté ou écrasé, et cette distinction sépare un
+        nettoyage d'une excavation complète.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,104 @@
+---
+/**
+ * How it works, EN. Twin of `src/pages/processus.astro`.
+ *
+ * Third person throughout for anything a professional does (rule 1bis): "the
+ * contractor excavates down to the footing" is allowed, "excavate down to the
+ * footing" is not.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'process' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="How it works — from enquiry to finished work"
+  description="The steps between first noticing a foundation problem and the end of the work, and what you should insist on at each one of them along the way."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "How it works", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>From the first damp patch to the finished work</h1>
+
+      <p class="chapeau">
+        Six steps. The most important is the second, and it is the one that almost always gets
+        skipped: establishing where the water comes from <em>before</em> authorising any digging.
+      </p>
+
+      <h2>1. You document what you can see</h2>
+      <p>
+        Before calling anyone, note the exact spot, the date, and the conditions: heavy rain,
+        snowmelt, or nothing to do with the weather at all. Photograph it, placing a ruler beside
+        a crack to keep a sense of scale. These notes cost nothing and change everything: they
+        let you compare two quotes against the same observation rather than against two sales
+        pitches.
+      </p>
+
+      <h2>2. Diagnosis, before the quote</h2>
+      <p>
+        This is the step that separates a measured expense from a pointless excavation. On a
+        drain, a camera inspection says whether it is clogged, crushed or simply loaded with
+        sediment — and that distinction separates a cleaning from a full replacement. On a wall,
+        it separates a shrinkage crack from structural movement.
+      </p>
+      <p>
+        <strong>A firm price given over the phone, with nobody having seen the building, should
+        make you wary.</strong> The real condition of a wall is only known once it is exposed.
+      </p>
+
+      <h2>3. You send your enquiry</h2>
+      <p>
+        The form passes your description and your area to an independent company holding its own
+        RBQ licence. It is free and commits you to nothing.
+      </p>
+
+      <h2>4. The contractor visits and prices the work</h2>
+      <p>
+        They examine the structure, establish what is happening, and issue a written quote. This
+        is the moment to ask for the licence number and check it yourself in the public register
+        of the Régie du bâtiment du Québec — a foundation job often touches three separate
+        subcategories, and being licensed to dig does not authorise waterproofing.
+      </p>
+
+      <h2>5. You compare, then you decide</h2>
+      <p>
+        A comparable quote names the standard used and which part of it, the type of pipe, what
+        site reinstatement includes, and what would trigger an extra charge. Two bare totals
+        cannot be compared. You remain free to seek other quotes, and doing so is recommended.
+        The <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>pricing page</a> sets
+        out the five points to insist on.
+      </p>
+
+      <h2>6. The work, and what is left afterwards</h2>
+      <p>
+        The contractor carries out the work, reinstates the ground, and gives you their
+        warranties in writing. Keep the inspection report, the quote and the photographs: on a
+        building under five years old, that file is what makes a claim possible at all. The
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>frequently asked questions</a>
+        explain the warranty windows.
+      </p>
+
+      <h2>What this service does not do</h2>
+      <p>
+        Solage Capitale performs no work and supervises no site. The contract is formed between
+        you and the company that visits. Nothing here constitutes technical advice or an
+        engineering opinion — see the
+        <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>terms of use</a>.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

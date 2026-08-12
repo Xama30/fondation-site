@@ -1,0 +1,37 @@
+{
+  "slug": "lac-beauport",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1975-1990",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "parc étalé depuis le début des années 1970 autour du lac Beauport, sans décennie dominante confirmée — le boulevard du Lac et le chemin du Tour-du-Lac mélangent tuile d'argile et PVC selon la phase de construction; pression plafonnée par prudence plutôt que portée par une cohorte précise"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "développement étalé empêche d'attribuer ce niveau à une seule cohorte de construction; les fissures de retrait plausibles sur le béton coulé 1975-1990 restent minoritaires dans un parc qui mélange plusieurs décennies sur la même rue"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le chemin du Tour-du-Lac et le boulevard du Lac ceinturent le lac Beauport d'un bâti étalé sur plus de cinquante ans : chalets d'origine convertis en résidences permanentes à partir du début des années 1970, condos plus récents près du Centre de ski Le Relais. Cette absence de décennie dominante mélange, sur une même rue, des semelles de béton coulées à des époques différentes et des drains de tuile d'argile voisins de sections de PVC. Les terrains les plus près de la rive du lac gardent une nappe plus haute toute l'année, quel que soit l'âge de la fondation.",
+    "en": "Chemin du Tour-du-Lac and boulevard du Lac ring Lac Beauport with a building stock spread across more than fifty years: original chalets converted into year-round homes starting in the early 1970s, newer condos near the Centre de ski Le Relais. With no single decade dominating construction, a given street can mix concrete footings poured decades apart and clay-tile drains sitting next to PVC sections. Lots closest to the lake's edge hold a higher water table year-round, regardless of the foundation's age."
+  },
+  "sources": [],
+  "todo": "Étalement résidentiel confirmé depuis les années 1970 sans décennie dominante identifiable par source ouverte — confirmer la répartition des cohortes via le rôle d'évaluation municipale de Lac-Beauport avant de monter au-delà de moderate.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

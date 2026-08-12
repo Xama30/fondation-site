@@ -1,0 +1,77 @@
+---
+/**
+ * Le hero d'un hub de secteur, et le seul endroit qui tranche entre les deux.
+ *
+ *   photo sous licence libre  → si `heroImage` est renseigné
+ *   schéma bâti sur les données → sinon
+ *
+ * Les deux produisent un hero AVEC texte alternatif, donc la porte d'unicité est
+ * satisfaite dans les deux cas : `heroAlt()` de `uniqueness-check.mjs` lit
+ * `<img alt>` comme `<svg role="img" aria-label>`. Aucune page ne reste sur un
+ * placeholder, donc `PENDING_IMAGES=strict` n'a plus rien à signaler.
+ *
+ * Un `heroImage` sans `heroAlt` dans CETTE langue LÈVE plutôt que de retomber
+ * sur le schéma : un repli silencieux ferait partir une page dont l'image est
+ * mal câblée sans que rien ne le dise (même raison que `resolveImage`).
+ */
+import { Image } from 'astro:assets';
+import EraDiagram from '@components/EraDiagram.astro';
+import { resolveImage } from '@lib/images.ts';
+import type { Locale } from '@lib/constants.ts';
+
+interface Era {
+  span: string;
+  weight: string;
+  foundation: string;
+  drain: string;
+}
+
+interface Props {
+  locale: Locale;
+  sector: string;
+  sectorName: string;
+  eras: Era[];
+  heroImage: string | null;
+  heroAlt: Partial<Record<Locale, string>> | null;
+}
+
+const { locale, sector, sectorName, eras, heroImage, heroAlt } = Astro.props;
+
+const alt = heroImage ? heroAlt?.[locale] : undefined;
+if (heroImage && !alt) {
+  throw new Error(
+    `Sector "${sector}" sets heroImage "${heroImage}" but has no heroAlt.${locale} — ` +
+      `both languages must carry an alt (docs/IMAGE-NEEDS.md).`,
+  );
+}
+---
+
+{
+  heroImage && alt ? (
+    <figure class="hero-photo">
+      <Image
+        src={resolveImage(heroImage)}
+        alt={alt}
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 48rem) 42rem, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
+  ) : (
+    <EraDiagram locale={locale} sectorName={sectorName} eras={eras} />
+  )
+}
+
+<style>
+  .hero-photo {
+    margin: 0 0 2rem;
+  }
+  .hero-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid var(--bordure);
+  }
+</style>

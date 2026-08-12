@@ -1,0 +1,165 @@
+---
+/**
+ * Pricing, EN. Twin of `src/pages/prix.astro`.
+ *
+ * Data-driven for the same reason: it READS `pricing.json` and prints a range
+ * only where a primary source exists. Today none does, and the page says so.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { pricing, services as serviceData } from '@lib/data.ts';
+import { SERVICE_SLUGS } from '@data/slugs.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'pricing' } as const;
+
+const keys = Object.keys(SERVICE_SLUGS) as ServiceKey[];
+const rows = keys
+  .map((k) => ({ key: k, name: serviceData[locale][k].name, price: pricing[k] }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+const published = rows.filter((r) => r.price.range !== null);
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Foundation repair cost in the Quebec City region"
+  description="Why this site publishes no price range for the Quebec City region, and what a quote must spell out before two offers can honestly be compared."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Pricing", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>What foundation repair costs in the Quebec City region</h1>
+
+      <p class="chapeau">
+        The honest answer: <strong>nobody publishes a reliable range for this territory</strong>,
+        and this site will not invent one. Here is why, and what serves you better than a number.
+      </p>
+
+      <h2>Why no price is shown here</h2>
+      <p>
+        The figures circulating for foundation repair in Quebec come almost entirely from lead
+        generation sites and contractor blogs. These are not primary sources: none of them
+        explains the sample, the year or the territory. The most frequently copied figure — a
+        linear-foot price for drain replacement — also targets Greater Montreal, not the Quebec
+        City Metropolitan Community.
+      </p>
+      <p>
+        Copying those numbers would make this page look informed while sending you into a quote
+        with a false expectation. The site's rule is simple: a figure without a verifiable
+        public source is worth <strong>nothing</strong>, and the page says so.
+      </p>
+
+      {
+        published.length === 0 ? (
+          <p>
+            <strong>As of writing, not one of the site's eleven services has a range published
+            by a primary source.</strong> The research is recorded and dated in the site's data
+            so it is not repeated identically; the moment a source opens up, it will appear here.
+          </p>
+        ) : (
+          <>
+            <h2>The ranges that are actually sourced</h2>
+            <ul>
+              {published.map((r) => (
+                <li>
+                  <a href={pathFor({ type: 'service', service: r.key }, locale)}>{r.name}</a>
+                  {" — $"}{r.price.range![0]} to ${r.price.range![1]}
+                  {r.price.unit ? ` ${r.price.unit}` : ''}
+                  {r.price.sourceUrl && (
+                    <>
+                      {" ("}
+                      <a href={r.price.sourceUrl} rel="nofollow noopener">
+                        {r.price.sourceLabel ?? 'source'}
+                      </a>
+                      {`, checked ${r.price.checkedOn})`}
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>What actually moves the invoice</h2>
+      <p>
+        A foundation quote turns on access and on the real condition of the structure, not on a
+        rate per foot. Two neighbouring houses can be a factor of three apart.
+      </p>
+      <ul>
+        <li>
+          <strong>Machine access.</strong> An open lot and a narrow one wedged between two
+          neighbours do not call for the same excavation, or the same reinstatement.
+        </li>
+        <li>
+          <strong>The depth of the footing</strong> and the height of wall to be exposed.
+        </li>
+        <li>
+          <strong>What has to come out and go back</strong>: deck, steps, asphalt, landscaping, a
+          mature hedge.
+        </li>
+        <li>
+          <strong>The condition found once the wall is exposed</strong>, which is only known at
+          that moment. That is the main reason a firm price quoted over the phone, with no
+          inspection, should make you wary.
+        </li>
+        <li>
+          <strong>The presence of iron ochre</strong>, which changes both the work and its
+          maintenance.
+        </li>
+      </ul>
+
+      <h2>What to demand before comparing two quotes</h2>
+      <p>
+        This is where you regain the leverage an approximate figure would never give you. A
+        comparable quote has to name, in writing:
+      </p>
+      <ul>
+        <li>
+          <strong>the RBQ licence number</strong> and the subcategories it covers — a foundation
+          job often touches three, and being licensed to dig does not authorise waterproofing;
+        </li>
+        <li>
+          <strong>the standard used and which part of it</strong> — "a BNQ drain", with no number
+          and no part, means nothing;
+        </li>
+        <li>
+          <strong>the type of pipe</strong> installed and its conformity;
+        </li>
+        <li>
+          <strong>what site reinstatement includes</strong>, and what it does not;
+        </li>
+        <li>
+          <strong>what would trigger an extra charge</strong>, and on what basis it would be
+          calculated.
+        </li>
+      </ul>
+      <p>
+        Two quotes that answer those five points can genuinely be compared. Two bare totals
+        cannot. The <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>frequently asked
+        questions</a> cover checking a licence in the register.
+      </p>
+
+      <h2>Start with the diagnosis</h2>
+      <p>
+        On almost every problem described here, the largest cost gap is not between two
+        contractors: it is between <em>diagnosing</em> and <em>excavating</em>. A
+        <a href={pathFor({ type: 'service', service: 'inspection' }, locale)}>drain camera
+        inspection</a> tells you whether the drain is clogged or crushed, and that distinction
+        separates a cleaning from a full excavation.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

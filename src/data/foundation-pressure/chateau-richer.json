@@ -1,0 +1,34 @@
+{
+  "slug": "chateau-richer",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "bâti ancestral dominant en pierre le long de l'avenue Royale (maisons attestées entre 1760 et le début du 20e siècle), sans drain d'origine, aggravé par la proximité nommée de la rivière Sault-à-la-Puce près du Moulin du Petit-Pré"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "fondations de pierre et moellons dominantes : le mouvement est une réfection de mortier de chaux, pas une fissure verticale de béton"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À Château-Richer, les maisons ancestrales de pierre et de bois qui bordent l'avenue Royale — certaines attestées dès 1760, la majorité construite avant 1945 — n'ont jamais reçu de drain d'origine, une technique qui n'existe pas encore lorsque ce bâti agricole se construit autour du Moulin du Petit-Pré et de la rivière Sault-à-la-Puce. Leur mortier de chaux, plus souple que le béton, s'effrite et se rejointoie plutôt qu'il ne se fissure, mais l'absence de tout drain laisse la nappe monter librement contre des fondations qui n'ont jamais été conçues pour l'évacuer.",
+    "en": "In Château-Richer, the stone and timber ancestral homes lining avenue Royale — some dated to 1760, most built before 1945 — never received an original drain, a technique that doesn't exist yet when this farming stock goes up around the Moulin du Petit-Pré and the rivière Sault-à-la-Puce. Their lime mortar, more forgiving than concrete, crumbles and needs repointing rather than cracking, but the total absence of a drain leaves the water table free to rise against foundations never built to carry it away."
+  },
+  "sources": [
+    "https://www.chateauricher.qc.ca/pages/nos-maisons-anciennes",
+    "https://www.patrimoine-culturel.gouv.qc.ca/rpcq/detail.do?methode=consulter&id=208912&type=bien"
+  ],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

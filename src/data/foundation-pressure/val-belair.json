@@ -1,0 +1,37 @@
+{
+  "slug": "val-belair",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "1975-1990",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1945-1975 en tuile d'argile — strate ancienne confirmée, mais aucun cours d'eau, plan d'eau ni marais n'est nommé dans localTerms/housingStock pour Val-Bélair ; le rythme de construction lié à la base de Valcartier est un facteur historique, pas hydrologique, au sens du critère resserré — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages en béton coulé ou en blocs typiques de l'après-guerre, fissures de retrait sans gravité structurale particulière"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À l'ouest du boulevard Pie-XI, artère commerciale qui sépare Val-Bélair de l'autoroute Henri-IV, l'essentiel du bâti résidentiel a poussé entre 1945 et 1975 au rythme de l'expansion de la base militaire de Valcartier, pour loger les familles qui s'y installaient. Cet empressement à construire pour loger les militaires a généralisé le même modèle de drain de tuile d'argile en sections sur ces rues nées du boum de Valcartier plutôt que d'une expansion urbaine ordinaire.",
+    "en": "West of boulevard Pie-XI, the commercial spine that separates Val-Bélair from autoroute Henri-IV, most of the housing stock went up between 1945 and 1975, in step with the growth of the Valcartier military base, to house the families settling nearby. That rush to house military households spread the same sectioned clay-tile drain across streets born of the Valcartier boom rather than of ordinary urban expansion."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

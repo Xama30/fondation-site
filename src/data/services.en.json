@@ -1,0 +1,249 @@
+{
+  "$schema_note": "English twin of services.fr.json. Same keys (SERVICE_SLUGS in src/data/slugs.ts), same regulations/related/order — only the prose differs. This is a translation of the ARGUMENT, not of the sentences: English search wording wins (french drain, iron ochre, sump pump, crawl space), never a transliterated French phrase (CLAUDE.md rule 6). 'signs' describes what a reader OBSERVES; 'whatProDoes' describes what a professional does, in the third person — never an imperative, never a method (rule 1bis).",
+  "drain": {
+    "name": "French drain",
+    "shortDescription": "The perforated pipe laid at the base of the footing that carries groundwater away before it pushes against the wall. It silts up, it collapses, and it stops draining.",
+    "signs": [
+      "water appearing at the base of the basement wall after sustained rain or during snowmelt",
+      "a damp ring or white efflorescence low on the wall, always in the same spot",
+      "a persistent damp-earth smell in the basement",
+      "a settled window well, or ground that slopes toward the house instead of away from it"
+    ],
+    "whatProDoes": "The contractor first inspects the existing drain by camera to tell a blockage apart from a collapse. If replacement is needed, they excavate down to the footing to expose the wall and the old pipe, lay a new drain on a stone bed with its filter membrane, then backfill. Pipe choice and installation method are governed by standard BNQ 3661-500.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [
+      "permis-excavation"
+    ],
+    "related": [
+      "inspection",
+      "ocre",
+      "infiltration"
+    ],
+    "order": 10
+  },
+  "fissure": {
+    "name": "foundation crack",
+    "shortDescription": "Not all cracks are the same: a shrinkage crack in new concrete has nothing in common with one that widens year over year. Reading the crack is what decides everything that follows.",
+    "signs": [
+      "a vertical or stair-step crack visible from inside the basement",
+      "a water trail or whitish deposit along a crack after rain",
+      "a crack whose width changes between winter and summer",
+      "a basement door or window that no longer closes the way it used to"
+    ],
+    "whatProDoes": "The contractor characterises the crack before treating it: width, orientation, movement over time, and whether it passes through the wall. A stable, non-structural crack is treated by injection from the inside; a moving crack is first a question of cause, usually drainage or bearing soil. On a building under five years old, the GCR warranty may cover the defect before any work begins.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "affaissement",
+      "infiltration",
+      "impermeabilisation"
+    ],
+    "order": 20
+  },
+  "impermeabilisation": {
+    "name": "foundation waterproofing",
+    "shortDescription": "The barrier applied to the outside face of the buried wall. The tar coating original to pre-1990 houses is not a membrane, and it does not last the life of the building.",
+    "signs": [
+      "a basement wall damp to the touch across a whole section, with no visible crack",
+      "paint or sealer blistering and peeling low on the wall",
+      "excavation already planned for a drain, which exposes the wall anyway",
+      "a pre-1990 house whose buried wall has never been reopened"
+    ],
+    "whatProDoes": "The contractor uses the excavation — the same one a drain requires — to clean the wall, repair defects in the concrete, then apply the membrane and its drainage board before backfilling. That is why waterproofing and a French drain are planned together: opening the same trench twice costs twice.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [
+      "permis-excavation"
+    ],
+    "related": [
+      "drain",
+      "infiltration",
+      "fissure"
+    ],
+    "order": 30
+  },
+  "infiltration": {
+    "name": "basement water infiltration",
+    "shortDescription": "The symptom, not the cause. Water that gets in always took a path — a crack, a dead drain, a window well, a slope — and treating it without identifying that path just moves the problem.",
+    "signs": [
+      "a puddle or damp patch that returns to the same spot after every heavy rain",
+      "water entering around a basement window or a garage door",
+      "carpet or floating floor buckling around the edges of the room",
+      "a water trail on the slab rather than on the wall"
+    ],
+    "whatProDoes": "The contractor traces the water's path before proposing anything: entry point, when it appears, how the ground behaves at the surface. Depending on what they find, the work belongs to the drain, the crack, the window well or an interior drain — different jobs at different costs. A quote that skips this step is proposing a solution before it has stated the problem.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "fissure",
+      "puisard"
+    ],
+    "order": 40
+  },
+  "ocre": {
+    "name": "iron ochre",
+    "shortDescription": "An orange, gelatinous deposit produced by iron bacteria that clogs a drain from the inside. It is not repaired — it is managed, and it changes what you should demand of a new installation.",
+    "signs": [
+      "orange or rust-coloured deposit visible in the cleanout or the sump pit",
+      "orange-tinted water at the drain outlet",
+      "a drain that clogs again soon after being cleaned",
+      "a neighbourhood where the problem is already known"
+    ],
+    "whatProDoes": "The contractor confirms iron ochre by camera inspection before diagnosing anything — a clogged drain is not necessarily an ochre problem. Where ochre is confirmed, a new installation is designed to be maintained: cleanout access, pipe choice, maintenance interval. Standard BNQ 3661-500 covers the subject in two parts, one of them devoted to diagnosis on an existing building.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "inspection",
+      "puisard"
+    ],
+    "order": 50
+  },
+  "affaissement": {
+    "name": "foundation settlement",
+    "shortDescription": "Movement of the foundation itself, as the bearing soil settles. It is the one subject on this list where an engineer's opinion normally comes before the work.",
+    "signs": [
+      "a stair-step crack widening toward the top, or a visible offset between two wall sections",
+      "a floor that has gone out of level",
+      "door and window frames distorting on the upper storey",
+      "a foundation wall bowing inward"
+    ],
+    "whatProDoes": "A contractor does not underpin a foundation without knowing why it moved: the cause is in the soil, not in the concrete. Diagnosis belongs to an engineer, and underpinning — piles, jacks, micropiles — requires an RBQ licence subcategory distinct from the one covering excavation. Ask which one before signing.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "fissure",
+      "videSanitaire",
+      "pyrite"
+    ],
+    "order": 60
+  },
+  "humidite": {
+    "name": "basement humidity and mould",
+    "shortDescription": "A damp basement with no visible water is usually a vapour problem, not an infiltration problem. The two are fixed differently, and confusing them spends money in the wrong place.",
+    "signs": [
+      "a persistent musty smell with no puddle and no water trail",
+      "condensation on cold pipes or low on the walls in summer",
+      "black or greenish staining low on a wall, behind furniture",
+      "clothing or cardboard stored in the basement that never dries out"
+    ],
+    "whatProDoes": "The contractor separates liquid water from vapour before proposing anything: infiltration is solved through drainage or the building envelope, excess vapour through ventilation, dehumidification and treatment of the slab. Visible mould over a significant area is a remediation job — a separate trade, and not one a foundation contractor should take on.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "videSanitaire",
+      "infiltration",
+      "impermeabilisation"
+    ],
+    "order": 70
+  },
+  "puisard": {
+    "name": "sump pump and interior drain",
+    "shortDescription": "The answer when water cannot leave by gravity, or when excavating the perimeter is impossible. It is permanent management, not a one-time repair.",
+    "signs": [
+      "an existing sump pit whose pump runs constantly, or no longer runs at all",
+      "a basement below the municipal sewer line, so nothing drains by gravity",
+      "a semi-detached house or a lot too narrow to excavate the perimeter",
+      "water coming up through the slab rather than through the wall"
+    ],
+    "whatProDoes": "The contractor runs drain pipe along the inside perimeter of the slab and routes it to a pit, where a pump discharges the water. The system's weak point is failure: a pump depends on electricity, and the contractor should say what happens during an outage — alarm, backup pump, battery — before the question answers itself during a storm.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "infiltration",
+      "drain",
+      "ocre"
+    ],
+    "order": 80
+  },
+  "videSanitaire": {
+    "name": "crawl space",
+    "shortDescription": "The low space under the floor, often over bare earth. What happens down there does not stay there: crawl space air rises into the house.",
+    "signs": [
+      "bare earth floor, with no vapour barrier, under the floor structure",
+      "an odour rising into the house through registers or floorboards",
+      "a cold floor above the crawl space in winter",
+      "framing lumber that is dark or stained around the perimeter"
+    ],
+    "whatProDoes": "The contractor documents the state of the ground, the framing and the moisture level before closing anything up. The work ranges from a ground vapour barrier to perimeter insulation, by way of managing the water that ends up there. Sealing a wet crawl space without first solving where the water comes from locks the problem in with the framing.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "humidite",
+      "affaissement",
+      "infiltration"
+    ],
+    "order": 90
+  },
+  "inspection": {
+    "name": "drain camera inspection",
+    "shortDescription": "The step that tells a clogged drain from a crushed one — and so a few hundred dollars of cleaning from several thousand dollars of excavation.",
+    "signs": [
+      "a drain that clogs repeatedly",
+      "buying a house whose drain condition is unknown",
+      "a drain replacement quote received with no prior diagnosis",
+      "iron ochre suspected"
+    ],
+    "whatProDoes": "The contractor runs a camera through the drain from an existing access point and records the run. What matters is the recording and the report, not a verbal conclusion: they are yours, and they let you compare two quotes against the same evidence. Ask for them before authorising any excavation.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "ocre",
+      "infiltration"
+    ],
+    "order": 100
+  },
+  "pyrite": {
+    "name": "pyrite under the slab",
+    "shortDescription": "Swelling of the stone backfill under the concrete slab as it oxidises. The problem is documented mainly elsewhere in Quebec: the first question is whether it applies to this region at all.",
+    "signs": [
+      "a basement slab cracked in a star pattern, or lifted in the middle",
+      "basement partition walls binding against the ceiling",
+      "slab cracks that widen from one year to the next",
+      "buying a house whose under-slab backfill is unknown"
+    ],
+    "whatProDoes": "Pyrite is not diagnosed by eye: it requires a sample of the backfill beneath the slab and a laboratory analysis under a recognised protocol. A contractor who asserts pyrite without an analysis is asserting what they cannot know. Where the work is justified, it means removing the backfill at fault and the slab covering it.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [
+      "ctq-m200",
+      "programme-aide-pyrite"
+    ],
+    "related": [
+      "affaissement",
+      "fissure"
+    ],
+    "order": 110
+  }
+}

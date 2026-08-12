@@ -1,0 +1,100 @@
+---
+/**
+ * Politique de confidentialité, FR. Jumelle : `src/pages/en/privacy.astro`.
+ *
+ * Décrit le traitement RÉEL : les champs que `worker/lead-form.ts` accepte, et
+ * la seule finalité (transmettre la demande à un entrepreneur). Ne rien
+ * promettre que le site ne fait pas — pas de « nous ne vendons jamais » creux,
+ * mais l'énoncé de ce qui se passe.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'privacy' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Politique de confidentialité — Solage Capitale"
+  description="Quels renseignements le formulaire recueille, à qui ils sont transmis, combien de temps ils sont conservés et comment exercer vos droits au Québec."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Confidentialité", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Politique de confidentialité</h1>
+
+      <p class="chapeau">
+        Ce site recueille le minimum nécessaire pour qu'un entrepreneur puisse vous rappeler au
+        sujet de votre fondation, et rien d'autre.
+      </p>
+
+      <h2>Ce qui est recueilli</h2>
+      <p>
+        Uniquement ce que vous inscrivez vous-même dans le formulaire de demande de soumission :
+        votre nom, un moyen de vous joindre, le secteur où se trouve le bâtiment, la description
+        du problème que vous observez, et une photo si vous choisissez d'en joindre une.
+      </p>
+      <p>
+        La page depuis laquelle la demande est envoyée est enregistrée avec elle, pour que
+        l'entrepreneur sache de quel sujet vous parlez. <strong>Aucun compte n'est créé et
+        aucun mot de passe n'est demandé.</strong>
+      </p>
+
+      <h2>Pourquoi</h2>
+      <p>
+        Pour une seule finalité : transmettre votre demande à l'entrepreneur qui vous rappellera.
+        Les renseignements ne servent ni à la publicité ciblée, ni à la revente, ni à la
+        constitution d'une liste d'envoi.
+      </p>
+
+      <h2>À qui ils sont transmis</h2>
+      <p>
+        À l'<strong>entreprise indépendante</strong> qui traite les demandes de la région, et à
+        elle seule. À partir du moment où elle reçoit votre demande, elle en devient responsable
+        et applique sa propre politique. Le statut respectif de chacun est décrit dans les
+        <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>conditions
+        d'utilisation</a>.
+      </p>
+
+      <h2>Ce que le site ne fait pas</h2>
+      <p>
+        Le site ne dépose <strong>aucun témoin de suivi publicitaire</strong> et ne charge aucun
+        script de mesure d'audience tiers. C'est une conséquence directe de sa construction : les
+        pages sont livrées en HTML statique, sans JavaScript, ce qui est vérifié à chaque build.
+      </p>
+
+      <h2>Conservation</h2>
+      <p>
+        Une demande est conservée le temps nécessaire au suivi de la soumission, puis supprimée.
+        Elle n'est pas archivée indéfiniment « au cas où ».
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        La loi québécoise sur la protection des renseignements personnels dans le secteur privé
+        vous donne le droit d'<strong>accéder</strong> aux renseignements qui vous concernent,
+        d'en demander la <strong>rectification</strong>, de <strong>retirer votre
+        consentement</strong> et d'en demander la <strong>suppression</strong>. Une demande en
+        ce sens se fait par la page
+        <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>Contact</a>.
+      </p>
+      <p>
+        Si la réponse ne vous satisfait pas, la Commission d'accès à l'information du Québec est
+        l'autorité compétente pour recevoir une plainte.
+      </p>
+
+      <h2>Modifications</h2>
+      <p>
+        Cette politique peut être modifiée. La version affichée est celle qui s'applique.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

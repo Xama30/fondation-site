@@ -1,0 +1,191 @@
+---
+/**
+ * Home, EN. Twin of `src/pages/index.astro` — see it for why both were rewritten
+ * on 2026-08-11: measured on `dist/`, the home pages carried 115 (FR) and 106
+ * (EN) words against 1,191 on a service hub, and passed almost nothing to the
+ * money pages despite receiving the most authority. No gate saw it: link-audit
+ * only enforces word and link thresholds on money pages, and home is not one.
+ *
+ * Rule 6: this is a translation of the ARGUMENT, not of the sentences. English
+ * search phrasing differs — "french drain", "foundation crack", "weeping tile"
+ * — and the copy leads with those rather than transliterating the French.
+ */
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { resolveImage } from '@lib/images.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'en' as const;
+const ui = dict(locale);
+const ref = { type: 'home' } as const;
+
+const written = new Set(
+  (await getCollection('services', (e) => e.data.locale === locale)).map((e) => e.data.service),
+);
+
+const ENTRIES: { key: ServiceKey; lead: string }[] = [
+  { key: 'infiltration', lead: "Water is getting into the basement and you cannot tell where from yet." },
+  { key: 'fissure', lead: "A crack has opened in the foundation wall, or it is widening." },
+  { key: 'drain', lead: "The drain is as old as the house and may no longer carry water." },
+  { key: 'ocre', lead: "An orange deposit is clogging the drain — a ground condition, not bad workmanship." },
+  { key: 'impermeabilisation', lead: "The buried wall has lost its membrane, or never had one." },
+  { key: 'inspection', lead: "Nobody has actually looked inside yet, and that decides everything else." },
+];
+const entries = ENTRIES.filter((e) => written.has(e.key)).map((e) => ({
+  ...e,
+  name: serviceData[locale][e.key].name,
+}));
+
+const sectorEntries = await getCollection('sectors', (e) => e.data.locale === locale);
+const featured = ['la-cite-limoilou', 'beauport', 'charlesbourg', 'levis', 'sainte-foy-sillery-cap-rouge', 'les-rivieres']
+  .filter((s) => sectorEntries.some((e) => e.data.sector === s))
+  .map((s) => ({ slug: s, name: cities[s]!.name[locale] }));
+
+const blogAll = await getCollection('blog');
+const twins = new Set(blogAll.filter((e) => e.data.locale === 'fr').map((e) => e.data.translationKey));
+const posts = blogAll
+  .filter((e) => e.data.locale === 'en' && twins.has(e.data.translationKey))
+  .map((e) => ({
+    h1: e.data.h1,
+    slugs: {
+      en: e.data.slug,
+      fr: blogAll.find((x) => x.data.locale === 'fr' && x.data.translationKey === e.data.translationKey)!.data.slug,
+    },
+  }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Foundation Repair in Quebec City — Solage Capitale"
+  description="Foundation cracks, french drains, iron ochre and basement water infiltration: what actually happens under a house in the Quebec City region."
+  schema={[breadcrumbSchema(locale, [{ name: 'Home', ref }])]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Foundations, french drains and wet basements in the Quebec City region</h1>
+
+      <p class="chapeau">
+        A crack in the foundation wall, water coming in as the snow melts, a drain that no longer
+        carries: around Quebec City these problems almost always trace back to the same three
+        causes — water, frost, and the ground the house sits on.
+      </p>
+
+      <figure class="hero-photo">
+        <Image
+          src={resolveImage('limoilou')}
+          alt="Residential street in Limoilou under snow, lined with brick duplexes whose basements sit half below grade."
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 48rem) 42rem, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+
+      <p>
+        This site explains what happens under a house here, what Quebec regulation entitles you to
+        insist on, and what a licensed contractor does to put it right. It will never tell you how
+        to work on a foundation yourself: a badly run excavation or injection injures people and
+        destroys buildings.
+      </p>
+
+      <h2>Where to start</h2>
+      <p>
+        If you are not yet sure what you are dealing with, start from the symptom. It is the
+        fastest way to the right page.
+      </p>
+      <ul>
+        {
+          entries.map((e) => (
+            <li>
+              <a href={pathFor({ type: 'service', service: e.key }, locale)}>{e.name}</a>
+              {" — "}
+              {e.lead}
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        The full list is on
+        <a href={pathFor({ type: 'serviceIndex' }, locale)}>foundation services</a>.
+      </p>
+
+      <h2>Why the Quebec City region specifically</h2>
+      <p>
+        The housing stock here is old, and it is old in ways worth knowing. A good share of the
+        homes in the Quebec City Metropolitan Community went up before french drains — weeping
+        tile — were common practice, so some never had one at all. Another share sits on
+        <strong>clay tile drains</strong> laid between the 1950s and the 1970s, now reaching the
+        end of their life just about everywhere.
+      </p>
+      <p>
+        Two regional factors compound it: a <strong>freeze-thaw</strong> cycle that works the soil
+        against the buried wall every winter, and <strong>iron ochre</strong>, a deposit that can
+        render a drainage system completely inoperative — including a brand-new drain, if the risk
+        was never assessed before it went in.
+      </p>
+      <p>
+        That is why every area has its own page rather than one generic text: the era a house was
+        built in changes the diagnosis.
+      </p>
+
+      <h2>Your area</h2>
+      <ul class="liens-liste">
+        {
+          featured.map((s) => (
+            <li><a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+      <p>
+        All 51 areas covered, from the Quebec City boroughs to Lévis and the outer ring, are listed
+        on <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>the service area
+        page</a>.
+      </p>
+
+      <h2>What you can insist on before signing</h2>
+      <p>
+        This is the part almost nobody writes, and it is public and checkable. A Régie du bâtiment
+        du Québec licence can be looked up in the public register, a quote can be required to name
+        the standard it works to, and the new home warranty plan covers certain defects for five
+        years.
+      </p>
+      <ul class="liens-liste">
+        {
+          posts.map((p) => (
+            <li><a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.h1}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>How this service works</h2>
+      <p>
+        Solage Capitale is an information and referral service. When you request a quote, it goes
+        to an <strong>independent company</strong> holding its own RBQ licence, which calls you
+        back, visits and prices the work. It is free, carries no obligation, and you remain free to
+        seek other quotes — which is in fact recommended. The detail is on
+        <a href={pathFor({ type: 'static', page: 'about' }, locale)}>about the service</a>.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-photo {
+    margin: 0 0 2rem;
+  }
+  .hero-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+</style>

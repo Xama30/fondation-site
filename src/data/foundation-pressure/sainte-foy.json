@@ -1,0 +1,37 @@
+{
+  "slug": "sainte-foy",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "apres-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    },
+    {
+      "span": "1945-1975",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "low",
+      "why": "parc dominant post-2005 (tours à condos et immeubles de bureaux autour du boulevard Laurier) en béton coulé et drain PVC conforme BNQ 3661-500 ; la poche résidentielle 1945-1975 en retrait vers le fleuve ne suffit pas à elle seule à porter le niveau"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "fondations d'ingénierie (dalles, gaines techniques partagées) des tours récentes autour de l'Université Laval ; parc trop jeune pour le retrait de béton accumulé des cohortes plus anciennes"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Autour du boulevard Laurier et de l'Université Laval, Sainte-Foy s'est rebâtie en tours à condos et en immeubles de bureaux après les années 2000, sur des fondations de béton coulé conformes à la norme BNQ 3661-500 et des gaines techniques partagées qui n'ont rien à voir avec un solage de maison. C'est ce parc récent qui domine le secteur et qui tire la pression vers le bas, malgré les poches de quartiers résidentiels plus anciens laissées en retrait vers le fleuve, près de la route de l'Église, où le bâti d'après-guerre garde son propre drain de tuile d'argile en fin de vie.",
+    "en": "Around boulevard Laurier and Université Laval, Sainte-Foy rebuilt itself into condo towers and office buildings after the 2000s, on poured-concrete foundations that meet the BNQ 3661-500 standard and shared utility shafts that have nothing in common with a house's foundation walls. It's this recent stock that dominates the sector and pulls the overall pressure down, despite pockets of older residential streets left behind toward the river, near route de l'Église, where postwar houses still carry their own aging clay-tile drains."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

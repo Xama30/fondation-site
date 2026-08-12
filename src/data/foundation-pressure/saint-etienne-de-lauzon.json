@@ -1,0 +1,37 @@
+{
+  "slug": "saint-etienne-de-lauzon",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1960-1985",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "conversion en banlieue dominante depuis les années 1960 sur d'anciennes terres agricoles, cohorte de tuile d'argile ; noyau paroissial 1904 minoritaire ne porte pas le niveau"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé de la vague 1960-1985 sur remblai de labour, fissures de retrait typiques de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À la jonction de l'autoroute 73 et de la route 175, les bungalows montés depuis les années 1960 sur les anciennes terres agricoles de la seigneurie de Lauzon reposent sur un remblai de labour compacté qui retient l'eau autour du solage de béton coulé, là où le drain de tuile en sections s'est déjà affaissé par endroits. Le noyau plus vieux, en pierre autour de l'église dessinée par David Ouellet en 1904, n'a jamais porté ce genre de drain : la seule usure qui s'y voit est celle du mortier de chaux, pas celle du tuyau.",
+    "en": "At the junction of autoroute 73 and route 175, the bungalows raised since the 1960s on the former farmland of the Lauzon seigneury sit on compacted plough fill that holds water around the poured-concrete foundation, where the sectioned clay-tile drain has already sagged in places. The older core, in stone around the église designed by David Ouellet in 1904, never carried that kind of drain: the only wear visible there is in the lime mortar, not the pipe."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

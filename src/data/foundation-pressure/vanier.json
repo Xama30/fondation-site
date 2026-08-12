@@ -1,0 +1,37 @@
+{
+  "slug": "vanier",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte dominante 1945-1975 des anciens motels et immeubles à logements du boulevard Wilfrid-Hamel, qui longe directement la rivière Saint-Charles ; la berge maintient la nappe haute sous cette bande riveraine et accélère le colmatage de la tuile d'argile"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "immeubles en béton coulé simple d'après-guerre le long de Wilfrid-Hamel, fissures de retrait typiques de cette cohorte ; le noyau ancien du Vieux-Vanier, en pierre, reste minoritaire et ne fait pas baisser le niveau porté par le parc dominant"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le long du boulevard Wilfrid-Hamel, les anciens motels et immeubles à logements bâtis avant 1980 s'alignent à quelques mètres de la rivière Saint-Charles, dont la berge maintient la nappe phréatique haute sous cette bande riveraine. Leur drain de tuile d'argile, posé en sections avant l'arrivée du PVC, s'y colmate plus vite qu'ailleurs à cause de cette proximité directe avec le cours d'eau. Au nord, le noyau du Vieux-Vanier — celui de l'ancienne ville de Québec-Ouest — repose plutôt sur des solages en pierre des moellons, où les mouvements du mortier de chaux priment sur la fissuration du béton.",
+    "en": "Along boulevard Wilfrid-Hamel, the pre-1980 motels and apartment buildings sit only metres from the Saint-Charles River, whose bank keeps the water table high beneath this riverside strip. Their clay-tile drains, laid in sections before PVC became standard, clog faster here than elsewhere precisely because of that direct exposure to the river. To the north, the old core of Vieux-Vanier — heart of the former town of Québec-Ouest — rests instead on rubble-stone foundations, where lime-mortar movement matters more than concrete cracking."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

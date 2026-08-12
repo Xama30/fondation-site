@@ -1,0 +1,37 @@
+{
+  "slug": "lac-delage",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "1975-1990",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "village fondé en 1959 autour du lac Delage, cohorte fondatrice 1945-1975 en tuile d'argile déjà en fin de vie utile; le territoire est le plus petit de la couronne nord et ne laisse presque aucun terrain éloigné du plan d'eau, ce qui maintient la nappe haute même en dehors de la cohorte dominante"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé de la cohorte fondatrice 1945-1975, fissures de retrait attendues avec l'âge du solage plutôt qu'un désordre aigu rapporté dans ce village"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le village de Lac-Delage tient en un peu plus de deux kilomètres carrés autour du lac Delage, entre l'avenue du Lac et l'avenue des Monts — la plus petite municipalité de la couronne nord de Québec. Les premiers chalets datent de la fondation de la municipalité en 1959 et de la construction du Manoir du Lac-Delage en 1963-1964; l'agrandissement du Manoir en 1976 a entraîné une deuxième vague de condos quatre-saisons. Sur un territoire aussi restreint, presque aucun terrain n'est loin du lac, si bien que le drain de tuile d'argile posé lors de la première vague reste exposé à une nappe phréatique haute toute l'année.",
+    "en": "The village of Lac-Delage covers a little over two square kilometres around Lac Delage, between avenue du Lac and avenue des Monts — the smallest municipality on Québec City's north shore. The earliest chalets date to the municipality's founding in 1959 and to the Manoir du Lac-Delage's construction in 1963-1964; the Manoir's 1976 expansion brought a second wave of four-season condos. On such a small territory, almost no lot sits far from the lake, so the clay-tile drain laid during that first wave stays exposed to a water table that runs high year-round."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

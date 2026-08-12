@@ -1,0 +1,37 @@
+{
+  "slug": "saint-gabriel-de-valcartier",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1990-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "aucune décennie de construction ne domine clairement ce parc rural étalé le long de la route 371 et de la rivière Jacques-Cartier depuis la fusion de 1985; pression plafonnée par prudence en l'absence de cohorte confirmée par une source ouverte"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "aucune cohorte ne pèse assez lourd dans ce parc rural dispersé pour porter seule le niveau; le noyau agricole en pierre d'avant 1945 et les maisons plus récentes se côtoient sans qu'un type de solage domine le territoire"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Saint-Gabriel-de-Valcartier étale son bâti le long de la route 371 et de la rivière Jacques-Cartier sur un territoire agricole qui mélange champs cultivés et boisés depuis la fusion des municipalités de Saint-Gabriel-de-Valcartier et de Saint-Gabriel Ouest en 1985. Aucune décennie de construction ne domine clairement ce parc rural : des fermes centenaires côtoient des résidences unifamiliales plus récentes sur de grands terrains, sans vague de développement aussi marquée qu'ailleurs dans la couronne nord. Cet étalement, plutôt qu'une pression précise, appelle à confirmer la répartition des époques au rôle d'évaluation municipale avant d'aller plus loin.",
+    "en": "Saint-Gabriel-de-Valcartier spreads its housing stock along route 371 and the Jacques-Cartier River across farmland that mixes cultivated fields and woodlots, since the 1985 merger of the municipalities of Saint-Gabriel-de-Valcartier and Saint-Gabriel Ouest. No single construction decade clearly dominates this rural stock: century-old farmhouses sit alongside newer single-family homes on large lots, without a development wave as sharp as elsewhere on the north shore. That spread, rather than a precise pressure, calls for checking the municipal assessment roll before going further."
+  },
+  "sources": [],
+  "todo": "Décennie de construction dominante non confirmée par une source ouverte pour ce secteur rural étalé — consulter le rôle d'évaluation municipale de Saint-Gabriel-de-Valcartier pour raffiner eras et les niveaux de pression avant toute matrice fine.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

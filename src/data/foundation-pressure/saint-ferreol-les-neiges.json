@@ -1,0 +1,33 @@
+{
+  "slug": "saint-ferreol-les-neiges",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "blocs-beton",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte dominante amorcée en 1954 avec la création du lac des Trois Castors au hameau de Saint-Nicolas = drain de tuile d'argile en fin de vie, aggravé par la proximité nommée de ce plan d'eau artificiel qui tient la nappe près de la surface autour des chalets"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages de blocs de béton typiques des chalets des années 1950-1960 autour du lac des Trois Castors, fissures de retrait modérées cohérentes avec cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Au hameau de Saint-Nicolas, les chalets bâtis autour du lac des Trois Castors depuis la création de ce plan d'eau artificiel en 1954 reposent sur des solages de blocs de béton raccordés à un drain de tuile d'argile typique de cette cohorte, aujourd'hui en fin de vie utile. Beaucoup de ces chalets d'origine saisonnière, convertis en résidences permanentes sans reprise complète du solage, affrontent une nappe que le lac lui-même maintient tout près de la surface — une pression qui distingue ce hameau au pied du mont Sainte-Anne du reste de la municipalité.",
+    "en": "In the Saint-Nicolas hamlet, the chalets built around Lac des Trois Castors since this artificial lake was created in 1954 sit on concrete-block foundations tied to a clay-tile drain typical of that cohort, now at the end of its service life. Many of these originally seasonal chalets, converted to year-round homes without a full foundation overhaul, face a water table the lake itself keeps close to the surface — a pressure that sets this hamlet at the foot of mont Sainte-Anne apart from the rest of the municipality."
+  },
+  "sources": [
+    "http://www.saintferreollesneiges.qc.ca/pages/la-municipalite-et-son-histoire"
+  ],
+  "todo": "Époque de construction du hameau de Saint-Léon non confirmée par housingStock ; classification basée sur la cohorte documentée de Saint-Nicolas / lac des Trois Castors (1954).",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

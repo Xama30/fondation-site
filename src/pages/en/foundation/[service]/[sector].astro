@@ -1,0 +1,160 @@
+---
+/**
+ * Matrix page, service × area, EN. Twin of `src/pages/fondation/[service]/[sector].astro`.
+ *
+ * ⚠ Le secteur est le DERNIER segment de l'URL. `sectorFromUrl()` dans
+ * `scripts/uniqueness-check.mjs` lit `parts.at(-1)` pour les familles `matrix-*` :
+ * inverser l'ordre ferait passer la règle des faits locaux sans rien vérifier,
+ * et la porte annoncerait un succès propre (CLAUDE.md, § contrainte de forme).
+ *
+ * Seules les 13 combinaisons approuvées existent. L'approbation est dérivée de
+ * `foundationPressure` et appliquée par `foundation-pressure.mjs merge` — jamais
+ * décidée ici : cette route ne construit que ce que la collection contient.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import { SERVICE_SLUGS, type ServiceKey } from '@data/slugs.ts';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('matrix', (e) => e.data.locale === 'en');
+  return entries.map((entry) => ({
+    params: {
+      service: SERVICE_SLUGS[entry.data.service as ServiceKey].en,
+      sector: entry.data.sector,
+    },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: Awaited<ReturnType<typeof getCollection<'matrix'>>>[number] };
+
+const locale = 'en' as const;
+const ui = dict(locale);
+const { entry } = Astro.props as Props;
+const key = entry.data.service as ServiceKey;
+const city = cities[entry.data.sector]!;
+const data = serviceData[locale][key];
+const ref = { type: 'serviceSector', service: key, sector: entry.data.sector } as const;
+const { Content } = await render(entry);
+
+// La raison chiffrée de l'approbation, écrite en phase 2 et affichée telle quelle :
+// la page dit pourquoi ELLE existe, au lieu de le laisser deviner.
+const slugFr = SERVICE_SLUGS[key].fr as 'drain-francais' | 'fissure-de-fondation';
+const pressure = city.foundationPressure.services[slugFr];
+
+// Une page matrice était un cul-de-sac : trois liens sortants seulement. On la rattache à ce
+// qui existe déjà autour d'elle — l'autre service approuvé pour CE secteur, et les secteurs
+// voisins. Toujours filtré contre les pages réellement construites : une combinaison approuvée
+// mais non écrite ne doit pas devenir un lien mort (PLAYBOOK §7.3).
+const builtMatrix = new Set(
+  (await getCollection('matrix', (e) => e.data.locale === locale)).map(
+    (e) => `${e.data.service}/${e.data.sector}`,
+  ),
+);
+const otherService = (['drain', 'fissure'] as const).find(
+  (k) => k !== key && builtMatrix.has(`${k}/${entry.data.sector}`),
+);
+const builtSectors = new Set(
+  (await getCollection('sectors', (e) => e.data.locale === locale)).map((e) => e.data.sector),
+);
+const neighbours = city.neighbours
+  .filter((n) => builtSectors.has(n) && cities[n])
+  .slice(0, 3)
+  .map((n) => ({ slug: n, name: cities[n]!.name[locale] }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title={entry.data.title}
+  description={entry.data.metaDescription}
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Foundation", ref: { type: 'serviceIndex' } },
+      { name: data.name, ref: { type: 'service', service: key } },
+      { name: city.name[locale], ref },
+    ]),
+    serviceSchema({
+      locale,
+      name: `${data.name} — ${city.name[locale]}`,
+      description: entry.data.metaDescription,
+      ref,
+      areaServed: city.name[locale],
+    }),
+    faqSchema(entry.data.faq),
+  ]}
+>
+  <article class="contenant bloc-page">
+    <div class="mesure">
+      <h1>{entry.data.h1}</h1>
+
+      <h2>{ui('sector.whyHere')}</h2>
+      <p>{entry.data.localAngle}</p>
+      <p>{pressure.why}</p>
+
+      <Content />
+
+      <h2>{ui('sector.pressure')}</h2>
+      <ul>
+        {
+          city.foundationPressure.eras.map((e) => (
+            <li>{e.span} ({e.weight}) — foundation: {e.foundation}, original drain: {e.drain}</li>
+          ))
+        }
+      </ul>
+
+      <h2>{ui('service.whatProDoes')}</h2>
+      <p>{data.whatProDoes}</p>
+
+      <h2>{ui('sector.publicRef')}</h2>
+      <p>{entry.data.publicReference}</p>
+
+      <h2>{ui('meta.faqTitle')}</h2>
+      {
+        entry.data.faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+
+      {
+        (otherService || neighbours.length > 0) && (
+          <>
+            <h2>{ui('meta.nearbySectors')}</h2>
+            <ul class="liens-liste">
+              {otherService && (
+                <li>
+                  <a href={pathFor({ type: 'serviceSector', service: otherService, sector: entry.data.sector }, locale)}>
+                    {serviceData[locale][otherService].name} — {city.name[locale]}
+                  </a>
+                </li>
+              )}
+              {neighbours.map((n) => (
+                <li>
+                  <a href={pathFor({ type: 'sector', sector: n.slug }, locale)}>{n.name}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <p>
+        <a href={pathFor({ type: 'service', service: key }, locale)}>{data.name}</a>
+        {" · "}
+        <a href={pathFor({ type: 'sector', sector: entry.data.sector }, locale)}>
+          {city.name[locale]}
+        </a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>

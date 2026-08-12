@@ -1,0 +1,140 @@
+---
+/**
+ * Article de blogue, FR. Jumelle : `src/pages/en/blog/[slug].astro`.
+ *
+ * APPARIEMENT PAR `translationKey`, JAMAIS PAR SLUG (PLAYBOOK §7.2). Les slugs
+ * de blogue diffèrent réellement d'une langue à l'autre — `verifier-licence-rbq-
+ * entrepreneur` et `check-rbq-contractor-licence` — donc un article ne peut pas
+ * déduire le slug de sa jumelle du sien. Le `PageRef` exige les deux, et c'est
+ * ici qu'ils se retrouvent.
+ *
+ * Un article dont la jumelle manque LÈVE au lieu de se construire seul : la
+ * règle 6 dit qu'une page FR sort avec sa jumelle EN, et une canonique bilingue
+ * bancale est invisible tant qu'on ne la cherche pas.
+ *
+ * `sources` est obligatoire dans le schéma (min 1) et rendu en bas de page :
+ * c'est ce qui distingue ces articles du contenu de la couche C, qui n'en cite
+ * jamais.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { ARTICLE_SERVICES } from '@lib/service-articles.ts';
+import { services as serviceData } from '@lib/data.ts';
+import { blogPostingSchema, breadcrumbSchema } from '@lib/schema.ts';
+
+export async function getStaticPaths() {
+  const all = await getCollection('blog');
+  const fr = all.filter((e) => e.data.locale === 'fr');
+  const en = new Map(all.filter((e) => e.data.locale === 'en').map((e) => [e.data.translationKey, e]));
+
+  return fr.map((entry) => {
+    const twin = en.get(entry.data.translationKey);
+    if (!twin) {
+      throw new Error(
+        `Blog post "${entry.data.slug}" has no EN twin for translationKey ` +
+          `"${entry.data.translationKey}" — rule 6: a post ships as a pair or not at all.`,
+      );
+    }
+    return {
+      params: { slug: entry.data.slug },
+      props: { entry, slugs: { fr: entry.data.slug, en: twin.data.slug } },
+    };
+  });
+}
+
+type Entry = Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+type Props = { entry: Entry; slugs: { fr: string; en: string } };
+
+const locale = 'fr' as const;
+const ui = dict(locale);
+const { entry, slugs } = Astro.props as Props;
+const ref = { type: 'blogPost', slug: slugs } as const;
+const { Content } = await render(entry);
+
+/*
+ * `timeZone: 'UTC'` N'EST PAS DÉCORATIF. `published: 2026-08-07` en frontmatter
+ * devient `2026-08-07T00:00:00Z`; formaté dans le fuseau local (America/Toronto,
+ * UTC-4) il s'affiche « 6 août 2026 ». Chaque article aurait porté la veille de
+ * sa date, et le JSON-LD — qui sort en `.toISOString()` — aurait contredit la
+ * page. Une date seule se lit en UTC ou elle recule.
+ */
+const dateFmt = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long', timeZone: 'UTC' });
+// Le sens inverse de la carte de `src/lib/service-articles.ts` : les hubs de
+// service sur lesquels CET article dit réellement quelque chose. Mesuré avant
+// d'ajouter : un article n'avait qu'UN seul lien éditorial sortant
+// (`/soumission/`), donc les 8 pages de blogue ne transmettaient rien aux pages
+// de tête. Filtré contre les hubs réellement écrits, comme partout ailleurs.
+const writtenServices = new Set(
+  (await getCollection('services', (e) => e.data.locale === 'fr')).map((e) => e.data.service),
+);
+const relatedServices = (ARTICLE_SERVICES[entry.data.translationKey] ?? [])
+  .filter((k) => writtenServices.has(k))
+  .map((k) => ({ key: k, name: serviceData['fr'][k].name }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title={entry.data.title}
+  description={entry.data.metaDescription}
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Blogue", ref: { type: 'blogIndex' } },
+      { name: entry.data.h1, ref },
+    ]),
+    blogPostingSchema({
+      locale,
+      headline: entry.data.h1,
+      description: entry.data.metaDescription,
+      published: entry.data.published,
+      updated: entry.data.updated,
+      ref,
+    }),
+  ]}
+>
+  <article class="contenant bloc-page">
+    <div class="mesure">
+      <h1>{entry.data.h1}</h1>
+
+      <p class="chapeau">
+        {ui('meta.lastUpdated')} {dateFmt.format(entry.data.updated ?? entry.data.published)}
+      </p>
+
+      <Content />
+
+
+      {
+        relatedServices.length > 0 && (
+          <>
+            <h2>{ui('meta.relatedServices')}</h2>
+            <ul class="liens-liste">
+              {relatedServices.map((s) => (
+                <li>
+                  <a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.name}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>{ui('meta.sources')}</h2>
+      <ul>
+        {
+          entry.data.sources.map((s) => (
+            <li>
+              <a href={s.url} rel="nofollow noopener">{s.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>

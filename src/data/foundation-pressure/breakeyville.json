@@ -1,0 +1,37 @@
+{
+  "slug": "breakeyville",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "noyau villageois avant-1945 en pierre le long de la rue Saint-Augustin et de la rue Sainte-Hélène, sans drain d'origine ; proximité nommée de la rivière Chaudière (déjà au plafond, pas d'ajustement supplémentaire possible)"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre avant-1945 dominant : l'usure attendue est la reprise du mortier de chaux entre les moellons, pas une fissure de retrait de béton"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le long de la rue Saint-Augustin et de la rue Sainte-Hélène, les maisons qui ont grandi autour de la scierie de Hans Denaston Breakey — érigée en 1846 sur la rivière Chaudière et aujourd'hui en ruines au bord de la piste cyclable de l'Éco-Parc — reposent sur des solages de pierre montés à joints de chaux, sans drain périphérique. La rivière qui a justifié l'implantation du moulin garde la nappe haute sous ce noyau villageois : c'est le mortier entre les moellons qui se délite, pas un béton qui n'existe pas encore ici.",
+    "en": "Along rue Saint-Augustin and rue Sainte-Hélène, the houses that grew up around Hans Denaston Breakey's sawmill — built in 1846 on the Chaudière River and now a ruin beside the Éco-Parc cycling path — sit on lime-mortar stone foundations with no perimeter drain. The river that justified the mill's location keeps the water table high beneath this village core: it's the lime mortar between the fieldstones that crumbles, not a poured-concrete slab that doesn't exist here yet."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

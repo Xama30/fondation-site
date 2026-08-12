@@ -1,0 +1,31 @@
+{
+  "slug": "sillery",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1890-1910",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante 1890-1910 en solage de pierre sans drain d'origine, mais aucun facteur aggravant nommé dans les données du secteur : l'escarpement du chemin Saint-Louis est une topographie, et le §3 exclut explicitement la pente comme facteur. Pression réelle, insuffisante pour une page dédiée."
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre des villas et des anciens couvents — les désordres attendus sont des joints de mortier de chaux cédant sous la pression racinaire du boisé mature, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le long du chemin Saint-Louis, les villas de Sillery bâties au tournant du XXe siècle par des marchands de bois et des armateurs reposent sur des fondations de pierre montées sans membrane d'étanchéité, une technique encore inconnue à l'époque. Perchées sur le plateau qui domine la falaise, ces maisons reçoivent l'eau de ruissellement de l'amont sur leur mur arrière, tandis que le boisé mature planté à même la fondation, hérité des grandes propriétés d'origine, envoie ses racines dans le mortier de chaux entre les moellons. Les anciens couvents et presbytères du secteur, convertis en copropriétés, ont vu leurs sous-sols rouverts pour l'aménagement d'unités, exposant des joints que personne n'avait touchés depuis un siècle.",
+    "en": "Along chemin Saint-Louis, the villas Sillery's timber merchants and shipowners built at the turn of the 20th century sit on stone foundations laid without any waterproofing membrane, a technique still unknown at the time. Perched on the plateau above the escarpment, these houses catch runoff draining downhill against their rear walls, while the mature trees planted right against the foundation — a legacy of the original large estates — send roots into the lime mortar between the fieldstones. The former convents and presbyteries nearby, now converted into condominiums, had their basements reopened for new units, exposing joints nobody had touched in a century."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,94 @@
+---
+/**
+ * Index du blogue, FR. Jumelle : `src/pages/en/blog/index.astro`.
+ *
+ * Piloté par `getCollection`, donc un article non écrit n'apparaît pas — et,
+ * comme la route d'article, il n'affiche que ceux dont la jumelle existe :
+ * lister un article FR sans jumelle EN publierait un lien dont la version
+ * anglaise mène au 404.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'blogIndex' } as const;
+
+const all = await getCollection('blog');
+const twins = new Map(all.filter((e) => e.data.locale === 'en').map((e) => [e.data.translationKey, e]));
+const posts = all
+  .filter((e) => e.data.locale === 'fr' && twins.has(e.data.translationKey))
+  .map((e) => ({
+    data: e.data,
+    slugs: { fr: e.data.slug, en: twins.get(e.data.translationKey)!.data.slug },
+  }))
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+
+/*
+ * `timeZone: 'UTC'` N'EST PAS DÉCORATIF. `published: 2026-08-07` en frontmatter
+ * devient `2026-08-07T00:00:00Z`; formaté dans le fuseau local (America/Toronto,
+ * UTC-4) il s'affiche « 6 août 2026 ». Chaque article aurait porté la veille de
+ * sa date, et le JSON-LD — qui sort en `.toISOString()` — aurait contredit la
+ * page. Une date seule se lit en UTC ou elle recule.
+ */
+const dateFmt = new Intl.DateTimeFormat('fr-CA', { dateStyle: 'long', timeZone: 'UTC' });
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Blogue — réglementation et fondation au Québec"
+  description="Licence RBQ, norme BNQ 3661-500, garanties : ce que les textes publics disent vraiment, et comment vous en servir face à un entrepreneur en fondation."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Blogue", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Ce que la réglementation dit, et ce que ça vous donne</h1>
+
+      <p class="chapeau">
+        Chaque article part d'un texte public — la Régie du bâtiment, le Bureau de normalisation
+        du Québec, un plan de garantie — et se termine par ce que vous pouvez en exiger. Les
+        sources sont citées en bas de chaque page pour que vous puissiez les vérifier.
+      </p>
+
+      {
+        posts.length === 0 ? (
+          <p>Les premiers articles sont en cours de rédaction.</p>
+        ) : (
+          <ul class="liens-liste">
+            {posts.map((p) => (
+              <li>
+                <a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.data.h1}</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        posts.length > 0 && (
+          <>
+            <h2>En bref</h2>
+            {posts.map((p) => (
+              <>
+                <h3>
+                  <a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.data.h1}</a>
+                </h3>
+                <p>{p.data.metaDescription}</p>
+                <p>
+                  <small>{dateFmt.format(p.data.updated ?? p.data.published)}</small>
+                </p>
+              </>
+            ))}
+          </>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

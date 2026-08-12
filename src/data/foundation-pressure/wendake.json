@@ -1,0 +1,39 @@
+{
+  "slug": "wendake",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1970-1990",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "1730-1969",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1970-1990 en PVC ondulé — hors des deux strates (avant-1945, 1945-1975) qui ouvrent droit à high sous le critère resserré ; la proximité nommée de la rivière Saint-Charles et de la chute Kabir Kouba reste réelle mais ne peut plus, seule, hisser un solage post-1970 en PVC ondulé à high — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé dominant sur les bungalows bâtis depuis 1970 au nord du Vieux-Wendake, ajusté à la baisse par la présence significative du bâti ancestral en pierre du Vieux-Wendake"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le programme d'habitation lancé par le Conseil de la Nation huronne-wendat en 1970 a fait pousser, au nord du Vieux-Wendake, des bungalows sur solage de béton coulé et drain de PVC ondulé. Cette partie de la communauté borde la rivière Saint-Charles près de la chute Kabir Kouba, ce qui maintient la nappe phréatique haute et pèse sur ces drains vieillissants. Le long des rues du Chef-Thomas-Martin et Chef Max-Gros-Louis, dans le Vieux-Wendake reconnu comme arrondissement historique, le bâti plus ancien sur solage de pierre montre plutôt une usure du mortier entre les moellons.",
+    "en": "The housing program launched by the Huron-Wendat Nation Council in 1970 grew, north of Vieux-Wendake, bungalows on poured-concrete foundations with corrugated PVC drains. This part of the community borders the Saint-Charles River near Kabir Kouba Falls, which keeps the water table high and strains these aging drains. Along rue du Chef-Thomas-Martin and rue Chef Max-Gros-Louis, in Vieux-Wendake, recognized as a historic district, the older stone-footed buildings instead show mortar wear between the fieldstones."
+  },
+  "sources": [
+    "https://www.lesoleil.com/2014/08/21/wendake-du-territoire-pour-rever-3b260548252f58441c0f12e0762ac34e/"
+  ],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

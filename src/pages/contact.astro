@@ -1,0 +1,134 @@
+---
+/**
+ * Contact, FR. Jumelle : `src/pages/en/contact.astro`.
+ *
+ * ⚠ CE N'EST PAS UNE PAGE DE CONVERSION, et il ne faut pas la transformer en
+ * page de conversion « pendant qu'on y est ». Elle existe pour UNE raison :
+ * `/confidentialite/` promet un droit d'accès, de rectification, de retrait du
+ * consentement et de suppression, et renvoie ici pour l'exercer. La loi
+ * québécoise sur la protection des renseignements personnels dans le secteur
+ * privé s'applique à quiconque recueille — personne physique comprise — et
+ * exige que le responsable soit IDENTIFIABLE. Sans un nom réel et un canal
+ * joignable sur cette page, la promesse de la politique est creuse
+ * (`docs/HANDOFF-TENANT.md` §4.1).
+ *
+ * D'où : pas de formulaire ici, pas d'appel à l'action en bouton, pas de
+ * promesse de rappel. La demande de soumission a sa page, et un lien en prose
+ * suffit à y renvoyer les gens qui se sont trompés de porte.
+ *
+ * Le nom et le courriel viennent de `PRIVACY_OFFICER` (src/lib/constants.ts),
+ * pas d'une chaîne écrite ici : la jumelle EN lit la même constante, donc les
+ * deux ne peuvent pas diverger, et le handoff au locataire ne change qu'un seul
+ * endroit.
+ *
+ * Règle 1 : aucun téléphone, aucune adresse. Il n'y a pas de local.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { PRIVACY_OFFICER } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'contact' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Contact — Solage Capitale"
+  description="À qui écrire, et pour quoi : le responsable de la protection des renseignements personnels, l'exercice de vos droits et la correction d'une erreur factuelle."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Contact", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Contact</h1>
+
+      <p class="chapeau">
+        Une adresse courriel, et une personne nommée derrière. Cette page sert à joindre
+        l'éditeur du site — pour vos renseignements personnels, ou pour signaler une erreur.
+        Pour faire évaluer une fondation, c'est la
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>demande de soumission</a>.
+      </p>
+
+      <h2>Écrire à l'éditeur du site</h2>
+      <p>
+        <strong>{PRIVACY_OFFICER.name}</strong><br />
+        <a href={`mailto:${PRIVACY_OFFICER.email}`}>{PRIVACY_OFFICER.email}</a>
+      </p>
+      <p>
+        Solage Capitale est édité par une personne, pas par une entreprise de construction, et
+        c'est cette personne qui est <strong>responsable de la protection des renseignements
+        personnels</strong> recueillis par le formulaire. La loi québécoise l'exige, et elle
+        exige surtout que ce responsable soit identifiable : d'où le nom ci-dessus plutôt qu'une
+        boîte anonyme.
+      </p>
+
+      <h2>Exercer vos droits sur vos renseignements</h2>
+      <p>
+        Si vous avez déjà envoyé une demande de soumission par ce site, vous pouvez demander à
+        <strong>accéder</strong> aux renseignements qui vous concernent, à les faire
+        <strong>rectifier</strong>, à <strong>retirer votre consentement</strong> ou à en obtenir
+        la <strong>suppression</strong>. Écrivez-le simplement, à l'adresse ci-dessus. Le détail
+        de ce qui est recueilli et pourquoi est dans la
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>politique de
+        confidentialité</a>.
+      </p>
+      <p>
+        Pour qu'une demande puisse aboutir, il faut pouvoir retrouver l'envoi : indiquez
+        l'adresse courriel utilisée dans le formulaire et, si vous l'avez, la date approximative.
+        Sans ces deux éléments, il n'y a rien à retrouver — le site ne crée aucun compte et ne
+        conserve aucun identifiant permettant de vous reconnaître autrement.
+      </p>
+      <p>
+        Si la réponse ne vous satisfait pas, la Commission d'accès à l'information du Québec est
+        l'autorité compétente pour recevoir une plainte.
+      </p>
+
+      <h2>Signaler une erreur dans une page</h2>
+      <p>
+        Le site cite la Régie du bâtiment du Québec, le Bureau de normalisation du Québec et le
+        plan de garantie des bâtiments résidentiels neufs, et chaque fait avancé est rattaché à
+        sa source publique. Une source peut être modifiée, une norme peut être révisée, et une
+        erreur peut avoir été commise à la lecture. <strong>Si vous en trouvez une, la signaler
+        est utile</strong> — dites quelle page et quel passage, et la correction se fait à la
+        source plutôt que sur la seule page où l'erreur a été vue.
+      </p>
+
+      <h2>Ce que ce canal n'est pas</h2>
+      <ul>
+        <li>
+          <strong>Ce n'est pas une ligne d'urgence.</strong> Un courriel n'est pas relevé en
+          continu. S'il y a de l'eau au sous-sol en ce moment, la page
+          <a href={pathFor({ type: 'static', page: 'emergency' }, locale)}>Urgence</a> dit quoi
+          faire d'abord, et à qui téléphoner.
+        </li>
+        <li>
+          <strong>Ce n'est pas un service de diagnostic par courriel.</strong> Personne ne peut
+          se prononcer sur une fondation à partir d'une description ou d'une photo, et ce site
+          ne fournit aucun avis technique ni aucune opinion d'ingénierie. Une fissure s'évalue
+          sur place.
+        </li>
+        <li>
+          <strong>Ce n'est pas l'entrepreneur.</strong> Les travaux sont exécutés par une
+          entreprise indépendante détentrice de sa propre licence RBQ. Le rôle de chacun est
+          décrit dans les
+          <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>conditions
+          d'utilisation</a>.
+        </li>
+      </ul>
+
+      <h2>Demander une soumission</h2>
+      <p>
+        Pour faire évaluer un drain, une fissure ou une infiltration, le formulaire de
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>demande de soumission</a>
+        recueille ce qu'il faut pour qu'un entrepreneur puisse vous rappeler utilement. C'est
+        gratuit et sans engagement, et vous restez libre de demander d'autres soumissions.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

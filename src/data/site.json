@@ -1,0 +1,20 @@
+{
+  "$note": "Configuration du site. Aucun marqueur de confiance ici tant qu'il n'y a pas de locataire : pas d'adresse, pas de licence, pas d'avis. Les valeurs PLACEHOLDER_ sont des erreurs dures de seo-audit.mjs si elles atteignent une page rendue — c'est volontaire, ça rend l'inconnue comptable.",
+  "name": "Solage Capitale",
+  "shortName": "Solage Capitale",
+  "tagline": {
+    "fr": "Fondation, drain français et imperméabilisation — région de Québec",
+    "en": "Foundation, french drain and waterproofing — Quebec City region"
+  },
+  "areaServed": {
+    "fr": "Communauté métropolitaine de Québec",
+    "en": "Quebec City Metropolitan Community"
+  },
+  "$moved": "`domain` et `formEndpoint` ont été RETIRÉS le 2026-08-11. Aucun module n'importait ce fichier : les deux valeurs étaient mortes, et `domain` était surtout un second endroit où un domaine pouvait s'écrire en dur — exactement ce que CLAUDE.md interdit. Le domaine vit dans `SITE_URL` (lu de l'environnement au build, `src/lib/constants.ts`) et l'endpoint dans `LEAD_ENDPOINT` du même fichier, d'où `worker/index.ts` et les deux formulaires le dérivent. Le responsable de la protection des renseignements personnels est dans `PRIVACY_OFFICER`, même fichier, pour la même raison.",
+  "phone": null,
+  "phoneNote": "TODO: numéro de suivi d'appel à décider en phase 7. `null` tant qu'il n'existe pas — jamais un numéro inventé.",
+  "address": null,
+  "addressNote": "Aucune adresse. Il n'y a pas d'entreprise. Règle 1.",
+  "rbqLicence": null,
+  "rbqLicenceNote": "Aucun numéro de licence tant qu'il n'y a pas de locataire réel. Le site EXPLIQUE les sous-catégories RBQ (2.5, 2.6, 3.2, 7, 4.2) comme un droit du consommateur — il n'en revendique aucune."
+}

@@ -1,0 +1,107 @@
+---
+/**
+ * À propos, FR. Jumelle : `src/pages/en/about.astro`.
+ *
+ * PIÈGE DE CETTE PAGE : une page « à propos » appelle une histoire d'entreprise,
+ * une équipe et une date de fondation. Il n'y en a aucune (règle 1). Elle décrit
+ * donc le SERVICE et la MÉTHODE ÉDITORIALE, qui sont vrais et vérifiables, au
+ * lieu d'un récit qui ne l'est pas.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'about' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="À propos — comment fonctionne ce service"
+  description="Ce site explique les problèmes de fondation de la région de Québec et met en relation avec un entrepreneur licencié. Voici comment il est écrit et financé."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "À propos", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>À propos de Solage Capitale</h1>
+
+      <p class="chapeau">
+        Solage Capitale est un site d'information sur la fondation résidentielle dans la région
+        de Québec, doublé d'un service de mise en relation avec un entrepreneur licencié. Ce
+        n'est pas une entreprise de construction, et la page le dit plutôt que de le laisser
+        deviner.
+      </p>
+
+      <h2>Ce que fait le service</h2>
+      <p>
+        Il répond à la question qui précède toutes les autres : <em>qu'est-ce qui se passe sous
+        ma maison, et à qui je m'adresse ?</em> Chaque page part d'un problème réel — un drain
+        qui ne conduit plus, une fissure qui s'ouvre, de l'eau qui entre à la fonte — et explique
+        le phénomène, la réglementation qui s'y applique, et ce qu'un professionnel fait.
+      </p>
+      <p>
+        Quand vous demandez une soumission, la demande est transmise à une entreprise
+        indépendante détentrice de sa propre licence de la Régie du bâtiment du Québec. C'est
+        elle qui se déplace, qui chiffre et qui exécute.
+        <strong>Solage Capitale ne touche pas à votre fondation.</strong>
+      </p>
+
+      <h2>Comment le contenu est écrit</h2>
+      <p>
+        Trois règles, appliquées sans exception, et qui expliquent ce que vous ne trouverez pas
+        ici.
+      </p>
+      <ul>
+        <li>
+          <strong>Aucun chiffre sans source publique.</strong> Quand aucune source primaire ne
+          publie une fourchette, le site écrit qu'il n'y en a pas plutôt que de reprendre un
+          chiffre de concurrent. C'est le cas des prix, et la page
+          <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Prix</a> explique
+          pourquoi.
+        </li>
+        <li>
+          <strong>Aucune marque de confiance inventée.</strong> Pas d'avis, pas d'étoiles, pas
+          de témoignage, pas de « depuis 19XX », pas de photo de chantier présentée comme la
+          nôtre. Les seules photos du site viennent d'archives libres et leur provenance est
+          consignée.
+        </li>
+        <li>
+          <strong>Aucune instruction d'exécution.</strong> Le site explique ce qu'un
+          professionnel fait ; il ne dit jamais comment le faire. Une excavation contre une
+          fondation mal menée blesse ou détruit un bâtiment.
+        </li>
+      </ul>
+
+      <h2>Ce que le site vous encourage à faire</h2>
+      <p>
+        Vérifier. La réglementation québécoise est publique et le registre des licences est
+        consultable par n'importe qui. Demander le numéro de licence, vérifier qu'il couvre la
+        bonne sous-catégorie, exiger que la soumission nomme la norme employée : ce sont des
+        gestes qui ne coûtent rien et qui changent la conversation. Les
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>
+        expliquent comment.
+      </p>
+
+      <h2>Comment le service est financé</h2>
+      <p>
+        Par l'entrepreneur qui reçoit les demandes, pas par vous. Consulter le site et demander
+        une soumission sont gratuits et ne vous engagent à rien. Vous restez libre de demander
+        d'autres soumissions — et c'est même recommandé.
+      </p>
+
+      <h2>Territoire</h2>
+      <p>
+        La Communauté métropolitaine de Québec : les arrondissements de la ville, Lévis, les
+        municipalités de la couronne et les quartiers. La liste complète est sur la page
+        <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>Territoire
+        desservi</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

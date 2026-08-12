@@ -1,0 +1,31 @@
+{
+  "slug": "loretteville",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "solage de pierre dominant avant-1945 sans drain d'origine sur la rue Racine — la strate ancienne est là, mais aucun cours d'eau, plan d'eau, baie ou marais n'est nommé dans localTerms/housingStock pour Loretteville : la condition d'aggravation du critère resserré n'est pas remplie — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage en pierre des moellons — les désordres attendus sont des désagrégations de mortier de chaux, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Sur la rue Racine, ancienne artère commerçante de la tannerie qui a donné son nom au noyau villageois de Loretteville, les maisons à toit mansardé et de style Boomtown bâties avant 1945 alignent des solages en pierre des moellons montés au mortier de chaux, creusés peu profondément pour loger un cellier commercial plutôt qu'un vrai sous-sol. C'est ce mortier ancien, pas le béton, qui travaille avec les saisons le long de cette rue étroite héritée de l'ancienne ville de Loretteville, fusionnée à Québec en 2002.",
+    "en": "On rue Racine, the former commercial street tied to the tannery that gave Loretteville's village core its name, the mansard-roofed and Boomtown-style houses built before 1945 sit on rubble-stone foundations laid with lime mortar, often dug shallow to hold a commercial cellar rather than a true basement. It's that old mortar, not concrete, that moves with the seasons along this narrow street inherited from the former town of Loretteville, merged into Québec in 2002."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

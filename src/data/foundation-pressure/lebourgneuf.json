@@ -1,0 +1,31 @@
+{
+  "slug": "lebourgneuf",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "apres-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "low",
+      "why": "cohorte post-2010, drains PVC neufs conformes a la norme BNQ 3661-500, aucune tuile d'argile en fin de vie a remplacer"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "beton coule recent sur un parc bati trop jeune pour avoir accumule le retrait a long terme observe sur les cohortes plus anciennes"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le Quartier Mosaïque et les tours LB9, construits depuis les années 2010 autour du boulevard Lebourgneuf et de l'autoroute Robert-Bourassa, reposent sur des fondations de béton coulé et des drains de PVC conformes à la norme BNQ 3661-500 récente — un parc bâti trop jeune pour avoir accumulé le retrait de béton ou la fatigue de drain qui touchent les cohortes plus anciennes de Québec.",
+    "en": "The Quartier Mosaïque and the LB9 towers, built since the 2010s around boulevard Lebourgneuf and autoroute Robert-Bourassa, sit on poured-concrete foundations and PVC drains built to the recent BNQ 3661-500 standard — building stock too young to have accumulated the concrete shrinkage or drain fatigue affecting Québec City's older cohorts."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

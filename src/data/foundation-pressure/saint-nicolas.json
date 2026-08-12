@@ -1,0 +1,31 @@
+{
+  "slug": "saint-nicolas",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1750-1900",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "noyau patrimonial (1750-1900, solage de pierre) sur nappe haute entre le fleuve Saint-Laurent et la rivière Aulneuse, ce qui pousserait vers high, mais les 19 km du chemin du Fleuve n'ont pas d'époque dominante confirmée hors du noyau — plafonné par prudence"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "le noyau en pierre donnerait low à lui seul, mais l'essentiel du corridor agricole du chemin du Fleuve n'a pas d'époque de construction confirmée — plafonné par prudence, faute de cohorte dominante nommable sur l'ensemble du secteur"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le noyau patrimonial de Saint-Nicolas — l'ancien magasin général, l'ancien presbytère, le bureau de poste — s'est bâti il y a près de trois cents ans sur la terrasse du chemin du Fleuve, entre le fleuve Saint-Laurent et l'embouchure de la rivière Aulneuse, sur des fondations de pierre exposées directement au sol, sans drain ni membrane. La nappe y reste haute, tenue par les deux cours d'eau qui l'encadrent, alors que le reste du village s'étire sur 19 km de terres agricoles dont l'âge du bâti n'est pas documenté de façon uniforme : impossible d'y nommer une seule cohorte dominante, d'où la prudence sur l'ensemble du secteur.",
+    "en": "Saint-Nicolas's heritage core — the former general store, the former presbytery, the post office — was built nearly three hundred years ago on the chemin du Fleuve terrace, between the St. Lawrence River and the mouth of the rivière Aulneuse, on stone foundations left exposed to the ground, with neither drain nor membrane. The water table stays high there, held up by the two watercourses that flank it, while the rest of the village stretches over 19 km of farmland whose building age isn't documented consistently — no single dominant cohort can be named, hence the caution across the sector as a whole."
+  },
+  "sources": [],
+  "todo": "confirmer la répartition des époques de construction sur les 19 km du chemin du Fleuve (rôle d'évaluation municipale de Lévis) pour sortir du plafond moderate ; vérifier les données MAPAQ/IRDA sur le drainage agricole avant d'ouvrir ocre",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

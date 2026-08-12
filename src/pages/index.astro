@@ -1,0 +1,215 @@
+---
+/**
+ * Accueil, FR. Jumelle : `src/pages/en/index.astro`.
+ *
+ * ⚠ POURQUOI ELLE A ÉTÉ RÉÉCRITE LE 2026-08-11. Mesuré sur `dist/` : **115 mots**,
+ * contre 1 191 sur un hub de service. Trois paragraphes, deux liens en prose et un
+ * bouton. C'était la page la plus faible du site sur la requête la plus
+ * concurrentielle du domaine — « réparation de fondation Québec » — et elle ne
+ * transmettait presque rien aux pages de tête, alors que c'est elle qui reçoit le
+ * plus d'autorité.
+ *
+ * Aucune porte ne le signalait : `link-audit` n'impose ses seuils de liens et de
+ * mots qu'aux pages « money » (`/fondation/`, `/secteurs/`), et l'accueil n'en est
+ * pas une. Même forme d'angle mort que la couche typographique et que la CSP.
+ *
+ * CE QUE LA PAGE PEUT ET NE PEUT PAS DIRE
+ * - Règle 1 : aucun chiffre d'entreprise, aucun avis, aucune ancienneté, aucune
+ *   promesse de délai. Ce qu'elle avance sur le parc bâti vient de `cities.json`,
+ *   qui est vérifié, ou n'est pas avancé.
+ * - Règle 1bis : elle nomme des symptômes pour orienter, jamais un geste à poser.
+ * - Les grilles sont pilotées par `getCollection`, jamais par `services.json` :
+ *   un service dont la page n'est pas écrite ne doit pas devenir un lien mort.
+ *
+ * L'image est une photo CC0 réelle de la région, et son `alt` nomme le lieu où
+ * elle a été prise — c'est ce qui la rend honnête (règle 1). Elle n'est pas
+ * présentée comme un chantier à nous.
+ */
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { resolveImage } from '@lib/images.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'fr' as const;
+const ui = dict(locale);
+const ref = { type: 'home' } as const;
+
+const written = new Set(
+  (await getCollection('services', (e) => e.data.locale === locale)).map((e) => e.data.service),
+);
+
+/**
+ * Les six portes d'entrée, choisies par intention de recherche et non par
+ * ordre alphabétique : le symptôme d'abord (infiltration, fissure), l'ouvrage
+ * ensuite (drain, imperméabilisation), puis les deux sujets propres à la
+ * région (ocre, inspection). Chacune est filtrée contre les pages écrites.
+ */
+const ENTRIES: { key: ServiceKey; lead: string }[] = [
+  { key: 'infiltration', lead: "De l'eau entre au sous-sol, et vous ne savez pas encore par où." },
+  { key: 'fissure', lead: "Une fissure s'est ouverte dans le solage, ou s'élargit." },
+  { key: 'drain', lead: "Le drain a l'âge de la maison et ne conduit peut-être plus." },
+  { key: 'ocre', lead: "Un dépôt orangé colmate le drain — c'est un phénomène de terrain, pas une malfaçon." },
+  { key: 'impermeabilisation', lead: "Le mur enterré n'a plus de membrane, ou n'en a jamais eu." },
+  { key: 'inspection', lead: "Personne n'a encore regardé dedans, et c'est ce qui décide du reste." },
+];
+const entries = ENTRIES.filter((e) => written.has(e.key)).map((e) => ({
+  ...e,
+  name: serviceData[locale][e.key].name,
+}));
+
+/** Quelques secteurs réellement écrits, pour ouvrir la porte géographique. */
+const sectorEntries = await getCollection('sectors', (e) => e.data.locale === locale);
+const featured = ['la-cite-limoilou', 'beauport', 'charlesbourg', 'levis', 'sainte-foy-sillery-cap-rouge', 'les-rivieres']
+  .filter((s) => sectorEntries.some((e) => e.data.sector === s))
+  .map((s) => ({ slug: s, name: cities[s]!.name[locale] }));
+
+/** Les articles appariés, pour donner à l'accueil une porte vers le fond réglementaire. */
+const blogAll = await getCollection('blog');
+const twins = new Set(blogAll.filter((e) => e.data.locale === 'en').map((e) => e.data.translationKey));
+const posts = blogAll
+  .filter((e) => e.data.locale === 'fr' && twins.has(e.data.translationKey))
+  .map((e) => ({
+    h1: e.data.h1,
+    slugs: {
+      fr: e.data.slug,
+      en: blogAll.find((x) => x.data.locale === 'en' && x.data.translationKey === e.data.translationKey)!.data.slug,
+    },
+  }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Réparation de fondation à Québec — Solage Capitale"
+  description="Fissure de fondation, drain français, ocre ferreuse et infiltration d'eau au sous-sol : ce qui se passe vraiment sous une maison de la région de Québec."
+  schema={[breadcrumbSchema(locale, [{ name: 'Accueil', ref }])]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Fondation, drain français et sous-sol humide dans la région de Québec</h1>
+
+      <p class="chapeau">
+        Une fissure dans le solage, de l'eau qui entre à la fonte des neiges, un drain qui ne
+        conduit plus : dans la région de Québec, ces problèmes remontent presque toujours aux
+        mêmes trois causes — l'eau, le gel, et le sol sur lequel la maison est assise.
+      </p>
+
+      <figure class="hero-photo">
+        <Image
+          src={resolveImage('limoilou')}
+          alt="Rue résidentielle de Limoilou sous la neige, bordée de duplex de brique dont les sous-sols sont à demi enterrés."
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 48rem) 42rem, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+
+      <p>
+        Ce site explique ce qui se passe sous une maison d'ici, ce que la réglementation
+        québécoise vous permet d'exiger, et ce qu'un entrepreneur licencié fait pour régler le
+        problème. Il ne vous dira jamais comment intervenir vous-même sur une fondation : une
+        excavation ou une injection mal menée blesse ou détruit un bâtiment.
+      </p>
+
+      <h2>Par où commencer</h2>
+      <p>
+        Si vous ne savez pas encore de quoi il s'agit, partez du symptôme. C'est la façon la plus
+        rapide d'arriver à la bonne page.
+      </p>
+      <ul>
+        {
+          entries.map((e) => (
+            <li>
+              <a href={pathFor({ type: 'service', service: e.key }, locale)}>{e.name}</a>
+              {" — "}
+              {e.lead}
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        La liste complète est sur
+        <a href={pathFor({ type: 'serviceIndex' }, locale)}>les interventions sur une fondation</a>.
+      </p>
+
+      <h2>Pourquoi la région de Québec, précisément</h2>
+      <p>
+        Le parc bâti d'ici est vieux, et il l'est de façon utile à savoir. Une bonne partie des
+        maisons de la Communauté métropolitaine de Québec ont été construites avant que le drain
+        français ne soit une pratique courante — certaines n'en ont donc jamais eu — et une autre
+        partie repose sur des drains de <strong>tuile d'argile</strong> posés entre les années
+        1950 et 1970, aujourd'hui en fin de vie à peu près partout.
+      </p>
+      <p>
+        S'y ajoutent deux facteurs proprement régionaux : un cycle de <strong>gel et de
+        dégel</strong> qui travaille le sol contre le mur enterré chaque hiver, et l'<strong>ocre
+        ferreuse</strong>, un dépôt qui peut rendre un système de drainage complètement inopérant
+        — y compris un drain neuf, s'il a été posé sans que le risque ait été évalué.
+      </p>
+      <p>
+        C'est pour ça que chaque secteur a sa propre page plutôt qu'un texte unique : l'époque de
+        construction change le diagnostic.
+      </p>
+
+      <h2>Votre secteur</h2>
+      <ul class="liens-liste">
+        {
+          featured.map((s) => (
+            <li><a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+      <p>
+        Les 51 secteurs couverts, des arrondissements de Québec à Lévis et à la couronne, sont
+        listés sur <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>le
+        territoire desservi</a>.
+      </p>
+
+      <h2>Ce que vous pouvez exiger avant de signer</h2>
+      <p>
+        C'est la partie que presque personne n'écrit, et c'est publique et vérifiable. La licence
+        de la Régie du bâtiment du Québec se consulte au registre, une soumission peut être
+        obligée de nommer la norme employée, et un plan de garantie couvre certains vices
+        pendant cinq ans.
+      </p>
+      <ul class="liens-liste">
+        {
+          posts.map((p) => (
+            <li><a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.h1}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>Comment fonctionne ce service</h2>
+      <p>
+        Solage Capitale est un service d'information et de mise en relation. Quand vous demandez
+        une soumission, votre demande est transmise à une <strong>entreprise indépendante</strong>
+        détentrice de sa propre licence RBQ, qui vous rappelle, se déplace et chiffre les travaux.
+        C'est gratuit, sans engagement, et vous restez libre de demander d'autres soumissions —
+        c'est même recommandé. Le détail est
+        <a href={pathFor({ type: 'static', page: 'about' }, locale)}>à propos du service</a>.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-photo {
+    margin: 0 0 2rem;
+  }
+  .hero-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+</style>

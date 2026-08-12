@@ -1,0 +1,31 @@
+{
+  "slug": "saint-romuald",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "noyau patrimonial avant-1945 le long du chemin du Fleuve (ouvert 1738, prolongé 1798), sans drain d'origine ; proximité nommée du fleuve Saint-Laurent (déjà au plafond)"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre dominant, secteur à forte proportion de maisons ancestrales : usure de mortier, pas de fissure de béton coulé"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Sur les deux tronçons historiques d'Etchemin et de New-Liverpool qui bordent le chemin du Fleuve — ouvert en 1738 et prolongé en 1798 à l'ouest de la côte Rouge —, les maisons montées en moellons autour de l'église dessinée par Charles Baillairgé en 1855-1856 n'ont jamais reçu de drain périphérique : la technique n'existe pas encore à cette date. Le fleuve tout proche, avec son marnage quotidien, garde le pied de ces solages de pierre humide à l'année, ce qui use le mortier de chaux entre les moellons plutôt que le béton, absent de ce noyau patrimonial protégé par le PPU Vieux-Saint-Romuald.",
+    "en": "Along the two historic stretches of Etchemin and New-Liverpool that border chemin du Fleuve — opened in 1738 and extended west of côte Rouge in 1798 — the fieldstone houses built around the église designed by Charles Baillairgé in 1855-1856 never received a perimeter drain: the technique doesn't exist yet at that date. The nearby river, with its daily tidal swing, keeps the base of these stone foundations wet year-round, wearing down the lime mortar between the fieldstones rather than concrete, which is absent from this heritage core protected by the PPU Vieux-Saint-Romuald."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,51 @@
+---
+/**
+ * The disclaimer is not boilerplate. The site is an advertising and referral
+ * service with no company behind it; saying so on every page is what keeps the
+ * whole thing honest (rule 1) and what /conditions-utilisation/ expands on.
+ */
+import type { Locale } from '@lib/constants.ts';
+import { SITE_NAME } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const ui = dict(locale);
+
+const links = [
+  { page: 'about', label: ui('footer.about') },
+  { page: 'contact', label: ui('footer.contact') },
+  { page: 'serviceArea', label: ui('footer.serviceArea') },
+  { page: 'terms', label: ui('footer.terms') },
+  { page: 'privacy', label: ui('footer.privacy') },
+  { page: 'sitemap', label: ui('footer.sitemap') },
+] as const;
+---
+
+<footer class="pied">
+  <div class="contenant">
+    <nav aria-label={ui('footer.sitemap')}>
+      <ul>
+        {/*
+          Le blogue n'est pas une page statique : son `PageRef` est `blogIndex`,
+          pas `static`. Il est listé à part plutôt que forcé dans le tableau
+          ci-dessus, où il aurait fallu un cas particulier dans le `map`.
+        */}
+        <li><a href={pathFor({ type: 'blogIndex' }, locale)}>{ui('footer.blog')}</a></li>
+        {links.map((l) => <li><a href={pathFor({ type: 'static', page: l.page }, locale)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <p class="avis">{ui('footer.disclaimer')}</p>
+    <p class="avis">{ui('footer.noAdvice')}</p>
+    <p class="fine">© {new Date().getFullYear()} {SITE_NAME}. {ui('footer.rights')}</p>
+  </div>
+</footer>
+
+<style>
+  .pied { background: var(--primaire); color: #fff; margin-top: 4rem; padding-block: 2.5rem; }
+  .pied a { color: #fff; }
+  .pied ul { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; margin: 0 0 1.5rem; padding: 0; }
+  .avis { max-width: 60rem; font-size: 0.9rem; line-height: 1.6; opacity: 0.92; margin-bottom: 0.9rem; }
+  .fine { font-size: 0.85rem; opacity: 0.75; }
+</style>

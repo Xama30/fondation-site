@@ -1,0 +1,43 @@
+{
+  "slug": "sainte-foy-sillery-cap-rouge",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "1945-1975",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "arrondissement qui empile trois générations sans strate dominante — propriétés en pierre de la falaise de Sillery, bungalows d'après-guerre du Plateau, tours récentes près du boulevard Laurier — le niveau est plafonné faute d'une cohorte majoritaire unique"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même étalement de parc bâti que pour le drain français ; aucune cohorte ne domine assez le territoire de l'arrondissement pour porter un niveau plus tranché"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "L'arrondissement empile trois générations sur une même pente : les grandes propriétés en pierre de la falaise de Sillery, antérieures à 1945, les bungalows d'après-guerre construits en série sur le Plateau entre 1945 et 1975, et les tours à condos élevées après 2005 autour du boulevard Laurier et de l'Université Laval. C'est ce mélange, plutôt qu'une seule cohorte, qui empêche tout niveau de dépasser le modéré à l'échelle de l'arrondissement — la pression réelle se lit rue par rue, du Vieux-Cap-Rouge jusqu'à Sillery.",
+    "en": "This borough stacks three building generations on a single slope: the pre-1945 stone estates on the Sillery cliff, the post-war bungalows built in series across the Plateau between 1945 and 1975, and the condo towers raised after 2005 around boulevard Laurier and Université Laval. That mix, rather than one dominant cohort, is why no borough-wide level here can read as more than moderate — the real pressure shows up street by street, from Vieux-Cap-Rouge to Sillery."
+  },
+  "sources": [],
+  "todo": "niveau plafonné par étalement du parc bâti à l'échelle de l'arrondissement ; affiner par sous-secteur (Sillery, Cap-Rouge, Sainte-Foy) si ces pages sont publiées séparément",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

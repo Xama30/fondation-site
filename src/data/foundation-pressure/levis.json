@@ -1,0 +1,37 @@
+{
+  "slug": "levis",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "1970-2000",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1970-2000 assise sur la Terrasse de Lévis, un till bien drainé, à l'écart de la pression que subit le Vieux-Lévis riverain"
+    },
+    "fissure-de-fondation": {
+      "level": "high",
+      "why": "jonction solage / garage attenant, quasi systématique dans cette vague de construction, point de fissuration privilégié du béton coulé"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Sur la Terrasse de Lévis, l'étalement de bungalows et de maisons unifamiliales élevés entre 1970 et 2000 repose sur un till bien drainé qui tient le solage relativement au sec, à l'écart de la pression que subit le Vieux-Lévis en contrebas, le long du fleuve Saint-Laurent. La jonction entre le solage principal et le garage attenant, un ajout quasi systématique de cette vague de construction, reste le point où le béton coulé fissure en premier, plutôt qu'un affaissement généralisé.",
+    "en": "On the Terrasse de Lévis, the sprawl of bungalows and single-family homes built between 1970 and 2000 sits on well-drained till that keeps the footing relatively dry, spared the pressure Vieux-Lévis takes on lower ground along the Saint Lawrence. The joint between the main footing and the attached garage — a near-universal add-on from this construction wave — is where the poured concrete cracks first, rather than any broad settlement."
+  },
+  "sources": [],
+  "todo": "ocre : aucune source primaire pour la nappe du secteur riverain de Vieux-Lévis — à vérifier avant d'assigner un niveau non nul",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

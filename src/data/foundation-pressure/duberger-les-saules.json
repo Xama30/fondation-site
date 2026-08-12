@@ -1,0 +1,34 @@
+{
+  "slug": "duberger-les-saules",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1950-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1950-1975 en tuile d'argile (chantier coopératif de Place-Duclos et du Domaine-Saint-Charles), mais aucun cours d'eau, plan d'eau ni zone inondable nommé dans localTerms ou housingStock — ceux-ci ne citent que le parc industriel et les artères ; la confluence Lorette/Saint-Charles ne figure que dans une source externe, pas dans les données du secteur, donc niveau plafonné à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages en béton coulé du même chantier coopératif, coulés selon des méthodes uniformes d'un lot à l'autre, peu de fissuration au-delà du retrait normal"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Bâties entre 1950 et 1975 par le mouvement coopératif qui a rendu la propriété accessible aux familles de Duberger et des Saules, les résidences de Place-Duclos et du Domaine-Saint-Charles reposent sur des tuiles d'argile posées à la même époque, une cohorte déjà en fin de vie utile dans ce coin du secteur Les Saules. Les solages en béton coulé de ce même chantier coopératif, coulés selon des méthodes uniformes d'un lot à l'autre, fissurent peu au-delà du retrait normal d'une coulée bien contrôlée.",
+    "en": "Built between 1950 and 1975 by the cooperative housing movement that made ownership affordable for families in Duberger and Les Saules, the homes in Place-Duclos and Domaine-Saint-Charles sit on clay-tile drains laid at the same time, a cohort already past its useful life in this corner of the Les Saules sector. The poured-concrete footings from that same cooperative build, poured to uniform specs lot to lot, crack little beyond the normal shrinkage of a well-controlled pour."
+  },
+  "sources": [
+    "https://fr.wikipedia.org/wiki/Duberger%E2%80%93Les_Saules",
+    "https://www.ville.quebec.qc.ca/citoyens/propriete/docs/zones_inondables/carto_zones_risque_inondation_2014_11_17.pdf"
+  ],
+  "todo": "époque résidentielle (1950-1975, mouvement coopératif) confirmée par Wikipédia, absente du housingStock actuel qui ne décrit que le parc industriel — à reporter dans cities.json si pertinent. Ocre : zone inondable confirmée près de la confluence Lorette/Saint-Charles, mais aucune source primaire sur le potentiel de sol ferrugineux — à vérifier avant d'assigner un niveau non nul.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

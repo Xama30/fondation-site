@@ -1,0 +1,120 @@
+---
+/**
+ * Conditions d'utilisation, FR. Jumelle : `src/pages/en/terms.astro`.
+ *
+ * Ce n'est PAS une page de remplissage (KEYWORD-MAP §1). C'est elle qui porte
+ * l'énoncé obligatoire de `docs/CLAUDE.md` : service publicitaire et de mise en
+ * relation, prestataire indépendant, aucun avis technique ni d'ingénierie.
+ * Sans cet énoncé, le site laisse croire qu'il exécute les travaux.
+ *
+ * Prose écrite ici plutôt qu'en markdown : ces pages utilitaires sont des
+ * singletons, pas une famille templatée — même choix que `territoire.astro`.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'terms' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Conditions d'utilisation — Solage Capitale"
+  description="Solage Capitale est un service publicitaire et de mise en relation. Ce que le site fait, ce qu'il ne fait pas, et avec qui vous contractez réellement."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Conditions d'utilisation", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Conditions d'utilisation</h1>
+
+      <p class="chapeau">
+        Lisez cette page avant d'utiliser le formulaire. Elle dit exactement ce qu'est ce
+        service, ce qu'il n'est pas, et avec qui vous vous engagez si des travaux ont lieu.
+      </p>
+
+      <h2>Ce qu'est ce site</h2>
+      <p>
+        Solage Capitale est un <strong>service publicitaire et de mise en relation</strong>. Il
+        publie de l'information sur les problèmes de fondation dans la région de Québec et
+        transmet les demandes des lecteurs à un entrepreneur.
+      </p>
+      <p>
+        <strong>Solage Capitale n'exécute aucun travail de construction.</strong> Le site ne
+        creuse pas, n'installe pas de drain, n'injecte pas de fissure et ne pose pas de
+        membrane. Il n'emploie pas d'entrepreneur et ne supervise aucun chantier.
+      </p>
+
+      <h2>Avec qui vous contractez</h2>
+      <p>
+        Le prestataire qui vous rappelle est une <strong>entreprise indépendante</strong>,
+        distincte de Solage Capitale, détentrice de sa propre licence de la Régie du bâtiment
+        du Québec. Tout contrat, toute soumission et toute garantie se forment
+        <strong>entre vous et cette entreprise</strong>, jamais avec Solage Capitale.
+      </p>
+      <p>
+        Vous demeurez libre de refuser, de demander d'autres soumissions et de vérifier vous-même
+        la licence de quiconque se présente chez vous. C'est un droit, et le site vous encourage
+        à l'exercer : <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>comment vérifier
+        une licence RBQ</a>.
+      </p>
+
+      <h2>Aucun avis technique</h2>
+      <p>
+        Rien sur ce site ne constitue un <strong>avis technique, un diagnostic ou une opinion
+        d'ingénierie</strong>. Les pages expliquent des phénomènes généraux, la réglementation
+        applicable et ce qu'un professionnel fait. Elles ne remplacent ni l'inspection de votre
+        bâtiment, ni le jugement d'un ingénieur ou d'un technologue.
+      </p>
+      <p>
+        Le site ne fournit volontairement <strong>aucune instruction d'exécution</strong>. Une
+        excavation contre une fondation, une injection ou la pose d'une membrane sont des
+        travaux qui engagent la sécurité des personnes et la solidité du bâtiment : ils
+        reviennent à un entrepreneur licencié.
+      </p>
+
+      <h2>Exactitude de l'information</h2>
+      <p>
+        Les faits réglementaires cités sont rattachés à leur source publique et datés. Ils
+        peuvent changer. Lorsqu'aucune source primaire n'existe pour un chiffre, le site l'écrit
+        plutôt que d'en publier un : c'est le cas des fourchettes de prix, expliqué sur la
+        page <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Prix</a>.
+      </p>
+
+      <h2>Limitation de responsabilité</h2>
+      <p>
+        L'information est fournie telle quelle, sans garantie d'exhaustivité. Solage Capitale ne
+        peut être tenue responsable des décisions prises à partir du contenu du site, ni de
+        l'exécution, de la qualité ou du prix des travaux réalisés par une entreprise tierce.
+        Les recours relatifs à des travaux s'exercent contre l'entreprise qui les a exécutés.
+      </p>
+
+      <h2>Propriété</h2>
+      <p>
+        Les textes et les schémas du site en sont la propriété. Les photographies proviennent
+        d'archives libres de droits, dont la provenance et la licence sont consignées et
+        transmises avec le site.
+      </p>
+
+      <h2>Droit applicable et modifications</h2>
+      <p>
+        Ces conditions sont régies par le droit applicable au Québec. Elles peuvent être
+        modifiées ; la version affichée est celle qui s'applique. L'usage du site vaut
+        acceptation.
+      </p>
+
+      <h2>Vos renseignements</h2>
+      <p>
+        Le traitement des renseignements transmis par le formulaire est décrit dans la
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>politique de
+        confidentialité</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

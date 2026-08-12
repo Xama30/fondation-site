@@ -1,0 +1,416 @@
+@import 'tailwindcss';
+
+/*
+ * Les polices décidées dans DESIGN.md, AUTO-HÉBERGÉES. Jusqu'ici le CSS
+ * déclarait les familles sans jamais les charger, et le site tournait sur
+ * Georgia et system-ui — une dette de la phase 1.
+ *
+ * Deux fichiers VARIABLES, sous-ensemble latin : 33 Ko + 26 Ko = ~59 Ko pour
+ * toute la plage 400-700, contre cinq fichiers statiques pour le même résultat.
+ * `unicode-range` est conservé tel que Google le publie ; il couvre tout ce dont
+ * le français a besoin, y compris `œ` (U+0152-0153, pour « reprise en
+ * sous-œuvre »), l'espace insécable et les tirets cadratins.
+ *
+ * `font-display: swap` : le texte s'affiche tout de suite dans la police de
+ * repli puis permute. Jamais de texte invisible pendant le chargement.
+ *
+ * Servies depuis `public/`, donc à URL stable — les en-têtes de cache longs se
+ * posent sur `/fonts/*` en phase 9. Licences OFL dans `public/fonts/`, comme la
+ * licence l'exige : elles suivent l'actif jusqu'au locataire.
+ */
+@font-face {
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/bitter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/public-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/*
+ * "Ardoise et rouille". The subject is rock, concrete and iron oxidation, so the
+ * palette says that literally. No service blue, no eco green, no site-safety
+ * yellow -- the three clichés of this niche. Every pair below was measured, not
+ * eyeballed: all >= 4.5:1, most >= 7:1. See docs/DESIGN.md.
+ */
+@theme {
+  --color-fond: #f6f5f2;
+  --color-surface: #ffffff;
+  --color-encre: #1b2127;
+  --color-encre-2: #4a555f;
+  --color-bordure: #d8d5ce;
+  --color-primaire: #22333f;
+  --color-accent: #9c3d26;
+  --color-accent-voile: #f2e6df;
+  --color-alerte: #8a5a00;
+  --color-valide: #1f5d3c;
+
+  --font-titre: 'Bitter', Georgia, 'Times New Roman', serif;
+  --font-corps: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:root {
+  color-scheme: light dark;
+  --fond: var(--color-fond);
+  --surface: var(--color-surface);
+  --encre: var(--color-encre);
+  --encre-2: var(--color-encre-2);
+  --bordure: var(--color-bordure);
+  --primaire: var(--color-primaire);
+  --accent: var(--color-accent);
+  --accent-voile: var(--color-accent-voile);
+  --alerte: var(--color-alerte);
+  --valide: var(--color-valide);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #131a1f;
+    --surface: #1b242b;
+    --encre: #e8e9e6;
+    --encre-2: #a9b4bc;
+    --bordure: #2f3d47;
+    --primaire: #2a3a46;
+    --accent: #e08256;
+    --accent-voile: #2b2019;
+    --alerte: #e0a73c;
+    --valide: #6fbf8f;
+  }
+}
+
+/* The viewer's theme toggle stamps data-theme on the root; it must win in both
+   directions, so both overrides are explicit rather than relying on the media
+   query alone. */
+:root[data-theme='light'] {
+  --fond: #f6f5f2; --surface: #ffffff; --encre: #1b2127; --encre-2: #4a555f;
+  --bordure: #d8d5ce; --primaire: #22333f; --accent: #9c3d26;
+  --accent-voile: #f2e6df; --alerte: #8a5a00; --valide: #1f5d3c;
+}
+:root[data-theme='dark'] {
+  --fond: #131a1f; --surface: #1b242b; --encre: #e8e9e6; --encre-2: #a9b4bc;
+  --bordure: #2f3d47; --primaire: #2a3a46; --accent: #e08256;
+  --accent-voile: #2b2019; --alerte: #e0a73c; --valide: #6fbf8f;
+}
+
+body {
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--font-corps);
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Headings inherit their colour. Pinning it breaks contrast inside dark
+   sections, and the failure only shows on the sections you did not test. */
+h1, h2, h3, h4 {
+  font-family: var(--font-titre);
+  color: inherit;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+a { color: var(--accent); text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* The reading column is CENTRED, not widened. A 42rem measure inside a 75rem
+   section without mx-auto hugs the left edge on desktop and looks broken --
+   mobile is unaffected, which is why it survives review (PLAYBOOK §8). */
+.mesure { max-width: 42rem; margin-inline: auto; }
+.contenant { max-width: 75rem; margin-inline: auto; padding-inline: 1.25rem; }
+
+/*
+ * L'air vertical d'une page. C'ÉTAIT UN `style="padding-block:3rem"` EN LIGNE
+ * SUR LES 34 GABARITS, et la CSP le bloquait.
+ *
+ * Mesuré le 2026-08-11, pas supposé : `public/_headers` pose
+ * `style-src 'self'` sans `'unsafe-inline'`, et un attribut `style` relève de
+ * `style-src-attr`, qui retombe sur `style-src`. Chrome sans tête, la vraie CSP
+ * posée par un serveur local, la vraie page de `dist/` :
+ *
+ *   attr: "padding-block:3rem"  ->  paddingTop: 0px, paddingBottom: 0px
+ *   « Applying inline style violates ... 'style-src 'self''. The action has
+ *     been blocked. »
+ *
+ * Donc les 182 pages auraient perdu leur air vertical À L'INSTANT où `_headers`
+ * est réellement appliqué — c'est-à-dire au moment précis où la vérification
+ * §4b de DEPLOY.md annonce un succès. Le contenu se serait collé sous
+ * l'en-tête, en production, sans qu'aucune porte le dise : `uniqueness`,
+ * `link-audit` et `seo-audit` lisent le texte, les liens et les métadonnées,
+ * jamais l'apparence.
+ *
+ * La note de la session 4 (« aucune ressource bloquée, aucune violation
+ * console ») était donc fausse sur ce point.
+ *
+ * ⚠ NE JAMAIS RÉINTRODUIRE D'ATTRIBUT `style=` DANS UN GABARIT. Un `<style>`
+ * de composant Astro est extrait dans une feuille externe et passe la CSP ; un
+ * attribut `style`, non. La page d'erreur de `worker/lead-form.ts` garde le
+ * sien sans risque : elle est servie par le Worker, pas par la plateforme,
+ * donc `_headers` ne s'y applique pas.
+ */
+.bloc-page { padding-block: 3rem; }
+.bloc-page-ample { padding-block: 4rem; }
+
+.saut-contenu {
+  position: absolute; left: -9999px;
+  background: var(--surface); color: var(--encre); padding: 0.75rem 1rem;
+}
+.saut-contenu:focus { left: 1rem; top: 1rem; z-index: 50; }
+
+/* ------------------------------------------------ typographie de contenu -- */
+/*
+ * CETTE COUCHE MANQUAIT ENTIÈREMENT, et c'est pour ça que les pages ressemblaient
+ * à un mur de texte : Tailwind v4 applique un preflight qui remet `font-size`,
+ * `font-weight`, `margin` et `list-style` des titres et des listes à zéro. Le
+ * fichier déclarait `font-family` sur h1-h4 et rien d'autre, donc un h1 sortait
+ * à la taille d'un paragraphe. Aucune porte ne mesure l'apparence — c'est le
+ * propriétaire qui l'a vu, pas le build.
+ *
+ * Tout est scopé à `.mesure`, la colonne de lecture : l'en-tête et le pied de
+ * page portent leurs propres classes et ne doivent pas être touchés.
+ */
+.mesure h1 {
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 2.9rem);
+  font-weight: 700;
+  margin-block: 0 1.25rem;
+}
+.mesure h2 {
+  font-size: clamp(1.45rem, 1.2rem + 1vw, 1.85rem);
+  font-weight: 600;
+  /* La séparation des sections se joue ici : un titre de section a besoin de
+     beaucoup plus d'air au-dessus qu'en dessous, sinon il flotte entre deux
+     blocs sans dire auquel il appartient. */
+  margin-block: 3rem 0.85rem;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid var(--bordure);
+}
+/* Le premier titre de section suit le chapeau ou le hero : pas de filet, il
+   découperait la page juste sous le h1. */
+.mesure > h2:first-of-type { border-block-start: 0; padding-block-start: 0; margin-block-start: 2.25rem; }
+.mesure h3 {
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.3rem);
+  font-weight: 600;
+  margin-block: 2rem 0.6rem;
+}
+.mesure p { margin-block: 0 1.15em; }
+.mesure > p:last-child { margin-block-end: 0; }
+
+/* Le chapeau : la phrase qui porte l'argument local, avant le corps. */
+.mesure .chapeau {
+  font-size: 1.125rem;
+  color: var(--encre-2);
+  margin-block-end: 1.75rem;
+}
+
+/* Le preflight retire puces et retrait. Une liste sans marqueur se lit comme
+   des paragraphes courts collés — c'est ce que donnaient les grilles de liens
+   en fin de page. */
+.mesure ul, .mesure ol { margin-block: 0 1.25em; padding-inline-start: 1.5em; }
+.mesure ul { list-style: disc; }
+.mesure ol { list-style: decimal; }
+.mesure li { margin-block-end: 0.5em; }
+.mesure li::marker { color: var(--encre-2); }
+
+/* La citation. Sur les articles de blogue, tout l'argument repose sur le fait
+   que le texte cité vient de la RBQ ou du BNQ et non de nous : si rien ne la
+   distingue d'un paragraphe, la source se dissout dans la prose. */
+.mesure blockquote {
+  margin: 1.75rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-inline-start: 4px solid var(--accent);
+  font-family: var(--font-titre);
+  font-size: 1.05rem;
+  color: var(--encre);
+}
+.mesure blockquote p:last-child { margin-block-end: 0; }
+
+/* La FAQ. `<details>` sans style s'empile sans séparation ni zone cliquable
+   lisible : les questions se touchent et rien ne dit qu'elles s'ouvrent. */
+.mesure details {
+  border-block-start: 1px solid var(--bordure);
+}
+.mesure details:last-of-type { border-block-end: 1px solid var(--bordure); }
+.mesure summary {
+  cursor: pointer;
+  padding-block: 0.9rem;
+  font-family: var(--font-titre);
+  font-weight: 600;
+  line-height: 1.35;
+}
+.mesure summary::marker { color: var(--accent); }
+.mesure summary:hover { color: var(--accent); }
+.mesure details[open] summary { color: var(--accent); }
+.mesure details p {
+  margin-block: 0 1rem;
+  padding-inline-start: 1.25rem;
+  color: var(--encre-2);
+}
+/* La FAQ se ferme déjà par son propre filet ; le titre qui suit en ajouterait
+   un second à quelques pixels. */
+.mesure details + h2 { border-block-start: 0; padding-block-start: 0; }
+
+/* Les grilles de fin de page (services liés, secteurs voisins) sont des listes
+   de liens, pas de la prose : en colonnes, sans puce, avec une vraie cible. */
+.mesure .liens-liste {
+  list-style: none;
+  padding-inline-start: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.25rem 1.5rem;
+}
+.mesure .liens-liste li { margin-block-end: 0; }
+.mesure .liens-liste a {
+  display: block;
+  padding-block: 0.45rem;
+  border-block-end: 1px solid var(--bordure);
+}
+
+/* L'appel à l'action de fin de corps. C'est du mobilier de conversion : il doit
+   se voir comme un bouton, pas comme un lien de plus dans une liste. */
+.mesure .cta-fin { margin-block-start: 2.5rem; }
+.mesure .cta-fin a {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--fond);
+  padding: 0.8rem 1.5rem;
+  border-radius: 3px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.mesure .cta-fin a:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------ formulaire -- */
+/*
+ * Le formulaire de /soumission/ et /en/quote/. Le preflight de Tailwind remet
+ * les champs à zéro comme il l'avait fait pour les titres — sans cette couche,
+ * un `<select>` et un `<input>` sortent sans bordure, sans hauteur et sans
+ * indication de focus.
+ *
+ * Aucun JS (règle 7) : la validation visible est celle du navigateur
+ * (`required`, `type="email"`), et la vraie validation est côté serveur dans
+ * `worker/lead-form.ts` — les attributs HTML sont une commodité pour les
+ * personnes, pas une garantie.
+ *
+ * Pas d'attribut `style` ici non plus, pour la raison mesurée plus haut.
+ */
+.formulaire { margin-block-start: 2rem; }
+
+.formulaire fieldset {
+  border: 1px solid var(--bordure);
+  border-radius: 4px;
+  padding: 1.25rem 1.25rem 0.5rem;
+  margin-block-end: 1.75rem;
+  min-width: 0; /* sinon un fieldset refuse de rétrécir sous la largeur de son contenu */
+}
+.formulaire legend {
+  font-family: var(--font-titre);
+  font-weight: 600;
+  padding-inline: 0.5rem;
+  color: var(--encre);
+}
+
+.champ { margin-block-end: 1.25rem; }
+.champ label {
+  display: block;
+  font-weight: 600;
+  margin-block-end: 0.35rem;
+}
+/* « Optionnel » plutôt qu'un astérisque sur les obligatoires : la majorité des
+   champs sont requis, donc marquer l'exception est plus court à lire — et un
+   astérisque seul n'est pas annoncé par un lecteur d'écran. */
+.champ .facultatif {
+  font-weight: 400;
+  color: var(--encre-2);
+  font-size: 0.9rem;
+}
+.champ .aide {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--encre-2);
+  margin-block-start: 0.3rem;
+  line-height: 1.5;
+}
+
+.champ input,
+.champ select,
+.champ textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--encre);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: 3px;
+  padding: 0.65rem 0.7rem;
+  /* 16px minimum : sous cette taille, iOS zoome sur le champ au focus et le
+     visiteur se retrouve avec une page décalée qu'il doit repincer. */
+  font-size: 1rem;
+}
+.champ textarea { min-height: 8rem; resize: vertical; }
+.champ select {
+  /* Le preflight retire la flèche native sur certains moteurs ; on la garde. */
+  appearance: auto;
+}
+.champ input:focus-visible,
+.champ select:focus-visible,
+.champ textarea:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+.champ input[type='file'] { padding: 0.5rem; background: transparent; }
+
+/* Deux champs courts côte à côte au-delà du mobile. `auto-fit` plutôt qu'une
+   media query : la grille se replie d'elle-même quand la place manque. */
+.champs-paire {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0 1rem;
+}
+
+.formulaire button[type='submit'] {
+  font: inherit;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--fond);
+  border: 0;
+  border-radius: 3px;
+  padding: 0.9rem 1.75rem;
+  cursor: pointer;
+}
+.formulaire button[type='submit']:hover { text-decoration: underline; }
+
+/* Le pot de miel. Retiré du flux ET du parcours au clavier ET de l'arbre
+   d'accessibilité : une personne ne doit ni le voir, ni l'atteindre en
+   tabulant, ni l'entendre annoncé. `display:none` suffirait pour les humains,
+   mais certains robots ignorent précisément les champs en `display:none` —
+   celui-ci reste donc « affiché » hors de l'écran. */
+.pot-de-miel {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* L'encadré qui porte une mise en garde ou un renvoi vers /urgence/. */
+.mesure .encadre {
+  border-inline-start: 4px solid var(--alerte);
+  background: var(--accent-voile);
+  padding: 1rem 1.25rem;
+  margin-block: 1.75rem;
+  border-radius: 0 3px 3px 0;
+}
+.mesure .encadre p:last-child { margin-block-end: 0; }

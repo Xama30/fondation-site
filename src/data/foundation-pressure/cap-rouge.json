@@ -1,0 +1,39 @@
+{
+  "slug": "cap-rouge",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "1961-1990",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte dominante 1961-1990 construite à l'embouchure de la rivière du Cap Rouge, où la confluence avec le fleuve tient la nappe haute contre des solages dont la moitié la plus âgée draine encore par tuile d'argile"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "cohorte dominante 1961-1990 à cheval entre la fin de la tuile d'argile et l'arrivée du PVC ondulé — pas assez homogène pour porter un niveau plus tranché que le solage en béton coulé qui la caractérise"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À l'embouchure de la rivière du Cap Rouge, sous les falaises de schiste rouge, le plateau résidentiel construit entre 1961 et 1990 en retrait du Vieux-Cap-Rouge repose sur des solages en béton coulé raccordés, pour la moitié la plus ancienne de cette cohorte, à des tuiles de drain en argile. La vallée resserrée entre le Tracel et la rivière retient l'eau de ruissellement contre ces fondations plus bas dans la pente que le noyau villageois patrimonial du chemin du Roy, construit avant 1945 en pierre sans aucun drain.",
+    "en": "At the mouth of the rivière du Cap Rouge, beneath the reddish shale cliffs, the residential plateau built between 1961 and 1990 behind Vieux-Cap-Rouge sits on poured-concrete foundations that, for the older half of that cohort, still drain through clay tile. The narrow valley between the Tracel and the river holds runoff against these foundations, set lower on the slope than the pre-1945 stone village core along chemin du Roy, which was built with no drain at all."
+  },
+  "sources": [
+    "https://www.patrimoine-culturel.gouv.qc.ca/rpcq/detail.do?methode=consulter&id=233718&type=bien"
+  ],
+  "todo": "ventilation fine des permis 1961-1990 (part tuile d'argile vs PVC ondulé) non trouvée ; confirmer via les archives de la ville de Québec pour affiner le niveau de drain-francais",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

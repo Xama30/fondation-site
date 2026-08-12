@@ -1,0 +1,43 @@
+{
+  "slug": "les-rivieres",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "1975-1990",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "arrondissement trop étalé — anciens motels et immeubles pré-1980 de Vanier en bordure de la rivière Saint-Charles, bungalows de Duberger-Les Saules, tours récentes de Lebourgneuf près de la rivière du Berger — pour qu'une seule strate domine ; niveau plafonné faute de strate dominante unique"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même hétérogénéité que le drain français : aucune strate ne domine assez le parc bâti de l'arrondissement pour porter un niveau unique, niveau plafonné"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "L'arrondissement des Rivières juxtapose trois générations de bâti sans qu'aucune ne domine les autres : les anciens motels et immeubles à logements d'avant 1980 qui longent le boulevard Wilfrid-Hamel à Vanier, à quelques mètres de la rivière Saint-Charles ; les bungalows et petits immeubles de Duberger-Les Saules ; et les tours à condos et à bureaux de Lebourgneuf, érigées depuis le prolongement du boulevard Robert-Bourassa dans les années 2000. Cette juxtaposition, plutôt qu'une strate dominante unique, est ce qui rend le portrait de pression difficile à résumer en un seul chiffre pour l'ensemble de l'arrondissement — la rivière du Berger, qui traverse Lebourgneuf, ajoute une variable de plus que la mesure à l'échelle du quartier laisserait mieux ressortir.",
+    "en": "Les Rivières borough juxtaposes three building generations without any one of them dominating: the pre-1980 motels and apartment buildings that line boulevard Wilfrid-Hamel in Vanier, just metres from the Saint-Charles River; the bungalows and small apartment buildings of Duberger-Les Saules; and the condo and office towers of Lebourgneuf, built since boulevard Robert-Bourassa was extended in the 2000s. That juxtaposition, rather than one dominant stratum, is what makes the pressure picture hard to sum up in a single figure for the whole borough — the rivière du Berger, which runs through Lebourgneuf, adds one more variable that neighbourhood-level data would resolve better."
+  },
+  "sources": [],
+  "todo": "arrondissement trop hétérogène (Vanier pré-1980 / Duberger-Les Saules bungalows / Lebourgneuf tours post-2000) pour nommer une strate dominante unique ; niveaux plafonnés à moderate par prudence — les pages de quartier (Vanier, Duberger-Les Saules, Lebourgneuf) donnent un portrait plus précis",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

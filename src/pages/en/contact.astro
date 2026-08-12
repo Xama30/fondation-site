@@ -1,0 +1,128 @@
+---
+/**
+ * Contact, EN. Twin of `src/pages/contact.astro`.
+ *
+ * ⚠ NOT A CONVERSION PAGE — see the French twin for the full reasoning. Short
+ * version: `/en/privacy/` promises a right of access, correction, withdrawal of
+ * consent and deletion, and points here to exercise it. Quebec's private-sector
+ * privacy law applies to whoever collects the information, individuals
+ * included, and requires the person responsible to be IDENTIFIABLE. Without a
+ * real name and a reachable channel on this page, that promise is hollow
+ * (`docs/HANDOFF-TENANT.md` §4.1).
+ *
+ * So: no form here, no button call to action, no promise of a callback.
+ *
+ * The name and address come from `PRIVACY_OFFICER` (src/lib/constants.ts) so
+ * the two twins cannot drift and the tenant handoff changes one place.
+ *
+ * Rule 1: no phone, no address. There is no premises.
+ *
+ * The title is "Contact us", not "Contact": the word is identical in both
+ * languages, and `seo-audit.mjs` fails hard on a duplicate <title> anywhere in
+ * the build — correctly, since two pages competing on one title is precisely
+ * what that check exists to catch.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { PRIVACY_OFFICER } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'contact' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Contact us — Solage Capitale"
+  description="Who to write to, and what for: the person responsible for personal information, exercising your rights, and reporting a factual error on a page."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Contact", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Contact</h1>
+
+      <p class="chapeau">
+        One email address, with a named person behind it. This page reaches the site's editor —
+        about your personal information, or to report an error. To have a foundation looked at,
+        use the <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>quote request</a>
+        instead.
+      </p>
+
+      <h2>Writing to the site's editor</h2>
+      <p>
+        <strong>{PRIVACY_OFFICER.name}</strong><br />
+        <a href={`mailto:${PRIVACY_OFFICER.email}`}>{PRIVACY_OFFICER.email}</a>
+      </p>
+      <p>
+        Solage Capitale is published by an individual, not by a construction company, and that
+        individual is the person <strong>responsible for the personal information</strong> the
+        quote form collects. Quebec law requires that, and above all it requires that person to
+        be identifiable — hence a name here rather than an anonymous inbox.
+      </p>
+
+      <h2>Exercising your rights over your information</h2>
+      <p>
+        If you have already sent a quote request through this site, you may ask to
+        <strong>access</strong> the information held about you, to have it
+        <strong>corrected</strong>, to <strong>withdraw your consent</strong>, or to have it
+        <strong>deleted</strong>. Just say so, at the address above. What is collected and why
+        is set out in the
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>privacy policy</a>.
+      </p>
+      <p>
+        For a request to go anywhere, the original submission has to be findable: give the email
+        address you used in the form and, if you have it, the approximate date. Without those
+        two, there is nothing to look up — the site creates no account and keeps no identifier
+        that would let it recognise you any other way.
+      </p>
+      <p>
+        If the answer does not satisfy you, the Commission d'accès à l'information du Québec is
+        the authority competent to receive a complaint.
+      </p>
+
+      <h2>Reporting an error on a page</h2>
+      <p>
+        The site cites the Régie du bâtiment du Québec, the Bureau de normalisation du Québec
+        and the new home warranty plan, and every claim it makes is tied to its public source. A
+        source can be amended, a standard can be revised, and a reading can simply be wrong.
+        <strong>If you find an error, reporting it is useful</strong> — name the page and the
+        passage, and the correction is made at the source rather than only on the page where it
+        happened to be spotted.
+      </p>
+
+      <h2>What this channel is not</h2>
+      <ul>
+        <li>
+          <strong>It is not an emergency line.</strong> Email is not monitored continuously. If
+          there is water in the basement right now, the
+          <a href={pathFor({ type: 'static', page: 'emergency' }, locale)}>emergency page</a>
+          covers what to do first and who to call.
+        </li>
+        <li>
+          <strong>It is not a diagnosis service.</strong> Nobody can rule on a foundation from a
+          description or a photograph, and this site provides no technical advice and no
+          engineering opinion. A crack is assessed on site.
+        </li>
+        <li>
+          <strong>It is not the contractor.</strong> The work is carried out by an independent
+          company holding its own RBQ licence. Who does what is set out in the
+          <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>terms of use</a>.
+        </li>
+      </ul>
+
+      <h2>Requesting a quote</h2>
+      <p>
+        To have a drain, a crack or an infiltration assessed, the
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>quote request form</a>
+        collects what a contractor needs in order to call you back usefully. It is free and
+        carries no obligation, and you remain free to seek other quotes.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

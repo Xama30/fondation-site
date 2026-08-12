@@ -1,0 +1,131 @@
+---
+/**
+ * Urgence — eau dans le sous-sol, FR. Jumelle : `src/pages/en/emergency.astro`.
+ *
+ * LA PAGE LA PLUS EXPOSÉE DU SITE À LA RÈGLE 1BIS. Quelqu'un qui a de l'eau au
+ * sous-sol maintenant cherche quoi faire, et c'est exactement ce qu'on ne peut
+ * pas lui dire : pas de pompe, pas de bâche, pas de « solution temporaire en
+ * attendant ». Le CLAUDE.md interdit nommément cette dernière.
+ *
+ * Ce que la page peut faire, et qui est réellement utile : nommer les DANGERS,
+ * dire à QUI téléphoner selon la cause, et rappeler ce qui protège une
+ * réclamation. Tous les gestes proposés sont des gestes d'observation, de
+ * documentation ou d'appel — le seul registre autorisé.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'emergency' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="De l'eau dans le sous-sol — quoi faire maintenant"
+  description="Eau au sous-sol après une pluie ou la fonte : les dangers à connaître, qui appeler selon la cause, et ce qui protège votre réclamation d'assurance."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Urgence", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>De l'eau dans le sous-sol en ce moment</h1>
+
+      <p class="chapeau">
+        Cette page ne vous dira pas comment intervenir vous-même, et c'est délibéré. Elle vous
+        dit ce qui est dangereux, à qui téléphoner selon la cause, et ce qu'il faut faire tout
+        de suite pour ne pas perdre une réclamation.
+      </p>
+
+      <h2>D'abord : l'électricité</h2>
+      <p>
+        <strong>N'entrez pas dans une pièce inondée si l'eau touche ou approche une prise, une
+        rallonge, un appareil branché ou le panneau électrique.</strong> Il n'y a aucun geste à
+        tenter dans cette situation : sortez de la pièce et appelez un maître électricien, ou
+        Hydro-Québec s'il s'agit de l'entrée électrique. C'est la seule urgence de cette page qui
+        met des personnes en danger, et non un bâtiment.
+      </p>
+
+      <h2>Ensuite : d'où vient l'eau ?</h2>
+      <p>
+        La réponse détermine qui appeler, et surtout qui paie. Trois cas se présentent, et ils
+        n'appellent pas le même numéro.
+      </p>
+
+      <h3>Ça remonte par un drain de plancher ou une toilette</h3>
+      <p>
+        C'est un refoulement d'égout, et cela relève du réseau municipal, pas d'un entrepreneur
+        en fondation. <strong>Signalez-le à votre ville</strong> — le 311 pour la Ville de Québec
+        — avant d'engager quoi que ce soit. C'est la Ville qui détermine si la cause est sur sa
+        portion du réseau ou sur la vôtre, et cette réponse change qui assume les frais.
+      </p>
+
+      <h3>L'eau entre par le bas d'un mur, un joint ou une fissure</h3>
+      <p>
+        Cela pointe vers la fondation elle-même : un drain qui ne conduit plus, une fissure qui
+        s'est ouverte, une membrane en fin de vie. C'est le sujet de ce site. Le premier geste
+        utile n'est pas une excavation, c'est un diagnostic — voir
+        <a href={pathFor({ type: 'service', service: 'infiltration' }, locale)}>infiltration
+        d'eau au sous-sol</a>.
+      </p>
+
+      <h3>C'est un tuyau, un chauffe-eau ou un appareil</h3>
+      <p>
+        Ce n'est pas un problème de fondation. C'est un plombier, et votre assureur.
+      </p>
+
+      <h2>Appelez votre assureur tôt, pas plus tard</h2>
+      <p>
+        Un dégât d'eau se déclare rapidement, et la plupart des contrats l'exigent. Avant de
+        jeter ou de remplacer quoi que ce soit, demandez à votre assureur ce qu'il veut voir :
+        des biens mis au rebut avant constatation peuvent devenir impossibles à réclamer.
+      </p>
+
+      <h2>Documentez pendant que c'est visible</h2>
+      <p>
+        L'eau part, la preuve avec. Pendant que la situation est là :
+      </p>
+      <ul>
+        <li>photographiez l'endroit exact où l'eau entre, et non seulement la flaque ;</li>
+        <li>notez la date, l'heure et la météo — forte pluie, fonte, ou rien de particulier ;</li>
+        <li>
+          si vous voyez une fissure, photographiez-la avec une règle à côté, pour garder une
+          échelle vérifiable plus tard ;
+        </li>
+        <li>gardez les factures de tout ce qui suit.</li>
+      </ul>
+      <p>
+        Ce dossier est ce qui vous permettra de comparer deux soumissions sur la même
+        observation, et de tenir une réclamation.
+      </p>
+
+      <h2>Si le bâtiment a moins de cinq ans</h2>
+      <p>
+        Ne faites pas réparer avant de vérifier votre couverture. Le plan de garantie des
+        bâtiments résidentiels neufs couvre cinq ans pour les vices de conception, de
+        construction ou de réalisation et les vices du sol — la fenêtre qui vise une fondation.
+        <strong>Faire exécuter les travaux soi-même peut compromettre la réclamation</strong>,
+        parce que la preuve disparaît avec le mur. Dénoncez d'abord. Les
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>
+        détaillent les délais.
+      </p>
+
+      <h2>Pourquoi cette page ne propose aucun bricolage</h2>
+      <p>
+        Parce qu'il n'existe pas de geste sûr et générique sur une fondation qui prend l'eau, et
+        qu'une « solution temporaire » mal choisie déplace souvent le problème au lieu de
+        l'arrêter. Ce site explique les phénomènes et la réglementation ; l'intervention revient
+        à un entrepreneur détenteur des bonnes sous-catégories de licence.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+{
+  "slug": "saint-roch",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante fin XIXe (avant-1945) en solage de pierre sans drain d'origine, mais aucun cours d'eau, plan d'eau, marais ni zone inondable nommé dans localTerms ou housingStock — rue Saint-Joseph, boulevard Charest et le Vieux-Port n'y figurent pas comme facteur hydrique ; niveau plafonné à moderate faute de facteur nommé, malgré les percements de gaines techniques lors de la conversion en lofts"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre sous des murs porteurs de manufacture — les désordres attendus sont des joints de mortier ouverts par les percements de gaines, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les anciens entrepôts et manufactures qui bordent la rue Saint-Joseph et le boulevard Charest datent de la fin du XIXe siècle, entre 1870 et 1900 environ, et reposent sur un solage de pierre sans drain d'origine. Leur conversion en lofts et en bureaux depuis les années 1990 a exigé de percer de nouvelles gaines techniques partagées à travers ce solage pour faire passer la plomberie et l'électricité des restaurants et des studios qui occupent aujourd'hui les rez-de-chaussée. Chaque percement rompt la continuité du solage à cet endroit précis, ouvrant une voie d'infiltration que l'immeuble industriel d'origine n'avait pas.",
+    "en": "The former warehouses and factories lining rue Saint-Joseph and boulevard Charest date from the late 19th century, roughly 1870 to 1900, and sit on stone foundations built with no drain at all. Converting them into lofts and offices since the 1990s meant cutting new shared service shafts through that foundation to run plumbing and wiring for the restaurants and studios now occupying the ground floors. Each shaft breaks the foundation's continuity at that exact point, opening an infiltration path the original industrial building never had."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

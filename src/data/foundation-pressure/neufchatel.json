@@ -1,0 +1,31 @@
+{
+  "slug": "neufchatel",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1960-1980",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "pointe sud-est du secteur en « L » directement au contact de la rivière Saint-Charles, nappe plus haute contre les tuiles d'argile d'origine à cet endroit"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages de béton coulé de la même génération, fissures de retrait de coulée uniformes d'un bout à l'autre du secteur, sans lien avec l'eau"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le secteur en forme de « L » que ses résidents appellent encore Neufchâtel, malgré le nom officiel de Des Châtels depuis 2002, n'expose pas ses bungalows de 1960 à 1980 à la même pression sur toute sa longueur : c'est la pointe sud-est, celle qui touche la rivière Saint-Charles, où la nappe pousse contre les tuiles d'argile d'origine, alors que les propriétés qui longent l'avenue Chauveau au nord restent en retrait du cours d'eau. Les solages en béton coulé de cette même génération, eux, fissurent de façon comparable d'un bout à l'autre du secteur — un retrait de coulée, pas un mouvement lié à l'eau.",
+    "en": "The L-shaped sector its residents still call Neufchâtel, despite the official Des Châtels name since 2002, doesn't feel the same pressure along its whole length: it's the southeast tip, the one touching the rivière Saint-Charles, where the water table pushes against the original clay-tile drains, while the properties along avenue Chauveau to the north sit well back from the river. The poured-concrete footings from that same generation crack fairly evenly across the sector, though — shrinkage from the pour, not water-driven movement."
+  },
+  "sources": [],
+  "todo": "ocre : aucune source primaire pour la portion sud-est du secteur en bordure de la rivière Saint-Charles — à vérifier avant d'assigner un niveau non nul",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

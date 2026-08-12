@@ -1,0 +1,116 @@
+---
+/**
+ * The page shell. Canonical, both hreflang alternates, x-default and the
+ * language switcher are all DERIVED from the PageRef -- never passed in, never
+ * hand-written. That derivation is what keeps FR/EN pairs correct across
+ * sessions (PLAYBOOK §0.4).
+ */
+import { LOCALES, SITE_NAME, otherLocale, type Locale } from '@lib/constants.ts';
+import { alternatesFor, urlFor, type PageRef } from '@lib/routes.ts';
+import { graph, organizationSchema, websiteSchema } from '@lib/schema.ts';
+import { dict } from '@lib/i18n.ts';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  ref: PageRef;
+  title: string;
+  description: string;
+  /** Extra JSON-LD nodes. Organization + WebSite are always included. */
+  schema?: Record<string, unknown>[];
+  /**
+   * Pages that must not be indexed and must not claim a canonical: the 404.
+   * Emitting one would make it collide with the page its `ref` borrows, and the
+   * hreflang pair would point at URLs that do not reciprocate. seo-audit catches
+   * both, correctly.
+   */
+  noindex?: boolean;
+}
+
+const { locale, ref, title, description, schema = [], noindex = false } = Astro.props;
+
+const ui = dict(locale);
+const canonical = urlFor(ref, locale);
+const alternates = alternatesFor(ref);
+const switchTo = otherLocale(locale);
+const jsonld = graph([organizationSchema(locale), websiteSchema(locale), ...schema]);
+---
+
+<!doctype html>
+<html lang={locale === 'fr' ? 'fr-CA' : 'en-CA'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/*
+      Les deux polices servent au-dessus de la ligne de flottaison — le corps et
+      le h1 — donc on les précharge plutôt que d'attendre que le CSS les
+      découvre. `crossorigin` est OBLIGATOIRE même en même origine : sans lui le
+      navigateur télécharge la police deux fois, le préchargement étant alors
+      inutilisable par la requête de police.
+    */}
+    <link rel="preload" href="/fonts/public-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/bitter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    {/*
+      Le favicon. Il n'y en avait AUCUN jusqu'au 2026-08-11 : chaque page prenait
+      un 404 sur la sonde `/favicon.ico` du navigateur, et l'onglet affichait
+      l'icône générique. Sans effet sur les portes — aucune ne regarde l'onglet.
+
+      Trois formats parce qu'ils ne servent pas au même endroit :
+        .ico  16/32/48 — c'est ce que Google lit pour l'icône du résultat de
+                         recherche, et le seul chemin que sondent les vieux
+                         navigateurs même sans balise.
+        .svg           — net à toutes les tailles sur les navigateurs modernes,
+                         qui le préfèrent quand les deux sont déclarés.
+        apple-touch    — 180x180, bords francs : iOS arrondit lui-même, donc un
+                         coin déjà arrondi se verrait deux fois.
+
+      `img-src 'self'` de la CSP les couvre : ils sont servis depuis public/.
+    */}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/*
+      La couleur de la barre d'adresse sur mobile, alignée sur la palette de
+      DESIGN.md et sur le thème réellement affiché — l'ardoise en clair, le fond
+      sombre en sombre. Sans les deux, une des deux combinaisons donne une barre
+      qui jure avec la page.
+    */}
+    <meta name="theme-color" content="#22333f" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131a1f" media="(prefers-color-scheme: dark)" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    {
+      !noindex &&
+        LOCALES.map((l) => (
+          <link rel="alternate" hreflang={l === 'fr' ? 'fr-CA' : 'en-CA'} href={urlFor(ref, l)} />
+        ))
+    }
+    {!noindex && <link rel="alternate" hreflang="x-default" href={urlFor(ref, 'fr')} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content={locale === 'fr' ? 'fr_CA' : 'en_CA'} />
+    {/*
+      `set:html` est une DIRECTIVE sur un élément, pas une balise. Écrit
+      `<set:html>…</set:html>`, Astro le rendait comme un élément inconnu, donc
+      le navigateur fermait <head> et affichait le script ÉCHAPPÉ en haut du
+      <body> : zéro donnée structurée sur les 158 pages, et la chaîne visible à
+      l'écran. `seo-audit.mjs` ne regardait pas le JSON-LD et annonçait 0 erreur
+      — la porte verte qui ne vérifie rien (CLAUDE.md). Le contrôle est ajouté.
+    */}
+    <script type="application/ld+json" is:inline set:html={jsonld} />
+  </head>
+  <body>
+    <a class="saut-contenu" href="#contenu">{ui('nav.skipToContent')}</a>
+    <Header locale={locale} switchHref={alternates[switchTo]} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

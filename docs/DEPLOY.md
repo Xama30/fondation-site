@@ -1,0 +1,196 @@
+# DEPLOY — mise en ligne, et la liste des pièges
+
+**Cible : Cloudflare Worker avec assets statiques.** Pas Cloudflare Pages, pas d'adaptateur Node,
+pas de serveur. 182 fichiers HTML préconstruits plus **une seule** route qui s'exécute — le
+formulaire, dans `worker/index.ts`.
+
+> **Le domaine est `solagecapitale.ca`** (acheté le 2026-08-11). Le build de production est vert
+> et la route est posée dans `wrangler.jsonc`. **Il ne reste que la commande à lancer**, plus la
+> configuration Mailgun du §2.
+>
+> ⚠ **Un seul bloqueur fonctionnel subsiste : Mailgun n'est pas configuré.** Tant que les
+> variables du §2 ne sont pas posées, le formulaire répond la page d'erreur de `lead-form.ts` au
+> lieu d'envoyer. Le site peut être mis en ligne ainsi — les 188 pages s'indexent — mais **la
+> vérification §4a échouera tant que ce n'est pas fait**, et c'est normal.
+
+---
+
+## 0. Avant de commencer
+
+| | |
+|---|---|
+| Node | **24** (`engines` l'exige) |
+| Install | `npm ci` — **jamais `npm install`** en CI, voir §5 |
+| Wrangler | **en `devDependency`, épinglé 4.120.0.** `npx wrangler` prend donc la version du dépôt, pas celle du jour |
+
+---
+
+## 1. Le domaine, d'abord
+
+Tout dérive d'une constante unique. Il n'y a **aucun domaine en dur** nulle part : canoniques,
+hreflang, sitemap, JSON-LD et courriels sortants passent tous par `SITE_URL`.
+
+```bash
+SITE_URL=https://solagecapitale.ca npm run build
+```
+
+Le build échoue tant que `SITE_URL` contient `PLACEHOLDER_`. C'est le comportement voulu.
+
+**Pour travailler en local :** `SITE_URL=http://localhost:4321 npm run build`. **Ne jamais
+committer un domaine dans un fichier de contenu** — le seul endroit du dépôt où
+`solagecapitale.ca` est écrit est la route de `wrangler.jsonc`, et ce n'est pas du contenu,
+c'est la cible de déploiement.
+
+**Le `www`.** Il n'est **pas** déclaré en domaine personnalisé : deux domaines personnalisés
+serviraient les 188 pages sous deux hôtes. À régler par une **Redirect Rule** Cloudflare
+`www.solagecapitale.ca/*` → `https://solagecapitale.ca/$1` en 301. `CANONICAL_HOSTS` dans
+`worker/lead-form.ts` accepte déjà l'origine `www`, donc rien ne casse dans l'intervalle.
+
+---
+
+## 2. Variables d'environnement du Worker
+
+Cloudflare → le Worker → Settings → Variables and Secrets.
+
+| Nom | Type | Rôle |
+|---|---|---|
+| `MAILGUN_API_KEY` | **secret** | Clé privée Mailgun. **Jamais en clair**, jamais dans le dépôt. |
+| `MAILGUN_DOMAIN` | variable | `mg.<domaine>` — le sous-domaine Mailgun vérifié |
+| `LEAD_TO_EMAIL` | variable | Où arrivent les demandes |
+| `MAILGUN_BASE_URL` | variable, optionnel | `https://api.eu.mailgun.net` si le compte est en région UE |
+| `LEAD_BCC` | variable, optionnel | Copie pour le registre des demandes (voir `HANDOFF-TENANT.md`) |
+
+Une variable manquante **ne fait pas planter silencieusement** : `lead-form.ts` les nomme dans le
+log du Worker et sert une page d'erreur lisible. `console.error` remonte dans le tableau de bord
+et dans `npx wrangler tail` — c'est la seule observabilité du formulaire.
+
+**Délivrabilité :** le message part **de** notre sous-domaine Mailgun, avec `Reply-To` sur le
+visiteur. Envoyer `From:` l'adresse du visiteur échoue SPF/DKIM et part en indésirable. Ne pas
+« simplifier » ça.
+
+---
+
+## 3. Déployer
+
+```bash
+SITE_URL=https://<domaine> npm run build   # les 3 portes doivent être vertes
+npx wrangler deploy
+```
+
+`npm run build` enchaîne `astro check` → build → `post-build` → les trois audits. **Si une porte
+est rouge, on ne déploie pas** — on corrige la page, jamais le seuil (règle 3).
+
+---
+
+## 4. Vérifications APRÈS le premier déploiement
+
+Ces cinq contrôles ne peuvent pas se faire en local. Trois d'entre eux ont déjà échoué en
+production sur le projet précédent.
+
+**a) Le formulaire envoie réellement.**
+
+```bash
+curl -i -X POST https://solagecapitale.ca/api/soumission/ \
+  -F "name=Test" -F "email=test@example.com" -F "locale=fr"
+```
+
+Attendu : un **303 vers `/merci/`**, **et un courriel qui arrive**. Puis ouvrir `/merci/` dans un
+navigateur — la page existe depuis la session 5 seulement ; avant, le 303 aboutissait à un 404 et
+**une soumission réussie ressemblait exactement à un échec**. Aucune porte ne peut le voir : la
+cible d'une redirection du Worker n'est pas un lien dans le HTML. Sur le projet précédent,
+le handler était sous `functions/` — une convention que seul Pages lit — donc il était ignoré et
+chaque POST répondait `200 Hello world` en jetant la demande. **Un formulaire qui répond 200 et
+perd le prospect est le pire échec possible ici.**
+
+**b) Les en-têtes de sécurité sont réellement appliqués.**
+
+```bash
+curl -sI https://solagecapitale.ca/ | grep -iE "content-security|strict-transport|x-content-type"
+```
+
+`public/_headers` est appliqué **par la plateforme**, pas par le Worker : avec un binding
+`assets`, Cloudflare sert l'asset avant d'invoquer le code, donc le Worker ne voit jamais passer
+une vraie page. **Si les en-têtes sont absents**, le repli est `run_worker_first` dans
+`wrangler.jsonc` — ça fonctionne, mais ça coûte une invocation par requête.
+
+⚠ **Et si l'en-tête EST présent, regarder la page.** La CSP pose `style-src 'self'` sans
+`'unsafe-inline'`, ce qui bloque aussi les **attributs** `style=`. Les 34 gabarits en portaient
+un (`padding-block:3rem`) : la CSP l'annulait, et les 188 pages perdaient leur air vertical au
+moment précis où cette vérification-ci annonçait un succès. Corrigé en session 5 par les classes
+`.bloc-page` / `.bloc-page-ample` de `global.css`. Contrôle de non-régression, à faire tourner
+avant tout déploiement :
+
+```bash
+grep -roh 'style="[^"]*"' dist/ | sort | uniq -c   # doit être VIDE
+```
+
+**Ne jamais réintroduire d'attribut `style=` dans un gabarit.** Un `<style>` de composant Astro
+est extrait dans une feuille externe et passe la CSP ; un attribut `style`, non.
+
+**c) Le 404 est un vrai 404, dans la bonne langue.**
+
+```bash
+curl -sI https://<domaine>/nexiste-pas/    | grep -i "^HTTP"   # 404
+curl -s  https://<domaine>/en/nexiste-pas/ | grep -o "<html[^>]*>"  # lang="en-CA"
+```
+
+Un « soft 404 » — page d'erreur servie en 200 — fait indexer la page d'erreur.
+
+**d) Aucun JavaScript n'est parti.**
+
+```bash
+find dist -name '*.js' | wc -l    # doit valoir 0
+```
+
+C'est l'avantage compétitif du site (règle 7). Le Worker tourne à la périphérie, pas dans le
+navigateur.
+
+**e) `sitemap.xml`, `robots.txt` et `llms.txt` portent le bon domaine.**
+
+```bash
+curl -s https://<domaine>/robots.txt
+curl -s https://<domaine>/sitemap.xml | head -5
+```
+
+Ils sont générés depuis les canoniques du HTML rendu, donc s'ils sont faux, le HTML l'est aussi.
+
+---
+
+## 5. Les pièges qui ont déjà coûté du temps
+
+- **`npm ci` casse sur Cloudflare sans les overrides `@emnapi`.** Ils sont dans `package.json`
+  depuis le premier commit (`@emnapi/core` 1.11.3, `@emnapi/runtime` 1.11.3,
+  `@emnapi/wasi-threads` 1.2.3). Ne pas les retirer.
+- **Deux copies de Vite.** `@tailwindcss/vite` tire Vite 8, Astro embarque 6.4.3 → `astro check`
+  échoue. L'override `"vite": "6.4.3"` règle ça. **À revérifier à chaque montée d'Astro.**
+- **Ne jamais renvoyer 502/504 depuis l'origine pour une page qu'un humain lit** : le CDN la
+  remplace par la sienne. 400 pour une entrée invalide, 200 pour « c'est nous qui avons échoué ».
+- **Ne jamais transformer l'acceptation des deux URL du formulaire en redirection.** Un navigateur
+  dégrade un POST en GET quand il suit un 301, ce qui perd la soumission. `/api/soumission` et
+  `/api/soumission/` sont acceptées telles quelles, exprès.
+- **`not_found_handling: "none"` dans `wrangler.jsonc` est délibéré.** `"404-page"` servirait
+  `/404.html` pour tout, y compris sous `/en/`, donnant une page d'erreur française aux
+  anglophones.
+- **Renommer `name` dans `wrangler.jsonc` crée un SECOND Worker** au lieu de mettre à jour
+  l'existant.
+- **Le certificat CD5, `pest`, `exterminateur-qc.ca`** — le dépôt vient d'un site antiparasitaire.
+  Quatre fichiers documentaient encore l'autre projet en session 4. **Après toute reprise de code,
+  greper les termes de l'ancienne verticale sur tout le dépôt, `worker/` compris.**
+
+---
+
+## 6. Ce qui reste à faire avant une vraie mise en ligne
+
+1. ~~Choisir le domaine~~ — **`solagecapitale.ca`**, câblé.
+2. ~~Écrire `/soumission/` et `/contact/`~~ — **écrites, plus `/merci/` et `/en/thank-you/`.**
+   La NOTE `planned` de `link-audit` est à **0**.
+3. **Créer le sous-domaine Mailgun `mg.solagecapitale.ca` et vérifier SPF/DKIM**, puis poser les
+   variables du §2 sur le Worker. **C'est le seul bloqueur fonctionnel restant.** Poser
+   `LEAD_TO_EMAIL` même si le reste attend : sans elle, la page d'erreur du formulaire n'a aucun
+   repli à offrir au visiteur (le code omet le paragraphe plutôt que d'afficher un `mailto:`
+   vide, ce qui est correct mais laisse une impasse).
+4. Poser la **Redirect Rule `www` → apex** (§1).
+5. Décider du numéro de suivi d'appel (question ouverte n° 7) — ou lancer avec le formulaire seul.
+6. Un **favicon** : il n'y en a aucun, le navigateur prend un 404 sur `/favicon.ico`. Cosmétique,
+   mais visible dans l'onglet.
+7. Dérouler `docs/HANDOFF-TENANT.md` le jour où un locataire arrive.

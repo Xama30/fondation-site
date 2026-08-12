@@ -1,0 +1,79 @@
+---
+/**
+ * Form return page, EN. Twin of `src/pages/merci.astro`.
+ *
+ * ⚠ See the French twin for why this exists: `worker/lead-form.ts` 303s here
+ * after a successful send, and this URL was built by NO file before
+ * 2026-08-11 — so a submission that went through correctly landed the visitor
+ * on a 404. No gate could catch it: the target of a Worker redirect is not a
+ * link in the HTML, so `link-audit` never sees it.
+ *
+ * `noindex`, which also excludes it from `sitemap.xml` and `llms.txt` by
+ * itself, since both are derived from the canonicals.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'thankYou' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  noindex
+  title="Request sent — Solage Capitale"
+  description="Your quote request has been passed on. Here is what happens next and what is worth preparing in the meantime."
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Your request has been sent</h1>
+
+      <p class="chapeau">
+        It has gone to the contractor handling enquiries for the region. There is nothing else
+        for you to do right now, and you have signed nothing.
+      </p>
+
+      <h2>What happens next</h2>
+      <p>
+        The contractor calls you back to understand the situation and arrange a visit. The
+        diagnosis is made on site: that is what comes before the price, and what makes one quote
+        comparable to another. The full sequence is set out in the
+        <a href={pathFor({ type: 'static', page: 'process' }, locale)}>repair process</a>.
+      </p>
+      <p>
+        If you gave a phone number, that is where the callback will arrive fastest. Otherwise the
+        reply comes by email — worth checking your junk folder, which is where most replies get
+        lost.
+      </p>
+
+      <h2>What is worth preparing</h2>
+      <p>
+        Nothing technical, and above all nothing to touch. What genuinely helps comes down to
+        three things: <strong>observe, note and photograph</strong>. The date you first noticed
+        the problem, whether the water or the crack changes after rain or during snowmelt, and
+        the year the building was put up if you know it — those three are worth more than a long
+        description.
+      </p>
+
+      <h2>The reflex that matters, before signing</h2>
+      <p>
+        Ask for the Régie du bâtiment du Québec licence number and check it in the public
+        register, confirming the subcategory covers the work being proposed. It is free, it takes
+        a few minutes, and it changes the conversation. The
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>FAQ</a> explains how.
+      </p>
+
+      <h2>Heard nothing back?</h2>
+      <p>
+        If nobody has replied after a few business days, say so from the
+        <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>contact page</a>. That is
+        also where you can ask to access your information or have it deleted, at any time.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'home' }, locale)}>Back to the home page</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

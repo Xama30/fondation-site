@@ -1,0 +1,37 @@
+{
+  "slug": "lancienne-lorette",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante 1945-1975 satisfait la condition d'ancienneté, mais aucun cours d'eau, plan d'eau, baie ou marais n'est nommé dans les données du secteur (rue Notre-Dame, boulevard Wilfrid-Hamel, aéroport Jean-Lesage, haie de cèdres) ; faute de facteur aggravant nommé, le niveau redescend à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé dominant sur les bungalows et duplex d'après-guerre, fissures de retrait verticales typiques de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À L'Ancienne-Lorette, les bungalows et les duplex resserrés entre la rue Notre-Dame et le boulevard Wilfrid-Hamel appartiennent presque tous à la même vague d'après-guerre, 1945 à 1975, et leur drain de tuile d'argile a atteint l'âge où les sections se désolidarisent aux joints. Aucun cours d'eau ni plan d'eau ne borde ces lots serrés entre garages attenants et haies de cèdres, à l'écart de la pression que subissent les secteurs construits en bordure d'une rivière durant la même période. Les quelques rues plus anciennes autour de l'église Notre-Dame-de-l'Annonciation, bâties sur pierre, échappent au problème de tuile mais réclament leurs propres joints de mortier.",
+    "en": "In L'Ancienne-Lorette, the bungalows and duplexes packed between rue Notre-Dame and boulevard Wilfrid-Hamel nearly all belong to the same postwar wave, 1945 to 1975, and their clay drain tile has reached the age where sections come apart at the joints. No stream or body of water runs past these lots, hemmed in by attached garages and cedar hedges, sparing them the pressure that sectors built along a river during the same period face. The few older streets around the Notre-Dame-de-l'Annonciation church, built on stone, escape the tile problem but need their own mortar repointing."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

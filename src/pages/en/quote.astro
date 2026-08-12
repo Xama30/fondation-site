@@ -1,0 +1,251 @@
+---
+/**
+ * Quote request, EN. Twin of `src/pages/soumission.astro`.
+ *
+ * ⚠ THE FIELD CONTRACT. The `name=` attributes below must match the keys of
+ * `FIELD_LABELS` in `worker/lead-form.ts` EXACTLY: `name`, `email`, `phone`,
+ * `sector`, `service`, `building`, `urgency`, `message`, plus the `website`
+ * honeypot and `locale`. The handler only formats keys it knows about — a
+ * renamed field does not fail, it VANISHES from the email. Do not reinvent
+ * them; they were decontaminated from the previous (pest-control) site in
+ * session 4.
+ *
+ * ⚠ THE ACTION KEEPS ITS TRAILING SLASH and comes from `LEAD_ENDPOINT`, the
+ * same constant `worker/index.ts` derives its routing table from. The Worker
+ * accepts both spellings on purpose: a browser downgrades a POST to a GET when
+ * it follows a 301, so a redirect would silently lose the submission
+ * (`docs/DEPLOY.md` §5).
+ *
+ * RULE 7: no JavaScript. The site's CSP forbids script outright, so a form that
+ * needed JS simply would not work here.
+ *
+ * RULE 1bis: the page never tells anyone what to do to their own foundation.
+ * The questions exist so a professional arrives prepared, not to diagnose from
+ * a distance.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { LEAD_ENDPOINT, PRIVACY_OFFICER } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'quote' } as const;
+
+const sectors = (await getCollection('sectors', (e) => e.data.locale === locale))
+  .map((e) => cities[e.data.sector]!.name[locale])
+  .sort((a, b) => a.localeCompare(b, 'en'));
+
+const services = (await getCollection('services', (e) => e.data.locale === locale))
+  .map((e) => serviceData[locale][e.data.service as ServiceKey].name)
+  .sort((a, b) => a.localeCompare(b, 'en'));
+
+const buildings = [
+  "Single-family house",
+  "Semi-detached house",
+  "Duplex, triplex or plex",
+  "Condo or co-ownership",
+  "Cottage or second home",
+  "Other",
+];
+
+const urgencies = [
+  "There is water coming in right now",
+  "It is recent, but dry for the moment",
+  "It has been going on for a while",
+  "Planning work, nothing urgent",
+  "I am buying or selling the property",
+];
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Request a quote — Solage Capitale"
+  description="Describe what you are seeing on your foundation and a licensed contractor in the Quebec City region calls you back. Free, with no obligation."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Request a quote", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Request a quote</h1>
+
+      <p class="chapeau">
+        Describe what you are seeing. The request goes to an independent company holding its own
+        RBQ licence, which calls you back to arrange a visit. It is free and carries no
+        obligation.
+      </p>
+
+      <div class="encadre">
+        <p>
+          <strong>Is water coming into the basement right now?</strong> A form is the wrong
+          route. The <a href={pathFor({ type: 'static', page: 'emergency' }, locale)}>emergency
+          page</a> covers what to check first, when to call 311 rather than a contractor, and why
+          telling your insurer early matters.
+        </p>
+      </div>
+
+      <h2>The form</h2>
+
+      <form class="formulaire" method="post" action={LEAD_ENDPOINT} enctype="multipart/form-data">
+        {/*
+          `locale` decides the language of the email and of the return page in
+          `worker/lead-form.ts`. `page_url` lets it record which page the request
+          came from — useful when one inbox receives leads from 182 pages.
+        */}
+        <input type="hidden" name="locale" value={locale} />
+        <input type="hidden" name="page_url" value={pathFor(ref, locale)} />
+
+        {/*
+          Honeypot. A person neither sees it nor can reach it by keyboard; a bot
+          fills in everything it finds. The Worker then answers exactly as it
+          would on success, so the bot learns nothing.
+        */}
+        <div class="pot-de-miel" aria-hidden="true">
+          <label for="website">Do not fill in this field</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <fieldset>
+          <legend>Reaching you</legend>
+
+          <div class="champ">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="champs-paire">
+            <div class="champ">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+
+            <div class="champ">
+              <label for="phone">Phone <span class="facultatif">(optional)</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+              <span class="aide">A callback happens faster by phone than in writing.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>The building</legend>
+
+          <div class="champ">
+            <label for="sector">Area</label>
+            <select id="sector" name="sector" required>
+              <option value="">Choose an area</option>
+              {sectors.map((s) => <option value={s}>{s}</option>)}
+              <option value="Elsewhere in the region">Elsewhere in the region</option>
+            </select>
+            <span class="aide">
+              The territory covered is the Quebec City Metropolitan Community. The full list is
+              on the <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>service
+              area</a> page.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="building">Building type</label>
+            <select id="building" name="building" required>
+              <option value="">Choose a type</option>
+              {buildings.map((b) => <option value={b}>{b}</option>)}
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>What you are seeing</legend>
+
+          <div class="champ">
+            <label for="service">Service <span class="facultatif">(if you know)</span></label>
+            <select id="service" name="service">
+              <option value="">I am not sure yet</option>
+              {services.map((s) => <option value={s}>{s}</option>)}
+            </select>
+            <span class="aide">
+              It does not matter if you are unsure: the contractor establishes what it is, on
+              site. "I am not sure" is a perfectly good answer.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="urgency">How long</label>
+            <select id="urgency" name="urgency" required>
+              <option value="">Choose one</option>
+              {urgencies.map((u) => <option value={u}>{u}</option>)}
+            </select>
+          </div>
+
+          <div class="champ">
+            <label for="message">Description</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+            <span class="aide">
+              What helps most: where it is happening (which wall, which corner of the basement),
+              how long you have been seeing it, and whether it changes with rain or snowmelt. The
+              year the house was built tells a great deal on its own.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="photo">Photo <span class="facultatif">(optional, 5 MB maximum)</span></label>
+            <input type="file" id="photo" name="photo" accept="image/*" />
+            <span class="aide">
+              A photo of the crack or the water mark, taken from a distance and then close up,
+              often saves a round trip. Setting a ruler or a coin beside it gives the scale.
+            </span>
+          </div>
+        </fieldset>
+
+        <button type="submit">Send the request</button>
+      </form>
+
+      <h2>What happens next</h2>
+      <p>
+        The request is emailed to the contractor handling enquiries for the region. That company
+        calls you back, visits and prices the work — Solage Capitale does not touch your
+        foundation and bills you nothing. The
+        <a href={pathFor({ type: 'static', page: 'process' }, locale)}>repair process</a> sets
+        out how it unfolds, and the rule that matters: diagnosis comes before price.
+      </p>
+      <p>
+        <strong>A firm price given over the phone, with nobody having seen the building, is a
+        warning sign.</strong> The
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>pricing page</a> explains
+        what makes an invoice vary and the five things a quote has to name before it can be
+        compared with another.
+      </p>
+
+      <h2>Before signing, whatever happens</h2>
+      <p>
+        Ask for the Régie du bâtiment du Québec licence number and check it yourself in the
+        public register, confirming the subcategory actually covers the work being proposed. An
+        ordinary foundation job often touches three of them, and an excavation licence attests
+        to no assessed competence in carrying out construction work. How to check, and why it is
+        the single best reflex in the whole process, is set out in the
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>FAQ</a>.
+      </p>
+
+      <h2>Your information</h2>
+      <p>
+        This form collects the minimum needed to call you back, for a single purpose: passing on
+        your request. No account is created, no tracking cookie is set, and nothing is resold.
+        The detail is in the
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>privacy policy</a>, and
+        the person responsible is named on the
+        <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>contact page</a>.
+      </p>
+      <p>
+        If the form refuses to send, write directly to
+        <a href={`mailto:${PRIVACY_OFFICER.email}`}>{PRIVACY_OFFICER.email}</a> — it reaches the
+        same place.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,92 @@
+---
+/**
+ * Blog index, EN. Twin of `src/pages/blogue/index.astro`.
+ *
+ * Driven by `getCollection`, and lists only posts whose twin exists: listing an
+ * EN post with no FR twin would publish a link whose French version 404s.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'blogIndex' } as const;
+
+const all = await getCollection('blog');
+const twins = new Map(all.filter((e) => e.data.locale === 'fr').map((e) => [e.data.translationKey, e]));
+const posts = all
+  .filter((e) => e.data.locale === 'en' && twins.has(e.data.translationKey))
+  .map((e) => ({
+    data: e.data,
+    slugs: { fr: twins.get(e.data.translationKey)!.data.slug, en: e.data.slug },
+  }))
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+
+/*
+ * `timeZone: 'UTC'` N'EST PAS DÉCORATIF. `published: 2026-08-07` en frontmatter
+ * devient `2026-08-07T00:00:00Z`; formaté dans le fuseau local (America/Toronto,
+ * UTC-4) il s'affiche « 6 août 2026 ». Chaque article aurait porté la veille de
+ * sa date, et le JSON-LD — qui sort en `.toISOString()` — aurait contredit la
+ * page. Une date seule se lit en UTC ou elle recule.
+ */
+const dateFmt = new Intl.DateTimeFormat('en-CA', { dateStyle: 'long', timeZone: 'UTC' });
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Blog — Quebec foundation rules explained"
+  description="RBQ licences, standard BNQ 3661-500, warranties: what the public texts actually say, and how to use them when dealing with a foundation contractor."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Blog", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>What the regulations say, and what that gets you</h1>
+
+      <p class="chapeau">
+        Every article starts from a public text — the Régie du bâtiment, the Bureau de
+        normalisation du Québec, a warranty plan — and ends with what you can demand because of
+        it. Sources are listed at the foot of each page so you can check them yourself.
+      </p>
+
+      {
+        posts.length === 0 ? (
+          <p>The first articles are being written.</p>
+        ) : (
+          <ul class="liens-liste">
+            {posts.map((p) => (
+              <li>
+                <a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.data.h1}</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        posts.length > 0 && (
+          <>
+            <h2>In brief</h2>
+            {posts.map((p) => (
+              <>
+                <h3>
+                  <a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.data.h1}</a>
+                </h3>
+                <p>{p.data.metaDescription}</p>
+                <p>
+                  <small>{dateFmt.format(p.data.updated ?? p.data.published)}</small>
+                </p>
+              </>
+            ))}
+          </>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

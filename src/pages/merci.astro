@@ -1,0 +1,93 @@
+---
+/**
+ * Page de retour du formulaire, FR. Jumelle : `src/pages/en/thank-you.astro`.
+ *
+ * ⚠ POURQUOI CETTE PAGE EXISTE, ET CE QU'ELLE CORRIGE.
+ * `worker/lead-form.ts` renvoie un 303 vers `/merci/` après un envoi réussi —
+ * et cette URL n'était construite par AUCUN fichier avant le 2026-08-11. Une
+ * soumission qui partait correctement, dont le courriel arrivait, se terminait
+ * donc sur un 404 : le visiteur n'avait aucun moyen de savoir si sa demande
+ * avait été reçue, et beaucoup l'auraient renvoyée ou abandonnée.
+ *
+ * Aucune porte ne pouvait l'attraper. `link-audit` suit les liens du HTML ; la
+ * cible d'une redirection émise par le Worker n'est pas un lien. C'est la même
+ * famille d'échec que les autres du projet : ça se déploie proprement et ça ne
+ * se voit qu'en le faisant pour de vrai.
+ *
+ * `noindex` : une page de confirmation n'a rien à faire dans un index, et elle
+ * ne se rejoint pas par un lien. Le `noindex` fait aussi qu'elle s'exclut
+ * d'elle-même de `sitemap.xml` et de `llms.txt`, qui sont dérivés des
+ * canoniques — il n'y a aucune liste d'exclusion à tenir.
+ *
+ * Le 303 (et non un 302) fait qu'un rafraîchissement de cette page ne renvoie
+ * pas le formulaire.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'thankYou' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  noindex
+  title="Demande envoyée — Solage Capitale"
+  description="Votre demande de soumission a été transmise. Voici ce qui se passe ensuite et ce qu'il est utile de préparer d'ici là."
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Votre demande est partie</h1>
+
+      <p class="chapeau">
+        Elle a été transmise à l'entrepreneur qui traite les demandes de la région. Vous n'avez
+        rien d'autre à faire pour l'instant, et vous n'avez rien signé.
+      </p>
+
+      <h2>Ce qui se passe ensuite</h2>
+      <p>
+        L'entrepreneur vous rappelle pour comprendre la situation et convenir d'une visite. Le
+        diagnostic se fait sur place : c'est ce qui précède le prix, et c'est ce qui rend une
+        soumission comparable à une autre. Le déroulement complet est décrit dans les
+        <a href={pathFor({ type: 'static', page: 'process' }, locale)}>étapes d'une
+        réparation</a>.
+      </p>
+      <p>
+        Si vous avez indiqué un numéro de téléphone, c'est par là que le rappel arrivera le plus
+        vite. Sinon, la réponse viendra par courriel — pensez à regarder dans les indésirables,
+        c'est là que se perdent la plupart des réponses.
+      </p>
+
+      <h2>Ce qu'il est utile de préparer</h2>
+      <p>
+        Rien de technique, et surtout rien à toucher. Ce qui aide vraiment tient en trois
+        choses : <strong>observer, noter et photographier</strong>. La date où vous avez remarqué
+        le problème, si l'eau ou la fissure change après une pluie ou à la fonte, et l'année de
+        construction du bâtiment si vous la connaissez — ces trois éléments valent plus qu'une
+        longue description.
+      </p>
+
+      <h2>Le réflexe qui compte, avant de signer</h2>
+      <p>
+        Demandez le numéro de licence de la Régie du bâtiment du Québec et vérifiez-le au
+        registre public, en contrôlant que la sous-catégorie couvre les travaux proposés. C'est
+        gratuit, ça prend quelques minutes, et ça change la conversation. Les
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>
+        expliquent comment le faire.
+      </p>
+
+      <h2>Sans nouvelles ?</h2>
+      <p>
+        Si personne ne vous a répondu au bout de quelques jours ouvrables, écrivez-le depuis la
+        page <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>Contact</a>. C'est
+        aussi par là que vous pouvez demander l'accès à vos renseignements ou leur suppression, à
+        tout moment.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'home' }, locale)}>Retour à l'accueil</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

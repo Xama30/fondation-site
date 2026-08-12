@@ -1,0 +1,37 @@
+{
+  "slug": "pintendre",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "municipalité rurale dispersée le long de l'avenue des Ruisseaux, sans cohorte de construction dominante ; niveau plafonné malgré la proximité nommée de la rivière à la Scie, qui pousserait le niveau à la hausse si une strate dominante pouvait être nommée"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même absence de cohorte dominante que pour le drain français — vieux rang agricole en pierre d'un côté, terrains plus élevés en béton coulé de l'autre, aucun des deux assez large pour porter un niveau tranché"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "L'avenue des Ruisseaux, la plus longue rue de Lévis, traverse la plaine agricole de Pintendre du nord au sud et croise la rivière à la Scie à plusieurs reprises, plaçant des propriétés voisines sur des sols de vallée très différents selon leur distance au cours d'eau. Autour du chemin Pintendre et de l'église Saint-Louis-de-Pintendre, le solage reste souvent celui d'un rang agricole ancien, sans drain d'origine, alors que les terrains plus élevés vers les contreforts des Appalaches portent un bâti plus récent coulé au béton. Cette dispersion le long d'une seule rue, plutôt qu'une cohorte d'époque unique, est ce qui plafonne la pression au modéré ici.",
+    "en": "Avenue des Ruisseaux, the longest street in Lévis, runs the length of Pintendre's farmland north to south and crosses the rivière à la Scie more than once, putting neighbouring properties on very different valley soils depending on how close they sit to the water. Around chemin Pintendre and the église Saint-Louis-de-Pintendre, foundations often still belong to an old farm concession, built with no drain at all, while the higher ground toward the Appalachian foothills carries newer poured-concrete construction. That spread along a single road, rather than one dominant building era, is what keeps the pressure rating capped at moderate here."
+  },
+  "sources": [],
+  "todo": "époque de construction chiffrée absente de housingStock (bâti dispersé) — confirmer au rôle d'évaluation de Lévis. OCRE: ramenée à null. La seule source trouvée (MAPAQ Chaudière-Appalaches) porte sur le drainage des champs agricoles, pas sur le drain français résidentiel : extrapoler du champ à la fondation est précisément l'association sol→secteur non vérifiée que le projet refuse. Rouvrir seulement avec une source résidentielle ou une carte de dépôts meubles.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

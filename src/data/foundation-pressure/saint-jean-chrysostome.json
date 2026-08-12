@@ -1,0 +1,37 @@
+{
+  "slug": "saint-jean-chrysostome",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "lotissements successifs depuis la paroisse fondée en 1828, entre les rivières Chaudière et Etchemin, sans cohorte dominante nommée dans housingStock ; plafonné par prudence"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "parc bâti étalé sans strate dominante identifiable ; plafonné par prudence en l'absence de décennie majoritaire confirmée"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Entre la rivière Chaudière à l'ouest et la rivière Etchemin à l'est, la rue du Rucher et la rue de la Sarriette ont été loties sur d'anciennes terres agricoles où subsistent par endroits les tuyaux de drainage de champ enfouis par les cultivateurs avant le lotissement. Ce drainage agricole abandonné coupe parfois le tracé du drain français neuf posé autour des fondations de béton coulé, et le raccordement mal documenté cause un refoulement propre à ce type de sous-sol reconverti — un risque que l'étalement du parc bâti depuis la paroisse fondée en 1828 rend difficile à cerner rue par rue.",
+    "en": "Between the Chaudière River to the west and the Etchemin River to the east, rue du Rucher and rue de la Sarriette were subdivided on former farmland where the field-drainage pipes buried by farmers before the subdivision still turn up in places. That abandoned agricultural drainage sometimes crosses the path of the new French drain laid around poured-concrete foundations, and the poorly documented connection causes backups specific to this kind of converted farmland basement — a risk that the sprawl of building stock since the parish was founded in 1828 makes hard to pin down street by street."
+  },
+  "sources": [],
+  "todo": "confirmer la décennie de construction dominante (permis municipaux Lévis / rôle d'évaluation) — housingStock ne nomme aucune cohorte majoritaire malgré le statut de ville obtenu en 1965 et ~20 000 habitants aujourd'hui",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

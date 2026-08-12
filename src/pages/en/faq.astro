@@ -1,0 +1,102 @@
+---
+/**
+ * Frequently asked questions, EN. Twin of `src/pages/faq.astro`.
+ *
+ * A translation of the ARGUMENT, not of the sentences: the English reader
+ * searches "check RBQ licence" and "new home warranty", so the questions are
+ * phrased the way they are asked in English.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema, faqSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'faq' } as const;
+
+const faq = [
+  {
+    q: "How do I check that a contractor really holds an RBQ licence?",
+    a: "Ask for the licence number, then check it yourself in the Régie du bâtiment du Québec register of licence holders, which is public and free. The register shows whether the licence is in force and which subcategories it covers. Do this before you sign, not after: a licence that exists does not yet tell you it covers the work being proposed.",
+  },
+  {
+    q: "How many licence subcategories does a foundation job need?",
+    a: "Often three, and this is the point almost nobody explains. Subcategory 2.5 covers excavation and earthwork, 3.2 covers small concrete structures — it explicitly names foundation walls of buildings under Part 9 of the National Building Code — and subcategory 7 covers insulation and waterproofing. A contractor can be licensed to dig and not licensed at all for the membrane.",
+  },
+  {
+    q: "Does an excavation licence prove assessed competence?",
+    a: "No, and you can verify that in the Régie's own text. Subcategory 2.5 falls under Schedule III, of which the RBQ writes that these subcategories \"do not require an assessment of competence in carrying out construction work\". Subcategory 2.6, which covers piles and special foundations and names underpinning, falls under Schedule II, which does require it. Holding an excavation licence is therefore not the same assurance as holding a 2.6.",
+  },
+  {
+    q: "What does \"a drain meeting the BNQ standard\" actually mean?",
+    a: "On its own, nothing. Standard BNQ 3661-500 covers ochre deposits in building drainage systems and comes in two parts: Part I deals with risk assessment for a new building and diagnosis for an existing one, Part II with installation methods. A separate standard, BNQ 3624-130, covers the perforated pipe itself. Require the quote to name the standard, the part, and the type of pipe.",
+  },
+  {
+    q: "My house is less than five years old. Am I covered?",
+    a: "Possibly, under the new residential building warranty plan. It covers one year for existing, non-apparent defects in workmanship, three years for latent defects, and five years for design, construction or execution defects and soil defects — that last window is the one that reaches a foundation. The warranty transfers to the next owner.",
+  },
+  {
+    q: "Can I repair it first and claim afterwards?",
+    a: "That is the instinct that costs the most on a recent house. Having work done yourself on a potentially covered defect can compromise the claim, because the evidence disappears along with the wall. The problem must be reported within a reasonable time, which case law puts at six months from discovery. Report it first, have it documented, then decide.",
+  },
+  {
+    q: "Do I need a municipal permit to excavate against a foundation?",
+    a: "It depends on your municipality, and the Quebec City Metropolitan Community contains several. There is no single rule covering the whole territory, so this site publishes none. Call your city's citizen services — 311 for Ville de Québec — before authorising work. A sewer backup, incidentally, is a municipal network matter rather than a foundation contractor's.",
+  },
+  {
+    q: "Why does this site publish no prices?",
+    a: "Because no primary source publishes any for this territory. The figures in circulation come from lead generation sites, and the most frequently copied one targets Greater Montreal. The pricing page explains what actually moves the invoice, and the five points a quote must name before it can be compared with another.",
+  },
+  {
+    q: "Does Solage Capitale carry out the work?",
+    a: "No. Solage Capitale is an advertising and referral service. The provider who calls you back is an independent company holding its own RBQ licence, and any contract is formed between you and that company. Nothing on this site constitutes technical advice, a diagnosis or an engineering opinion.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Foundation questions answered — Quebec City"
+  description="RBQ licence, BNQ 3661-500, the new home warranty and excavation permits: verifiable answers to the questions homeowners ask most often here."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "FAQ", ref },
+    ]),
+    faqSchema(faq),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Frequently asked questions</h1>
+
+      <p class="chapeau">
+        The answers below rest on public texts — the Régie du bâtiment du Québec, the Bureau de
+        normalisation du Québec, the new residential building warranty plan — that you can look
+        up and put to any contractor yourself.
+      </p>
+
+      <h2>Verify, understand, compare</h2>
+      {
+        faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+
+      <h2>Going further</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Pricing and quotes</a></li>
+        <li><a href={pathFor({ type: 'static', page: 'process' }, locale)}>How it works</a></li>
+        <li><a href={pathFor({ type: 'serviceIndex' }, locale)}>Types of work</a></li>
+        <li><a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>Service area</a></li>
+      </ul>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

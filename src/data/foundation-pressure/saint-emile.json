@@ -1,0 +1,37 @@
+{
+  "slug": "saint-emile",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1945-1975 en tuile d'argile le long de l'avenue Lapierre et de la rue de la Faune, mais aucun cours d'eau, plan d'eau, marais ni zone inondable nommé dans localTerms ou housingStock — le couvert forestier mentionné n'est pas un facteur aggravant reconnu par le tableau ; niveau plafonné à moderate faute de facteur nommé"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages en béton coulé simple, sans armature, de cette génération de bungalows ; fissures de retrait plus précoces que la moyenne, sans facteur aggravant documenté"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Sur l'avenue Lapierre et la rue de la Faune, qui quadrillent Saint-Émile du nord au sud et d'est en ouest, les bungalows d'après-guerre bâtis entre 1945 et 1975 sont cernés d'un couvert forestier qui n'a jamais reculé au-delà des cours arrière — un legs du territoire concédé à Robert Giffard dès 1647 et resté longtemps en bois debout. Les racines de cette forêt s'infiltrent dans les joints de la tuile d'argile d'origine, tandis que les solages en béton coulé simple de cette génération, sans armature, développent des fissures de retrait plus tôt que la moyenne.",
+    "en": "Along avenue Lapierre and rue de la Faune, which cross Saint-Émile north-south and east-west, the postwar bungalows built between 1945 and 1975 sit hemmed in by forest that has never been pushed back past the rear yards — a legacy of land granted to Robert Giffard as early as 1647 and left wooded for generations. Tree roots from that forest work their way into the joints of the original clay-tile drains, while the unreinforced poured-concrete foundations of that generation develop shrinkage cracks earlier than most."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

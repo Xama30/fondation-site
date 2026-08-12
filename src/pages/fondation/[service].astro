@@ -1,0 +1,213 @@
+---
+/**
+ * Hub de service, FR. Sa jumelle EN est `src/pages/en/foundation/[service].astro`.
+ *
+ * La famille `service-fr` est déjà déclarée dans FAMILIES (uniqueness-check.mjs) :
+ * cette route est donc contrôlée dès sa première page. Ne pas créer de page ici
+ * sans vérifier que la porte affiche `[uniqueness] N pages` avec N ≥ 1.
+ *
+ * La grille de liens est pilotée par `getCollection`, jamais par le JSON brut :
+ * un service dont la page n'est pas écrite ne doit pas devenir un lien mort.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '@lib/schema.ts';
+import { cities, services as serviceData, verifiedRegulations } from '@lib/data.ts';
+import { SERVICE_SLUGS, type ServiceKey } from '@data/slugs.ts';
+import { articlesForService } from '@lib/service-articles.ts';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('services', (e) => e.data.locale === 'fr');
+  return entries.map((entry) => ({
+    params: { service: SERVICE_SLUGS[entry.data.service as ServiceKey].fr },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: Awaited<ReturnType<typeof getCollection<'services'>>>[number] };
+
+const locale = 'fr' as const;
+const ui = dict(locale);
+const { entry } = Astro.props as Props;
+const key = entry.data.service as ServiceKey;
+const data = serviceData[locale][key];
+const ref = { type: 'service', service: key } as const;
+const { Content } = await render(entry);
+
+// Les liens connexes ne pointent que vers des pages RÉELLEMENT écrites : une
+// entité rétrogradée reste dans le JSON et deviendrait un lien mort permanent
+// que l'audit couvre à vie sous la dérogation « planifié ».
+const written = new Set(
+  (await getCollection('services', (e) => e.data.locale === locale)).map((e) => e.data.service),
+);
+const related = data.related
+  .filter((k) => written.has(k) && k !== key)
+  .map((k) => ({ key: k, name: serviceData[locale][k].name }));
+
+const regs = data.regulations.map((k) => verifiedRegulations[k]).filter(Boolean);
+
+// SEO-PLAN §6 : chaque hub de service porte une grille vers ses secteurs approuvés.
+// Piloté par la collection, jamais par _matrice.txt : une combinaison approuvée mais
+// dont la page n'est pas écrite ne doit pas devenir un lien mort.
+const sectorPages = (await getCollection('matrix', (e) => e.data.locale === locale))
+  .filter((e) => e.data.service === key)
+  .map((e) => ({ sector: e.data.sector, name: cities[e.data.sector]!.name[locale] }))
+  .sort((a, b) => a.name.localeCompare(b.name, locale));
+// Les articles de blogue qui portent réellement sur CE service, appariés par
+// `translationKey` dans `src/lib/service-articles.ts`. Filtré contre les
+// articles réellement écrits ET appariés : un article dont la jumelle manque ne
+// se construit pas, donc le lier serait un lien mort.
+const blogAll = await getCollection('blog');
+const blogTwinKeys = new Set(
+  blogAll.filter((e) => e.data.locale === 'en').map((e) => e.data.translationKey),
+);
+const relatedArticles = blogAll
+  .filter(
+    (e) =>
+      e.data.locale === locale &&
+      blogTwinKeys.has(e.data.translationKey) &&
+      articlesForService(key).includes(e.data.translationKey),
+  )
+  .map((e) => ({ h1: e.data.h1, slug: e.data.slug, tk: e.data.translationKey }));
+const relatedArticleSlugs = new Map(
+  blogAll.filter((e) => e.data.locale !== locale).map((e) => [e.data.translationKey, e.data.slug]),
+);
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title={entry.data.title}
+  description={entry.data.metaDescription}
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Fondation", ref: { type: 'serviceIndex' } },
+      { name: data.name, ref },
+    ]),
+    serviceSchema({
+      locale,
+      name: data.name,
+      description: entry.data.metaDescription,
+      ref,
+      areaServed: "Communauté métropolitaine de Québec",
+    }),
+    faqSchema(entry.data.faq),
+  ]}
+>
+  <article class="contenant bloc-page">
+    <div class="mesure">
+      <h1>{entry.data.h1}</h1>
+      <p class="chapeau">{data.shortDescription}</p>
+
+      <Content />
+
+      <h2>{ui('service.signs')}</h2>
+      <ul>
+        {data.signs.map((s) => <li>{s}</li>)}
+      </ul>
+
+      <h2>{ui('service.whatProDoes')}</h2>
+      <p>{data.whatProDoes}</p>
+
+      <h2>{ui('service.regulation')}</h2>
+      <p>{entry.data.regulation}</p>
+      {
+        regs.length > 0 && (
+          <ul>
+            {regs.map((r) => (
+              <li>
+                <a href={r.sourceUrl} rel="noopener nofollow">{r.code}</a> — {r.title[locale]}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        sectorPages.length > 0 && (
+          <>
+            <h2>{ui('service.bySector')}</h2>
+            <ul>
+              {sectorPages.map((s) => (
+                <li>
+                  <a href={pathFor({ type: 'serviceSector', service: key, sector: s.sector }, locale)}>
+                    {data.name} — {s.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>{ui('meta.faqTitle')}</h2>
+      {
+        entry.data.faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+
+      {
+        related.length > 0 && (
+          <>
+            <h2>{ui('meta.relatedServices')}</h2>
+            <ul class="liens-liste">
+              {related.map((r) => (
+                <li>
+                  <a href={pathFor({ type: 'service', service: r.key }, locale)}>{r.name}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+
+      {
+        relatedArticles.length > 0 && (
+          <>
+            <h2>{ui('meta.relatedReading')}</h2>
+            <ul class="liens-liste">
+              {relatedArticles.map((a) => (
+                <li>
+                  <a
+                    href={pathFor(
+                      {
+                        type: 'blogPost',
+                        slug: { fr: a.slug, en: relatedArticleSlugs.get(a.tk) ?? a.slug },
+                      },
+                      locale,
+                    )}
+                  >
+                    {a.h1}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>{ui('meta.sources')}</h2>
+      <ul>
+        {
+          entry.data.sources.map((s) => (
+            <li><a href={s.url} rel="noopener nofollow">{s.label}</a></li>
+          ))
+        }
+      </ul>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>{ui('cta.pricing')}</a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>

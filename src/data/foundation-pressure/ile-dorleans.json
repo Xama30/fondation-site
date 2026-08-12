@@ -1,0 +1,31 @@
+{
+  "slug": "ile-dorleans",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "bâti dominant en moellons de pierre montés au mortier de chaux, sans drain d'origine, sur une île entièrement cernée par le fleuve Saint-Laurent qui maintient la nappe haute contre le solage"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre — les désordres attendus sont des joints de mortier de chaux qui s'effritent, pas des fissures de retrait de béton armé, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le chemin Royal, qui encercle l'île, longe des maisons ancestrales dont les murs de moellons ont été montés au mortier de chaux avant 1945, une technique qui ne connaît pas le drain français. De Sainte-Famille-de-l'Île-d'Orléans à Saint-Jean-de-l'Île-d'Orléans, ces solages en pierre reposent sur une île entièrement cernée par le fleuve Saint-Laurent, où la nappe reste haute toute l'année contre des joints qui n'ont jamais été conçus pour l'étanchéité.",
+    "en": "Chemin Royal, which encircles the island, runs past ancestral houses whose rubble-stone walls were set in lime mortar before 1945 — a technique that predates the french drain entirely. From Sainte-Famille-de-l'Île-d'Orléans to Saint-Jean-de-l'Île-d'Orléans, these stone foundations sit on an island entirely ringed by the St. Lawrence, where the water table stays high year-round against mortar joints that were never built to be watertight."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

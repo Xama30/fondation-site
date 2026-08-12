@@ -1,0 +1,40 @@
+{
+  "slug": "fossambault-sur-le-lac",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1934-1960",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte de chalets 1934-1960 sur solage de pierre ou pieux, sans drain d'origine, aggravé par la proximité immédiate du lac Saint-Joseph qui maintient la nappe haute à l'année"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solages de pierre et de pieux typiques des chalets de villégiature de cette époque : réfection de mortier et tassement de pieux, pas de fissure de béton coulé"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Sur la rive sud-est du lac Saint-Joseph, le lotissement de Thomas Maher amorcé en 1934 a fait passer le nombre de chalets à 341 en 1953 puis à 388 en 1960, tous construits sur des solages de pierre ou des pieux sans drain, pensés pour un usage saisonnier léger. Leur conversion en résidences permanentes, fréquente le long de la route de Fossambault et près des quais et remises à bateaux, ajoute une charge que ces vieux solages de villégiature n'ont jamais portée, dans une nappe que le lac maintient haute à l'année.",
+    "en": "On the southeastern shore of Lac Saint-Joseph, Thomas Maher's 1934 subdivision pushed the number of chalets to 341 by 1953 and 388 by 1960, all built on stone footings or piers with no drain, designed for light seasonal use. Their conversion into year-round homes, common along route de Fossambault and near the docks and boathouses, adds a load these old vacation-era foundations were never built to carry, in a water table the lake keeps high all year."
+  },
+  "sources": [
+    "https://www.lesoleil.com/2013/08/03/les-belles-dantan-du-lac-saint-joseph-1f25370f9d5e688417901951003f2160/",
+    "https://fossambault-sur-le-lac.com/ville/decouverte/notre-histoire/"
+  ],
+  "todo": "proportion exacte solage de pierre vs pieux de bois non confirmée pour les chalets 1934-1960 ; aucune source ouverte pour ocre/pyrite sur le secteur du lac Saint-Joseph",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

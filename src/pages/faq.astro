@@ -1,0 +1,107 @@
+---
+/**
+ * Questions fréquentes, FR. Jumelle : `src/pages/en/faq.astro`.
+ *
+ * Toutes les réponses réglementaires viennent de `regulations.json`, entrées
+ * `status: verified` uniquement (RBQ, BNQ 3661-500, GCR). Le permis municipal
+ * d'excavation est `unverified` et le restera : il varie d'une municipalité à
+ * l'autre et la CMQ en compte plusieurs — la réponse renvoie donc à la Ville
+ * plutôt que d'avancer un chiffre.
+ *
+ * Règle 1bis : aucune réponse ne dit comment intervenir. Le seul geste proposé
+ * au lecteur est d'observer, de documenter et de vérifier une licence.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema, faqSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'faq' } as const;
+
+const faq = [
+  {
+    q: "Comment vérifier qu'un entrepreneur détient bien une licence RBQ ?",
+    a: "Demandez-lui son numéro de licence, puis vérifiez-le vous-même au registre des détenteurs de licence de la Régie du bâtiment du Québec, qui est public et gratuit. Le registre indique si la licence est en vigueur et quelles sous-catégories elle couvre. Faites-le avant de signer, pas après : une licence qui existe ne dit pas encore qu'elle couvre les travaux qu'on vous propose.",
+  },
+  {
+    q: "Combien de sous-catégories de licence un chantier de fondation demande-t-il ?",
+    a: "Souvent trois, et c'est le point que presque personne n'explique. La 2.5 couvre l'excavation et le terrassement, la 3.2 les petits ouvrages de béton — elle nomme explicitement les murs de fondation des bâtiments visés à la partie 9 du Code national du bâtiment — et la sous-catégorie 7 l'isolation et l'étanchéité. Un entrepreneur peut être licencié pour creuser sans l'être du tout pour la membrane.",
+  },
+  {
+    q: "Une licence d'excavation atteste-t-elle d'une compétence évaluée ?",
+    a: "Non, et c'est vérifiable dans le texte de la Régie. La 2.5 relève de l'annexe III, dont la RBQ écrit que ces sous-catégories « ne nécessitent pas une évaluation de la compétence en exécution de travaux de construction ». La 2.6, qui vise les pieux et les fondations spéciales et nomme la reprise en sous-œuvre, relève au contraire de l'annexe II, qui l'exige. Détenir une licence d'excavation n'est donc pas la même garantie que détenir une 2.6.",
+  },
+  {
+    q: "Que veut dire « un drain conforme à la norme BNQ » ?",
+    a: "Seul, rien du tout. La norme BNQ 3661-500 porte sur les dépôts d'ocre dans les systèmes de drainage et elle est en deux parties : la partie I traite de l'évaluation du risque pour un bâtiment neuf et du diagnostic pour un bâtiment existant, la partie II des méthodes d'installation. Une norme distincte, la BNQ 3624-130, vise les tuyaux perforés eux-mêmes. Exigez que la soumission nomme la norme, la partie et le type de tuyau.",
+  },
+  {
+    q: "Ma maison a moins de cinq ans. Suis-je couvert ?",
+    a: "Peut-être, par le plan de garantie des bâtiments résidentiels neufs. Il couvre un an pour les malfaçons existantes et non apparentes, trois ans pour les vices cachés, et cinq ans pour les vices de conception, de construction ou de réalisation et les vices du sol — c'est cette dernière fenêtre qui vise une fondation. La garantie est transférable au propriétaire suivant.",
+  },
+  {
+    q: "Puis-je faire réparer d'abord et réclamer ensuite ?",
+    a: "C'est le réflexe qui coûte le plus cher sur une maison récente. Faire exécuter soi-même des travaux sur un vice potentiellement couvert peut compromettre la réclamation, parce que la preuve disparaît avec le mur. La problématique doit être dénoncée dans un délai raisonnable, que la jurisprudence fixe à six mois suivant la découverte. Dénoncez d'abord, faites constater, puis décidez.",
+  },
+  {
+    q: "Faut-il un permis municipal pour excaver contre une fondation ?",
+    a: "Cela dépend de votre municipalité, et la Communauté métropolitaine de Québec en compte plusieurs. Il n'existe aucune règle unique applicable à tout le territoire, donc ce site n'en publie pas. Appelez le service aux citoyens de votre ville — le 311 pour la Ville de Québec — avant d'autoriser des travaux. Un refoulement d'égout relève d'ailleurs du réseau municipal et non d'un entrepreneur en fondation.",
+  },
+  {
+    q: "Pourquoi ce site ne publie-t-il aucun prix ?",
+    a: "Parce qu'aucune source primaire n'en publie pour ce territoire. Les chiffres qui circulent viennent de sites de génération de prospects, et la donnée la plus recopiée vise le Grand Montréal. La page Prix explique ce qui fait réellement varier la facture et les cinq points qu'une soumission doit nommer pour être comparable à une autre.",
+  },
+  {
+    q: "Est-ce que Solage Capitale fait les travaux ?",
+    a: "Non. Solage Capitale est un service publicitaire et de mise en relation. Le prestataire qui vous rappelle est une entreprise indépendante, détentrice de sa propre licence RBQ, et tout contrat se forme entre vous et elle. Rien sur ce site ne constitue un avis technique, un diagnostic ou une opinion d'ingénierie.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Questions fréquentes sur la fondation au Québec"
+  description="Licence RBQ, norme BNQ 3661-500, garantie des bâtiments neufs, permis d'excavation : les réponses vérifiables aux questions qui reviennent le plus."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Questions", ref },
+    ]),
+    faqSchema(faq),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Questions fréquentes</h1>
+
+      <p class="chapeau">
+        Les réponses ci-dessous s'appuient sur des textes publics — la Régie du bâtiment du
+        Québec, le Bureau de normalisation du Québec, le plan de garantie des bâtiments neufs —
+        que vous pouvez consulter et opposer vous-même à n'importe quel entrepreneur.
+      </p>
+
+      <h2>Vérifier, comprendre, comparer</h2>
+      {
+        faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+
+      <h2>Aller plus loin</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Prix et soumissions</a></li>
+        <li><a href={pathFor({ type: 'static', page: 'process' }, locale)}>Comment ça marche</a></li>
+        <li><a href={pathFor({ type: 'serviceIndex' }, locale)}>Les types d'intervention</a></li>
+        <li><a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>Territoire desservi</a></li>
+      </ul>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

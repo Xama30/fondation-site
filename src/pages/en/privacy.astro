@@ -1,0 +1,92 @@
+---
+/**
+ * Privacy policy, EN. Twin of `src/pages/confidentialite.astro`.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'privacy' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Privacy policy — Solage Capitale"
+  description="What the quote form collects, who it is passed to, how long it is kept, and how to exercise your rights under Quebec privacy law as a resident."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Privacy", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Privacy policy</h1>
+
+      <p class="chapeau">
+        This site collects the minimum needed for a contractor to call you back about your
+        foundation, and nothing else.
+      </p>
+
+      <h2>What is collected</h2>
+      <p>
+        Only what you enter yourself in the quote form: your name, a way to reach you, the area
+        the building is in, a description of the problem you are seeing, and a photo if you
+        choose to attach one.
+      </p>
+      <p>
+        The page the request was sent from is recorded with it, so the contractor knows which
+        subject you are asking about. <strong>No account is created and no password is
+        requested.</strong>
+      </p>
+
+      <h2>Why</h2>
+      <p>
+        For a single purpose: passing your request to the contractor who will call you back. The
+        information is not used for targeted advertising, resale, or building a mailing list.
+      </p>
+
+      <h2>Who it goes to</h2>
+      <p>
+        To the <strong>independent company</strong> handling enquiries for the region, and to no
+        one else. Once it receives your request, that company becomes responsible for it and
+        applies its own policy. The respective roles are set out in the
+        <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>terms of use</a>.
+      </p>
+
+      <h2>What the site does not do</h2>
+      <p>
+        The site sets <strong>no advertising or tracking cookies</strong> and loads no
+        third-party analytics script. That follows directly from how it is built: pages are
+        served as static HTML with no JavaScript, which is verified on every build.
+      </p>
+
+      <h2>Retention</h2>
+      <p>
+        A request is kept for as long as the quote needs following up, then deleted. It is not
+        archived indefinitely just in case.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Quebec's private-sector personal information legislation gives you the right to
+        <strong>access</strong> the information held about you, to request its
+        <strong>correction</strong>, to <strong>withdraw your consent</strong> and to request
+        its <strong>deletion</strong>. Such a request can be made through the
+        <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>contact page</a>.
+      </p>
+      <p>
+        If the answer does not satisfy you, the Commission d'accès à l'information du Québec is
+        the authority competent to receive a complaint.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        This policy may be amended. The version displayed is the one that applies.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

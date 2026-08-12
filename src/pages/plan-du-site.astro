@@ -1,0 +1,168 @@
+---
+/**
+ * Plan du site, FR. Jumelle : `src/pages/en/sitemap.astro`.
+ *
+ * DÉRIVÉ, jamais tenu à la main. Les listes de services, de secteurs et de pages
+ * matrice viennent de `getCollection`, donc une page écrite y apparaît et une
+ * page non écrite n'y figure pas — c'est la règle du projet (piloter les grilles
+ * de liens depuis la collection, jamais depuis le JSON brut).
+ *
+ * Les pages utilitaires viennent de `STATIC_PAGES` pour la même raison : ajouter
+ * une page statique la fait apparaître ici sans que personne ait à y penser.
+ * Certaines sont encore au statut « planifié » dans KEYWORD-MAP — l'en-tête et
+ * le pied de page les lient déjà partout, donc ce plan n'ajoute aucun lien mort
+ * qui n'existe pas ailleurs.
+ *
+ * À ne pas confondre avec `/sitemap.xml`, qui est produit en phase 9 et destiné
+ * aux moteurs. Celui-ci est pour les humains.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import { STATIC_PAGES } from '@data/slugs.ts';
+import type { ServiceKey, StaticPageKey } from '@data/slugs.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'sitemap' } as const;
+
+const LABELS: Record<StaticPageKey, string> = {
+  quote: "Demander une soumission",
+  pricing: "Prix",
+  emergency: "Urgence — eau au sous-sol",
+  process: "Comment ça marche",
+  serviceArea: "Territoire desservi",
+  faq: "Questions fréquentes",
+  about: "À propos",
+  contact: "Contact",
+  terms: "Conditions d'utilisation",
+  privacy: "Politique de confidentialité",
+  sitemap: "Plan du site",
+  thankYou: "Demande envoyée",
+};
+
+// `sitemap` : c'est cette page-ci. `thankYou` : une page de confirmation en
+// `noindex`, qu'on n'atteint qu'en ayant envoyé le formulaire — la lister ici en
+// ferait une page atteignable par curiosité, et elle annoncerait à un visiteur
+// qui n'a rien envoyé que sa demande est partie.
+const HORS_PLAN: StaticPageKey[] = ['sitemap', 'thankYou'];
+
+const staticPages = (Object.keys(STATIC_PAGES) as StaticPageKey[])
+  .filter((k) => !HORS_PLAN.includes(k))
+  .map((k) => ({ key: k, label: LABELS[k] }));
+
+const services = (await getCollection('services', (e) => e.data.locale === locale))
+  .map((e) => ({ key: e.data.service as ServiceKey, name: serviceData[locale][e.data.service as ServiceKey].name }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+const sectors = (await getCollection('sectors', (e) => e.data.locale === locale))
+  .map((e) => ({ slug: e.data.sector, name: cities[e.data.sector]!.name[locale] }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+// Le blogue s'apparie par `translationKey`, jamais par slug (PLAYBOOK §7.2), et
+// seuls les articles dont la jumelle existe sont listés.
+const allBlog = await getCollection('blog');
+const blogTwins = new Map(
+  allBlog.filter((e) => e.data.locale === 'en').map((e) => [e.data.translationKey, e]),
+);
+const posts = allBlog
+  .filter((e) => e.data.locale === 'fr' && blogTwins.has(e.data.translationKey))
+  .map((e) => ({
+    h1: e.data.h1,
+    slugs: {
+      fr: e.data.slug,
+      en: blogTwins.get(e.data.translationKey)!.data.slug,
+    },
+  }))
+  .sort((a, b) => a.h1.localeCompare(b.h1, 'fr'));
+
+const matrix = (await getCollection('matrix', (e) => e.data.locale === locale))
+  .map((e) => ({
+    service: e.data.service as ServiceKey,
+    sector: e.data.sector,
+    label: `${serviceData[locale][e.data.service as ServiceKey].name} — ${cities[e.data.sector]!.name[locale]}`,
+  }))
+  .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Plan du site — Solage Capitale"
+  description="Toutes les pages du site : les interventions sur une fondation, les secteurs de la région de Québec et les pages utilitaires, en une seule liste."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Plan du site", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Plan du site</h1>
+
+      <p class="chapeau">
+        {services.length} interventions, {sectors.length} secteurs et {matrix.length} pages
+        combinant les deux. Cette liste est construite à partir des pages réellement écrites,
+        pas tenue à la main.
+      </p>
+
+      <h2>Pages utilitaires</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'home' }, locale)}>Accueil</a></li>
+        {
+          staticPages.map((p) => (
+            <li><a href={pathFor({ type: 'static', page: p.key }, locale)}>{p.label}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>Interventions sur une fondation</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'serviceIndex' }, locale)}>Tous les types d'intervention</a></li>
+        {
+          services.map((s) => (
+            <li><a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+
+      {
+        matrix.length > 0 && (
+          <>
+            <h2>Intervention par secteur</h2>
+            <ul class="liens-liste">
+              {matrix.map((m) => (
+                <li>
+                  <a href={pathFor({ type: 'serviceSector', service: m.service, sector: m.sector }, locale)}>
+                    {m.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>Blogue</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'blogIndex' }, locale)}>Tous les articles</a></li>
+        {
+          posts.map((p) => (
+            <li><a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.h1}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>Secteurs</h2>
+      <ul class="liens-liste">
+        {
+          sectors.map((s) => (
+            <li><a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

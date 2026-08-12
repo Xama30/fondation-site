@@ -1,0 +1,39 @@
+{
+  "slug": "saint-augustin-de-desmaures",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "apres-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte post-2005 en drain PVC conforme BNQ 3661-500, mais les maisons neuves des Bocages reposent sur le remblai d'anciens terrains de villégiature entre le lac Saint-Augustin et la rivière du Cap-Rouge, où la nappe reste proche de la surface"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "béton coulé récent dominant dans Les Bocages, parc bâti trop jeune pour le retrait de béton à long terme"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Dans le secteur des Bocages et autour du lac Saint-Augustin, les chalets de bois du siècle dernier cèdent la place depuis les années 2000 à des maisons unifamiliales neuves sur solage de béton coulé et drain conforme à la norme BNQ 3661-500. Ces nouvelles constructions reposent souvent sur le remblai des anciens terrains de villégiature, entre le lac et la rivière du Cap-Rouge, où la nappe reste proche de la surface malgré des drains récents. Le noyau villageois plus ancien, le long du chemin du Roy et de la route 138, s'appuie plutôt sur des solages de pierre sans drain.",
+    "en": "In the Les Bocages sector and around Lac Saint-Augustin, wood-frame cottages from the last century have been giving way since the 2000s to new single-family homes on poured-concrete foundations with drains meeting the BNQ 3661-500 standard. These newer builds often sit on fill from former vacation lots, between the lake and the Cap-Rouge River, where the water table stays close to the surface despite the newer drains. The older village core along chemin du Roy and route 138 instead rests on undrained stone foundations."
+  },
+  "sources": [
+    "https://grandquebec.com/villes-quebec/saint-augustin-de-desmaures/"
+  ],
+  "todo": "confirmer la part du bâti 1969-1990 issu du parc industriel ; aucune source ouverte pour ocre/pyrite sur ce secteur",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

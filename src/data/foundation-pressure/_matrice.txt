@@ -1,0 +1,45 @@
+# approuvées (13/30) — lignes à passer en « planifié » dans KEYWORD-MAP
+/fondation/fissure-de-fondation/levis/	high	jonction solage / garage attenant, quasi systématique dans cette vague de construction, point de fissuration privilégié du béton coulé
+/fondation/drain-francais/la-cite-limoilou/	high	parc dominant 1900-1940 en solage de pierre sans drain d'origine ; la densité de murs mitoyens sur lot étroit empêche une excavation périphérique complète autour de chaque bâtiment, ce qui concentre l'eau contre la seule face de solage restée accessible, aggravée par la proximité de la rivière Saint-Charles qui borde Vieux-Limoilou et Maizerets
+/fondation/drain-francais/charlesbourg/	high	ceinture pavillonnaire 1960-1985 draine encore par tuile d'argile en sections vers la rivière du Berger, qui longe le parc des Moulins
+/fondation/drain-francais/beauport/	high	cohorte 1960-1985 = drain de tuile d'argile en fin de vie, aggrave par la proximite nommee de la riviere Beauport et de la baie de Beauport qui maintiennent une nappe phreatique haute
+/fondation/fissure-de-fondation/stoneham-et-tewkesbury/	high	cohorte 1975-1990 dominante en béton coulé, fissures de retrait attendues sur ce type de solage; le noyau ancien de Saint-Adolphe en pierre reste minoritaire et ne fait pas fléchir le niveau porté par la vague de construction dominante
+/fondation/drain-francais/boischatel/	high	cohorte dominante des années 1940 à 1960 (percement des rues autour de l'église paroissiale de 1937, puis vers l'ouest par les rues Montmorency et Notre-Dame) = drain de tuile d'argile en fin de vie ; les terrains en pente vers la falaise du fleuve Saint-Laurent concentrent en plus le ruissellement contre les solages du bas de pente
+/fondation/drain-francais/ile-dorleans/	high	bâti dominant en moellons de pierre montés au mortier de chaux, sans drain d'origine, sur une île entièrement cernée par le fleuve Saint-Laurent qui maintient la nappe haute contre le solage
+/fondation/drain-francais/shannon/	high	la base de Valcartier devient permanente au début des années 1950, premier lotissement civil de Shannon construit dans cette cohorte en tuile d'argile déjà en fin de vie; plusieurs maisons toujours desservies par un puits privé signalent un solage antérieur au réseau municipal, aggravé par la proximité de la rivière Jacques-Cartier
+/fondation/drain-francais/chateau-richer/	high	bâti ancestral dominant en pierre le long de l'avenue Royale (maisons attestées entre 1760 et le début du 20e siècle), sans drain d'origine, aggravé par la proximité nommée de la rivière Sault-à-la-Puce près du Moulin du Petit-Pré
+/fondation/drain-francais/saint-ferreol-les-neiges/	high	cohorte dominante amorcée en 1954 avec la création du lac des Trois Castors au hameau de Saint-Nicolas = drain de tuile d'argile en fin de vie, aggravé par la proximité nommée de ce plan d'eau artificiel qui tient la nappe près de la surface autour des chalets
+/fondation/drain-francais/sainte-anne-de-beaupre/	high	résidences dominantes construites avant 1945 en pierre, sans drain d'origine, aggravé par la proximité nommée de l'embouchure de la rivière Sainte-Anne-du-Nord qui tient la nappe haute autour du noyau villageois de la basilique
+/fondation/drain-francais/fossambault-sur-le-lac/	high	cohorte de chalets 1934-1960 sur solage de pierre ou pieux, sans drain d'origine, aggravé par la proximité immédiate du lac Saint-Joseph qui maintient la nappe haute à l'année
+/fondation/drain-francais/lac-delage/	high	village fondé en 1959 autour du lac Delage, cohorte fondatrice 1945-1975 en tuile d'argile déjà en fin de vie utile; le territoire est le plus petit de la couronne nord et ne laisse presque aucun terrain éloigné du plan d'eau, ce qui maintient la nappe haute même en dehors de la cohorte dominante
+
+# rétrogradées (29) — sections du hub de secteur, en texte brut, jamais en lien
+levis	drain-francais	moderate
+sainte-foy-sillery-cap-rouge	drain-francais	moderate
+sainte-foy-sillery-cap-rouge	fissure-de-fondation	moderate
+la-haute-saint-charles	drain-francais	moderate
+la-haute-saint-charles	fissure-de-fondation	moderate
+charlesbourg	fissure-de-fondation	moderate
+beauport	fissure-de-fondation	moderate
+les-rivieres	drain-francais	moderate
+les-rivieres	fissure-de-fondation	moderate
+saint-augustin-de-desmaures	drain-francais	moderate
+lancienne-lorette	drain-francais	moderate
+lancienne-lorette	fissure-de-fondation	moderate
+stoneham-et-tewkesbury	drain-francais	moderate
+boischatel	fissure-de-fondation	moderate
+sainte-catherine-de-la-jacques-cartier	drain-francais	moderate
+sainte-brigitte-de-laval	drain-francais	moderate
+lac-beauport	drain-francais	moderate
+lac-beauport	fissure-de-fondation	moderate
+shannon	fissure-de-fondation	moderate
+beaupre	drain-francais	moderate
+beaupre	fissure-de-fondation	moderate
+lange-gardien	drain-francais	moderate
+lange-gardien	fissure-de-fondation	moderate
+saint-ferreol-les-neiges	fissure-de-fondation	moderate
+saint-gabriel-de-valcartier	drain-francais	moderate
+saint-gabriel-de-valcartier	fissure-de-fondation	moderate
+wendake	drain-francais	moderate
+wendake	fissure-de-fondation	moderate
+lac-delage	fissure-de-fondation	moderate

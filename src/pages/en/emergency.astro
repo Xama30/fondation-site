@@ -1,0 +1,127 @@
+---
+/**
+ * Emergency — water in the basement, EN. Twin of `src/pages/urgence.astro`.
+ *
+ * The page most exposed to rule 1bis on the whole site. Someone with water in
+ * the basement right now wants to know what to do, and that is exactly what
+ * cannot be given: no pump, no tarp, no "temporary fix in the meantime" — that
+ * last one is named and forbidden in docs/CLAUDE.md.
+ *
+ * Every action suggested here is observing, documenting or telephoning.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'emergency' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Water in the basement — what to do right now"
+  description="Water in the basement after rain or snowmelt: the real dangers to know, who to call depending on the cause, and what protects your insurance claim."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Emergency", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Water in your basement right now</h1>
+
+      <p class="chapeau">
+        This page will not tell you how to tackle it yourself, and that is deliberate. It tells
+        you what is dangerous, who to telephone depending on the cause, and what to do
+        immediately so that you do not lose a claim.
+      </p>
+
+      <h2>First: electricity</h2>
+      <p>
+        <strong>Do not enter a flooded room if the water is touching or approaching an outlet, an
+        extension cord, a plugged-in appliance or the electrical panel.</strong> There is nothing
+        to attempt in that situation: leave the room and call a master electrician, or
+        Hydro-Québec if the electrical service entrance is involved. This is the one emergency on
+        this page that puts people at risk rather than a building.
+      </p>
+
+      <h2>Then: where is the water coming from?</h2>
+      <p>
+        The answer decides who to call, and above all who pays. There are three cases, and they
+        do not share a phone number.
+      </p>
+
+      <h3>It is coming up through a floor drain or a toilet</h3>
+      <p>
+        That is a sewer backup, and it belongs to the municipal network, not to a foundation
+        contractor. <strong>Report it to your city</strong> — 311 for Ville de Québec — before
+        committing to anything. The city determines whether the cause is on its portion of the
+        network or on yours, and that answer changes who bears the cost.
+      </p>
+
+      <h3>Water is entering at the base of a wall, a joint or a crack</h3>
+      <p>
+        That points at the foundation itself: a drain that no longer carries water, a crack that
+        has opened, a membrane at the end of its life. That is this site's subject. The first
+        useful step is not excavation, it is a diagnosis — see
+        <a href={pathFor({ type: 'service', service: 'infiltration' }, locale)}>basement water
+        infiltration</a>.
+      </p>
+
+      <h3>It is a pipe, a water heater or an appliance</h3>
+      <p>
+        That is not a foundation problem. It is a plumber, and your insurer.
+      </p>
+
+      <h2>Call your insurer early, not later</h2>
+      <p>
+        Water damage has to be reported promptly, and most policies require it. Before throwing
+        anything out or replacing it, ask your insurer what they need to see: belongings disposed
+        of before they are documented can become impossible to claim for.
+      </p>
+
+      <h2>Document it while it is still visible</h2>
+      <p>
+        The water goes, and the evidence with it. While the situation is in front of you:
+      </p>
+      <ul>
+        <li>photograph the exact point where water is entering, not just the puddle;</li>
+        <li>note the date, the time and the weather — heavy rain, snowmelt, or nothing unusual;</li>
+        <li>
+          if you can see a crack, photograph it with a ruler beside it, so the scale can be
+          verified later;
+        </li>
+        <li>keep the invoices for everything that follows.</li>
+      </ul>
+      <p>
+        That file is what will let you compare two quotes against the same observation, and what
+        holds a claim together.
+      </p>
+
+      <h2>If the building is under five years old</h2>
+      <p>
+        Do not have it repaired before checking your coverage. The new residential building
+        warranty plan covers five years for design, construction or execution defects and soil
+        defects — the window that reaches a foundation. <strong>Having the work done yourself can
+        compromise the claim</strong>, because the evidence disappears along with the wall.
+        Report it first. The <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>frequently
+        asked questions</a> set out the deadlines.
+      </p>
+
+      <h2>Why this page suggests no quick fix</h2>
+      <p>
+        Because there is no safe, generic action to take on a foundation that is letting water
+        in, and a badly chosen "temporary fix" usually moves the problem rather than stopping it.
+        This site explains the phenomena and the regulations; the intervention belongs to a
+        contractor holding the right licence subcategories.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

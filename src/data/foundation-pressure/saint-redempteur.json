@@ -1,0 +1,37 @@
+{
+  "slug": "saint-redempteur",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1975-1990",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte dominante 1975-1990 en PVC ondulé — hors des strates avant-1945/1945-1975 qui ouvrent droit à high sous le critère resserré ; la proximité nommée de la rive ouest de la rivière Chaudière reste réelle mais ne suffit plus, seule, à hisser un solage post-1975 en PVC ondulé à high — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "high",
+      "why": "béton coulé de la cohorte 1975-1990 sur remblai en pente vers la rivière, fissures de retrait fréquentes pour cette vague de construction"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les lotissements construits à partir de la fin des années 1970 sur les terres cultivées entre la route des Rivières et la rive ouest de la rivière Chaudière — le village de 1919 blotti autour de l'église Très-Saint-Rédempteur et de la gare Chaudière n'occupait alors qu'une fraction du secteur — coffrent leurs semelles de béton directement sur ce remblai de terre cultivée en pente vers la rivière, et ceinturent le solage d'un tuyau de PVC annelé. Ce tuyau s'écrase et se déforme aux joints plus vite que sur un sol ferme, et le retrait du béton en une seule saison de coffrage marque déjà les murs de sous-sol du secteur Bernières.",
+    "en": "The subdivisions built from the late 1970s onward on farmland between route des Rivières and the west bank of the Chaudière River — the 1919 village clustered around the église Très-Saint-Rédempteur and the Chaudière train station then occupied only a fraction of the sector — pour their concrete footings straight onto that sloped, cultivated fill and ring the foundation with corrugated PVC pipe. That pipe crushes and deforms at the joints faster than it would on firm ground, and single-season formwork shrinkage already marks the basement walls of the Bernières area."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "saint-jean-baptiste",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1880-1920",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "solage de pierre dominant 1880-1920, sans drain d'origine — strate ancienne confirmée, mais aucun cours d'eau, plan d'eau ni marais n'est nommé dans localTerms/housingStock pour Saint-Jean-Baptiste ; le ruissellement de pente vers la Grande Allée n'est pas un facteur nommé au sens du critère resserré (« secteur en pente » est explicitement exclu) — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre non armé — la charge additionnelle des étages supérieurs sollicite surtout les joints de mortier des moellons, pas le béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les immeubles locatifs de trois à cinq étages qui bordent la rue Saint-Jean et l'avenue Honoré-Mercier ont été construits entre 1880 et 1920, sur des solages de moellons sans drain périphérique. Le quartier descend en pente depuis la côte Sainte-Geneviève vers la Grande Allée, et cette dénivellation dirige le ruissellement contre les fondations des immeubles situés dans la partie basse de la pente. La hauteur des bâtiments — jusqu'à cinq étages — ajoute une charge que le mortier de chaux entre les moellons n'a pas été conçu pour porter aussi longtemps.",
+    "en": "The three- to five-storey rental buildings lining rue Saint-Jean and avenue Honoré-Mercier went up between 1880 and 1920, on rubble-stone foundations with no perimeter drain at all. The neighbourhood slopes down from côte Sainte-Geneviève toward Grande Allée, and that grade channels runoff against the foundations sitting at the low end of the slope. The height of these buildings — up to five storeys — adds a load the lime mortar between the fieldstones was never built to carry this long."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

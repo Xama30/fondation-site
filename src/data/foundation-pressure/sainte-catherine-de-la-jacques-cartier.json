@@ -1,0 +1,39 @@
+{
+  "slug": "sainte-catherine-de-la-jacques-cartier",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "apres-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "cohorte post-2005 en drain PVC conforme BNQ 3661-500 le long de la route 367, mais la frange riveraine du chemin de la Liseuse longe la rivière Jacques-Cartier et maintient la nappe haute même pour ces fondations récentes"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "béton coulé récent dominant sur la couronne résidentielle de la route 367, parc bâti trop jeune pour le retrait de béton à long terme"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le long de la route 367, les fondations de béton coulé de la couronne résidentielle bâtie après 2005 sont raccordées à des drains conformes à la norme BNQ 3661-500, une génération de construction qui laisse peu de prise à l'humidité — sauf sur l'étroite bande du chemin de la Liseuse, qui longe la rivière Jacques-Cartier et où la nappe reste haute même sous ces fondations récentes. Cette proximité du cours d'eau n'entraîne pas de fissures, le béton y étant trop jeune pour un retrait à long terme, mais elle empêche le sol de s'assécher complètement autour des solages riverains. Le noyau villageois historique, en retrait de la rivière, s'appuie encore sur des solages de pierre sans drain d'aucune sorte.",
+    "en": "Along route 367, the poured-concrete foundations of the residential ring built after 2005 are tied into drains meeting the BNQ 3661-500 standard, a construction generation that leaves little room for moisture problems — except along the narrow strip of chemin de la Liseuse, which runs beside the rivière Jacques-Cartier and where the water table stays high even under these newer foundations. That proximity to the river doesn't cause cracking, since the concrete there is too young for long-term shrinkage, but it keeps the soil from ever fully drying around the riverside foundations. The historic village core, set back from the river, still rests on stone foundations with no drain at all."
+  },
+  "sources": [
+    "https://www.courrierdeportneuf.com/2020/12/02/la-construction-va-bien-a-sainte-catherine-de-la-jacques-cartier/"
+  ],
+  "todo": "part exacte du bâti 1990-2005 dans la couronne résidentielle non confirmée ; aucune source ouverte pour ocre/pyrite sur ce secteur",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

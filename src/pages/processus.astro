@@ -1,0 +1,107 @@
+---
+/**
+ * Comment ça marche, FR. Jumelle : `src/pages/en/process.astro`.
+ *
+ * Décrit le déroulement du SERVICE, et ce qu'un professionnel fait à chaque
+ * étape, à la 3ᵉ personne. Jamais d'impératif technique, jamais de méthode
+ * (règle 1bis) : « l'entrepreneur excave jusqu'à la semelle » est permis,
+ * « excavez jusqu'à la semelle » ne l'est pas.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'process' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Comment ça marche — de la demande aux travaux"
+  description="Les étapes entre le moment où vous constatez un problème de fondation et la fin des travaux, et ce que vous devriez exiger à chacune d'entre elles."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Comment ça marche", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>De la première tache d'humidité à la fin des travaux</h1>
+
+      <p class="chapeau">
+        Six étapes. La plus importante est la deuxième, et c'est celle qu'on saute presque
+        toujours : établir d'où vient l'eau <em>avant</em> d'autoriser une excavation.
+      </p>
+
+      <h2>1. Vous documentez ce que vous observez</h2>
+      <p>
+        Avant d'appeler qui que ce soit, notez l'endroit exact, la date, et les conditions :
+        forte pluie, fonte des neiges, ou aucun rapport avec la météo. Photographiez, en plaçant
+        une règle à côté d'une fissure pour garder une échelle. Ces notes ne coûtent rien et
+        elles changent tout : elles vous permettront de comparer deux soumissions sur la même
+        observation plutôt que sur deux argumentaires.
+      </p>
+
+      <h2>2. Le diagnostic, avant le devis</h2>
+      <p>
+        C'est l'étape qui sépare une dépense mesurée d'une excavation inutile. Sur un drain,
+        une inspection par caméra dit s'il est colmaté, écrasé ou simplement chargé de sédiment
+        — et cette distinction sépare un nettoyage d'un remplacement complet. Sur un mur, elle
+        distingue une fissure de retrait d'un mouvement structural.
+      </p>
+      <p>
+        <strong>Un prix ferme donné au téléphone, sans que personne n'ait vu le bâtiment, devrait
+        vous rendre méfiant.</strong> L'état réel d'un mur n'est connu qu'une fois exposé.
+      </p>
+
+      <h2>3. Vous envoyez votre demande</h2>
+      <p>
+        Le formulaire transmet votre description et votre secteur à une entreprise indépendante
+        détentrice de sa propre licence RBQ. C'est gratuit et ça ne vous engage à rien.
+      </p>
+
+      <h2>4. L'entrepreneur se déplace et chiffre</h2>
+      <p>
+        Il examine l'ouvrage, établit ce qui se passe, et remet une soumission écrite. C'est le
+        moment de demander le numéro de licence et de le vérifier vous-même au registre public
+        de la Régie du bâtiment du Québec — un chantier de fondation touche souvent trois
+        sous-catégories distinctes, et être licencié pour creuser n'autorise pas à
+        imperméabiliser.
+      </p>
+
+      <h2>5. Vous comparez, puis vous décidez</h2>
+      <p>
+        Une soumission comparable nomme la norme employée et sa partie, le type de tuyau, ce
+        que la remise en état du terrain inclut, et ce qui déclencherait un supplément. Deux
+        montants seuls ne se comparent pas. Vous restez libre de demander d'autres soumissions,
+        et c'est recommandé. La page
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Prix</a> détaille les
+        cinq points à exiger.
+      </p>
+
+      <h2>6. Les travaux, et ce qui reste après</h2>
+      <p>
+        L'entrepreneur exécute, remet le terrain en état, et vous remet ses garanties par écrit.
+        Conservez le rapport d'inspection, la soumission et les photos : sur un bâtiment de moins
+        de cinq ans, ce dossier est ce qui rend une réclamation possible. Les
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>
+        expliquent les fenêtres de garantie.
+      </p>
+
+      <h2>Ce que ce service ne fait pas</h2>
+      <p>
+        Solage Capitale n'exécute aucun travail et ne supervise aucun chantier. Le contrat se
+        forme entre vous et l'entreprise qui se déplace. Rien ici ne constitue un avis technique
+        ou une opinion d'ingénierie — voir les
+        <a href={pathFor({ type: 'static', page: 'terms' }, locale)}>conditions d'utilisation</a>.
+      </p>
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,87 @@
+---
+/**
+ * Index géographique, FR. Jumelle : `src/pages/en/service-area.astro`.
+ *
+ * C'est `/territoire/`, pas `/secteurs/`. Les deux existeraient en concurrence
+ * sur la même intention (« secteurs desservis ») : `/secteurs/` reste un simple
+ * préfixe d'URL, sans page. Le fil d'Ariane des hubs de secteur pointe ici.
+ *
+ * La liste est pilotée par `getCollection` : un secteur dont la page n'est pas
+ * écrite n'apparaît pas, plutôt que de devenir un lien mort.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities } from '@lib/data.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'serviceArea' } as const;
+
+const written = await getCollection('sectors', (e) => e.data.locale === locale);
+const listed = written
+  .map((e) => ({ slug: e.data.sector, city: cities[e.data.sector]! }))
+  .filter((s) => s.city)
+  .sort((a, b) => a.city.name[locale].localeCompare(b.city.name[locale], 'fr'));
+
+const groups = [
+  { tier: 'A' as const, label: "Arrondissements et villes principales" },
+  { tier: 'B' as const, label: "Municipalités de la couronne" },
+  { tier: 'C' as const, label: "Quartiers et secteurs" },
+].map((g) => ({ ...g, items: listed.filter((s) => s.city.tier === g.tier) }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Territoire desservi — région de Québec et Lévis"
+  description="Les secteurs couverts dans la région de Québec : arrondissements, municipalités de la couronne et quartiers, avec ce qui caractérise le bâti de chacun."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Territoire", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Les secteurs de la région de Québec</h1>
+      <p>
+        Le parc résidentiel de la Communauté métropolitaine de Québec n'a pas été bâti d'un
+        seul tenant. Un noyau villageois d'avant 1945, une couronne pavillonnaire des années
+        1970 et un lotissement récent ne posent pas les mêmes problèmes de fondation, même à
+        quelques rues de distance. Chaque page ci-dessous part de l'époque de construction du
+        secteur et de sa géographie, pas d'un texte interchangeable.
+      </p>
+
+      {
+        listed.length === 0 ? (
+          <p>Les pages de secteur sont en cours de rédaction.</p>
+        ) : (
+          groups
+            .filter((g) => g.items.length > 0)
+            .map((g) => (
+              <>
+                <h2>{g.label}</h2>
+                <ul>
+                  {g.items.map((s) => (
+                    <li>
+                      <a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>
+                        {s.city.name[locale]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ))
+        )
+      }
+
+      <p>
+        <a href={pathFor({ type: 'serviceIndex' }, locale)}>Les types d'intervention</a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Demander une soumission</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

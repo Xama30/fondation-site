@@ -1,0 +1,40 @@
+{
+  "slug": "beaupre",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1975-1990",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "apres-2005",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "aucune cohorte dominante confirmée : le bâti condo/chalet du secteur Mont-Sainte-Anne s'étale de l'ouverture de la station en 1968 aux projets résidentiels encore construits aujourd'hui, sans cohorte majoritaire nommée dans housingStock — plafonné par prudence"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même plafond : parc bâti trop étalé dans le temps pour assigner un niveau tranché sans strate dominante"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À Beaupré, les condos et chalets construits par vagues successives depuis l'ouverture de la station de ski du Mont-Sainte-Anne en 1968 jusqu'aux projets résidentiels encore construits aujourd'hui se côtoient avec des résidences permanentes plus anciennes proches de l'embouchure de la rivière Sainte-Anne-du-Nord. Cet étalement dans le temps empêche de cibler une seule cohorte : les dalles des chalets de montagne évacuent l'eau par la pente naturelle du boisé environnant, alors que les fondations plus proches du fleuve affrontent une nappe que la rivière tient près de la surface — deux logiques de drainage qui coexistent sans qu'aucune ne domine le secteur.",
+    "en": "In Beaupré, the condos and chalets built in successive waves since the Mont-Sainte-Anne ski resort opened in 1968 through to residential projects still going up today sit alongside older permanent homes closer to the mouth of the rivière Sainte-Anne-du-Nord. This spread over time rules out targeting a single cohort: mountain chalet slabs shed water down the natural slope of the surrounding woods, while foundations closer to the river face a water table the river itself keeps near the surface — two different drainage logics coexisting without either dominating the sector."
+  },
+  "sources": [
+    "https://www.ledevoir.com/economie/777260/beaupre-et-le-mont-sainte-anne-une-ville-la-conquete-de-son-affranchissement",
+    "https://fyraquartier.com/en/"
+  ],
+  "todo": "Aucune strate dominante confirmée pour Beaupré : le bâti condo/chalet du secteur Mont-Sainte-Anne s'étale de l'ouverture de la station (1968) à des projets résidentiels encore en construction (ex. Fyra Quartier, années 2020) sans cohorte majoritaire identifiable dans housingStock. Confirmer via le rôle d'évaluation municipal si une cohorte domine réellement avant de dépasser moderate.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

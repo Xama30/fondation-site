@@ -1,0 +1,40 @@
+{
+  "slug": "boischatel",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte dominante des années 1940 à 1960 (percement des rues autour de l'église paroissiale de 1937, puis vers l'ouest par les rues Montmorency et Notre-Dame) = drain de tuile d'argile en fin de vie ; les terrains en pente vers la falaise du fleuve Saint-Laurent concentrent en plus le ruissellement contre les solages du bas de pente"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé dominant sur les résidences des années 1940 à 1960, fissures de retrait typiques de cette cohorte ; la frange ancestrale de l'avenue Royale reste en pierre et relève de la réfection de mortier, pas de la fissure de béton"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À Boischatel, la trame de rues qui s'est formée autour de l'église paroissiale bâtie en 1937, puis étendue vers l'ouest par les rues Montmorency et Notre-Dame, date presque entièrement du même quart de siècle : 1945 à 1975. Les drains d'argile posés à cette époque ont maintenant passé le cap où les joints entre les sections s'écartent et laissent entrer la terre. Sur les lots qui descendent vers la falaise dominant le fleuve Saint-Laurent, cette même pente qui a dicté le tracé des rues rabat aussi le ruissellement contre les fondations bâties au pied de la déclivité. Les maisons de pierre encore debout le long de l'avenue Royale, antérieures à 1945, ne demandent qu'une reprise de mortier entre les moellons.",
+    "en": "In Boischatel, the street grid that grew up around the parish church built in 1937, then extended west along rue Montmorency and rue Notre-Dame, dates almost entirely to the same quarter-century: 1945 to 1975. The clay drains laid down in that period have now passed the point where the joints between sections separate and let soil in. On the lots sloping toward the cliff above the St. Lawrence River, the same grade that shaped the street layout also channels runoff against the foundations built at the bottom of the slope. The stone houses still standing along avenue Royale, predating 1945, need only mortar repointing between the fieldstones."
+  },
+  "sources": [
+    "https://www.boischatel.ca/ville/profil-histoire/",
+    "https://histoire-du-quebec.ca/boischatel"
+  ],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

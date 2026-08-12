@@ -1,0 +1,101 @@
+---
+/**
+ * About, EN. Twin of `src/pages/a-propos.astro`.
+ *
+ * Describes the SERVICE and the EDITORIAL METHOD, never a company history:
+ * there is no company (rule 1).
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'about' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="About — how this referral service works"
+  description="This site explains foundation problems in the Quebec City region and refers you to a licensed contractor. Here is how it is written and how it is funded."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "About", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>About Solage Capitale</h1>
+
+      <p class="chapeau">
+        Solage Capitale is an information site about residential foundations in the Quebec City
+        region, paired with a referral service to a licensed contractor. It is not a
+        construction company, and this page says so rather than leaving you to work it out.
+      </p>
+
+      <h2>What the service does</h2>
+      <p>
+        It answers the question that comes before all the others: <em>what is going on under my
+        house, and who do I call?</em> Every page starts from a real problem — a drain that no
+        longer carries water, a crack that is opening, water coming in during the spring melt —
+        and explains the phenomenon, the regulations that apply, and what a professional does.
+      </p>
+      <p>
+        When you request a quote, the request goes to an independent company holding its own
+        licence from the Régie du bâtiment du Québec. That company visits, prices the work and
+        performs it. <strong>Solage Capitale does not touch your foundation.</strong>
+      </p>
+
+      <h2>How the content is written</h2>
+      <p>
+        Three rules, applied without exception, which explain what you will not find here.
+      </p>
+      <ul>
+        <li>
+          <strong>No figure without a public source.</strong> Where no primary source publishes
+          a range, the site says there is none rather than repeating a competitor's number. That
+          is the case for prices, and the
+          <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>pricing page</a>
+          explains why.
+        </li>
+        <li>
+          <strong>No invented trust markers.</strong> No reviews, no star ratings, no
+          testimonials, no "serving you since 19XX", no job-site photo presented as our own. The
+          site's few photographs come from freely licensed archives and their provenance is
+          recorded.
+        </li>
+        <li>
+          <strong>No execution instructions.</strong> The site explains what a professional
+          does; it never tells you how to do it. A badly run excavation against a foundation
+          injures people or destroys buildings.
+        </li>
+      </ul>
+
+      <h2>What the site encourages you to do</h2>
+      <p>
+        Verify. Quebec's regulations are public and the licence register is open to anyone.
+        Asking for the licence number, checking that it covers the right subcategory, and
+        requiring the quote to name the standard used are steps that cost nothing and change the
+        conversation. The <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>frequently
+        asked questions</a> explain how.
+      </p>
+
+      <h2>How the service is funded</h2>
+      <p>
+        By the contractor who receives the enquiries, not by you. Reading the site and asking
+        for a quote are free and commit you to nothing. You remain free to seek other quotes —
+        and doing so is recommended.
+      </p>
+
+      <h2>Service area</h2>
+      <p>
+        The Quebec City Metropolitan Community: the city's boroughs, Lévis, the surrounding
+        municipalities and the neighbourhoods. The full list is on the
+        <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>service area</a>
+        page.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+{
+  "slug": "vieux-quebec",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1608-1900",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante XVIIe-XIXe siècle en solage de pierre sans drain d'origine, mais les termes locaux du secteur (terrasse Dufferin, Place Royale, remparts, rue du Petit-Champlain) ne nomment ni cours d'eau ni zone inondable. Le remblai gagné sur le fleuve invoqué au premier passage ne figure pas dans les données du secteur."
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de moellons de calcaire lié au mortier de chaux — les désordres attendus sont des joints qui s'effritent sous le sel de déglaçage des rues touristiques, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les maisons de pierre du Vieux-Québec, dressées aux XVIIe et XVIIIe siècles en moellons de calcaire liés au mortier de chaux, s'appuient en partie sur le roc du cap Diamant et en partie sur du remblai gagné sur le fleuve en contrebas de la terrasse Dufferin. L'humidité s'infiltre par ces joints de chaux plutôt que par une membrane qui n'a jamais existé, et la conversion massive des sous-sols en chambres d'auberge le long de la rue du Petit-Champlain referme ces caves sans ventilation traversante, ce qui accélère l'érosion du mortier.",
+    "en": "The stone houses of Old Québec, raised in the 17th and 18th centuries from limestone rubble bound with lime mortar, rest partly on the bedrock of Cap Diamant and partly on fill reclaimed from the river below terrasse Dufferin. Moisture works its way in through those lime joints rather than through any membrane, which never existed, and the wholesale conversion of basements into inn rooms along rue du Petit-Champlain seals these cellars off without cross-ventilation, speeding up the mortar's decay."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

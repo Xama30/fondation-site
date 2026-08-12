@@ -1,0 +1,31 @@
+{
+  "slug": "la-haute-saint-charles",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1970-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "parc bâti étalé après 1970 sans strate dominante unique nommée dans housingStock ; plafonné en attendant de distinguer Loretteville, Val-Bélair, Saint-Émile et Lac-Saint-Charles"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même plafonnement : étalement entre ex-municipalités empêche de trancher au-delà de moderate"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À Val-Bélair et autour du Lac-Saint-Charles, les maisons unifamiliales d'après 1970 sont souvent posées sur vide sanitaire plutôt que sur un sous-sol complet, en bordure de grands terrains boisés où des souches laissées en place pourrissent contre le solage. Les racines qui s'infiltrent dans les drains de cette génération, combinées à l'humidité que retient le boisé autour du Marais du Nord, répartissent la pression sur l'ensemble du secteur plutôt que de la concentrer sur une seule strate.",
+    "en": "In Val-Bélair and around Lac-Saint-Charles, homes built after 1970 typically sit on crawl spaces rather than full basements, backing onto large wooded lots where old tree stumps were left to rot against the footing. Roots working into that generation's drains, combined with the moisture the surrounding woodland holds near the Marais du Nord, spread the pressure across the sector rather than concentrating it in a single stratum."
+  },
+  "sources": [],
+  "todo": "housingStock ne nomme qu'« après 1970 » pour un arrondissement qui regroupe Loretteville (plus ancien), Val-Bélair, Saint-Émile et Lac-Saint-Charles (plus récents) — confirmer une strate dominante par ex-municipalité avant de dépasser moderate. Ocre : aucune source primaire pour le secteur du Marais du Nord.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

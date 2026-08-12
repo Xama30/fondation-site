@@ -1,0 +1,172 @@
+---
+/**
+ * Le hero par défaut d'un hub de secteur : une coupe stratigraphique du parc
+ * bâti, dessinée depuis `foundationPressure.eras` du secteur lui-même.
+ *
+ * POURQUOI un schéma et non une photo de sujet réutilisée. La porte d'unicité
+ * exige un `alt` de hero DISTINCT de toutes les pages sœurs. Une même photo de
+ * moellons posée sur vingt secteurs laisse deux issues, toutes deux fermées :
+ * un alt identique (erreur dure de la porte), ou un alt qui nomme un lieu où la
+ * photo n'a pas été prise (règle 1 — inventer de la confiance). Un schéma bâti
+ * sur les données du secteur peut au contraire le nommer honnêtement : il parle
+ * bel et bien de ce secteur-là.
+ *
+ * Et il n'y a AUCUNE licence à transmettre au locataire, ce qui est la
+ * contrainte qui décide de tout en phase 3.
+ *
+ * Le texte du schéma ne triche avec aucune porte : `bodyText()` de
+ * `scripts/lib/crawl.mjs` retire `<svg>…</svg>` avant de mesurer, donc ces
+ * étiquettes ne comptent ni dans les 400 mots ni dans la similarité entre
+ * sœurs. Seul `heroAlt()` le lit, sur le HTML brut.
+ */
+import { dict } from '@lib/i18n.ts';
+import type { UiKey } from '@lib/i18n.ts';
+import type { Locale } from '@lib/constants.ts';
+
+interface Era {
+  span: string;
+  weight: string;
+  foundation: string;
+  drain: string;
+}
+
+interface Props {
+  locale: Locale;
+  /** Nom du secteur tel qu'il s'écrit dans cette langue. */
+  sectorName: string;
+  eras: Era[];
+}
+
+const { locale, sectorName, eras } = Astro.props;
+const ui = dict(locale);
+
+/** `avant-1945` et `apres-2005` sont des jetons ; le reste est déjà lisible. */
+const spanLabel = (span: string) =>
+  span === 'avant-1945' || span === 'apres-2005'
+    ? ui(`era.span.${span}` as UiKey)
+    : span.replace('-', '–');
+
+/** Pour ordonner les strates : la plus récente en haut, comme une vraie coupe. */
+const startYear = (span: string) =>
+  span === 'avant-1945' ? 0 : span === 'apres-2005' ? 9999 : Number(span.slice(0, 4));
+
+const strata = [...eras].sort((a, b) => startYear(b.span) - startYear(a.span));
+
+const W = 480;
+const PAD = 10;
+const bandHeight = (weight: string) => (weight === 'dominant' ? 78 : 56);
+
+let y = PAD;
+const bands = strata.map((era) => {
+  const h = bandHeight(era.weight);
+  const band = {
+    era,
+    y,
+    h,
+    dominant: era.weight === 'dominant',
+    span: spanLabel(era.span),
+    foundation: ui(`era.foundation.${era.foundation}` as UiKey),
+    drain: ui(`era.drain.${era.drain}` as UiKey),
+  };
+  y += h + 6;
+  return band;
+});
+const H = y - 6 + PAD;
+
+/**
+ * L'alt. Il nomme le secteur — c'est ce qui le rend distinct des 50 autres, et
+ * c'est honnête parce que le schéma décrit réellement les données de ce
+ * secteur. Il décrit ce que le graphique montre, jamais ce que le site fait.
+ *
+ * Ponctué de virgules et de points UNIQUEMENT : « ; » et « : » exigent une
+ * espace insécable en français et pas en anglais, et l'insécable ne se vérifie
+ * qu'au niveau octet (règle 5). Une phrase par cohorte évite le piège des deux
+ * côtés plutôt que de le gérer.
+ */
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const label = [
+  `${ui('hero.diagram.label')} ${sectorName}.`,
+  ...bands.map(
+    (b) =>
+      `${cap(ui(`era.weight.${b.era.weight}` as UiKey))} ${b.span}, ${b.foundation}, ${b.drain}.`,
+  ),
+].join(' ');
+---
+
+<figure class="hero-schema">
+  <svg
+    role="img"
+    aria-label={label}
+    viewBox={`0 0 ${W} ${H}`}
+    width={W}
+    height={H}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {
+      bands.map((b) => (
+        <>
+          <rect
+            x={PAD}
+            y={b.y}
+            width={W - PAD * 2}
+            height={b.h}
+            rx="3"
+            fill={b.dominant ? 'var(--accent-voile)' : 'var(--surface)'}
+            stroke="var(--bordure)"
+            stroke-width="1"
+          />
+          <rect
+            x={PAD}
+            y={b.y}
+            width="5"
+            height={b.h}
+            fill={b.dominant ? 'var(--accent)' : 'var(--encre-2)'}
+          />
+          <text
+            x={PAD + 18}
+            y={b.y + 26}
+            font-family="var(--font-titre)"
+            font-size="19"
+            font-weight="600"
+            fill="var(--encre)"
+          >
+            {b.span}
+          </text>
+          <text
+            x={PAD + 18}
+            y={b.y + 46}
+            font-family="var(--font-corps)"
+            font-size="14"
+            fill="var(--encre-2)"
+          >
+            {b.foundation} · {b.drain}
+          </text>
+          {b.dominant && (
+            <text
+              x={W - PAD - 18}
+              y={b.y + 26}
+              text-anchor="end"
+              font-family="var(--font-corps)"
+              font-size="13"
+              font-weight="600"
+              fill="var(--accent)"
+            >
+              {ui('era.weight.dominant')}
+            </text>
+          )}
+        </>
+      ))
+    }
+  </svg>
+</figure>
+
+<style>
+  .hero-schema {
+    margin: 0 0 2rem;
+  }
+  .hero-schema svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -1,0 +1,37 @@
+{
+  "slug": "charny",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "1975-1990",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "noyau ouvrier avant-1945 de Vieux-Charny le long de l'avenue des Églises, sans drain d'origine ; proximité nommée de la rivière Chaudière/Bruyante (déjà au plafond)"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre avant-1945 dominant : usure de mortier, pas de fissure de béton coulé"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le noyau ouvrier de Vieux-Charny, aligné sur l'avenue des Églises entre la gare et la centrale hydroélectrique mise en service en 1901 sur la rivière Chaudière — l'ancienne rivière Bruyante —, s'est bâti en maçonnerie de pierre avant que le drain français n'existe comme technique. Le barrage qui alimente la centrale retient le niveau de la rivière juste en contrebas du village : la nappe reste haute toute l'année sous ces solages sans drain, à l'inverse du reste de Charny bâti après l'ouverture du pont Pierre-Laporte en 1970.",
+    "en": "The working-class core of Vieux-Charny, strung along avenue des Églises between the train station and the hydroelectric plant that went into service in 1901 on the Chaudière River — once called the rivière Bruyante — was built in stone masonry before the French drain existed as a technique. The dam that feeds the plant holds the river level just below the village: the water table stays high year-round under these drainless foundations, unlike the rest of Charny built after the Pierre-Laporte Bridge opened in 1970."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

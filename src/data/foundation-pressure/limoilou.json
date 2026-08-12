@@ -1,0 +1,31 @@
+{
+  "slug": "limoilou",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1900-1930",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "parc dominant du début du XXe siècle en solage de pierre sans drain d'origine ; la rénovation actuelle des triplex et duplex ouvriers autour de la 3e Avenue et de la 1re Avenue porte sur l'intérieur seulement, laissant le solage d'origine intact sous des rénovations par ailleurs complètes, aggravé par la proximité de la rivière Saint-Charles"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre sous des triplex ouvriers légers — les désordres attendus sont des joints de mortier, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les triplex et duplex ouvriers massés autour de la 3e Avenue et de la 1re Avenue — l'ancien chemin de Charlesbourg — datent du début du XXe siècle, entre 1900 et 1930 environ, sur un solage de pierre sans drain d'origine. Les jeunes familles et jeunes professionnels qui achètent ces bâtiments aujourd'hui rénovent surtout l'intérieur, en laissant intacts l'escalier extérieur, la façade de brique et, sous le tout, le solage d'origine que personne ne touche. La rivière Saint-Charles, qui longe le quartier, maintient une nappe phréatique haute contre ces fondations non modernisées.",
+    "en": "The working-class triplexes and duplexes clustered along 3e Avenue and 1re Avenue — the old chemin de Charlesbourg — date from the early 20th century, roughly 1900 to 1930, sitting on stone foundations with no drain at all. The young families and professionals buying these buildings today mostly renovate the interior, leaving the exterior staircase, the brick façade, and underneath it all, the original foundation, untouched. The rivière Saint-Charles running past the neighbourhood keeps the water table high against these unmodernized foundations."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "sainte-anne-de-beaupre",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "résidences dominantes construites avant 1945 en pierre, sans drain d'origine, aggravé par la proximité nommée de l'embouchure de la rivière Sainte-Anne-du-Nord qui tient la nappe haute autour du noyau villageois de la basilique"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "fondations de pierre dominantes : mouvement de mortier de chaux à rejointoyer, pas de fissure verticale de béton"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À Sainte-Anne-de-Beaupré, les résidences construites avant 1945 autour de la basilique Sainte-Anne-de-Beaupré et le long de l'avenue Royale reposent sur des solages de pierre montés au mortier de chaux, sans drain d'origine — la technique n'existe pas encore lorsque ce noyau de pèlerinage se bâtit, bien avant les auberges et les motels qui s'ajoutent plus tard le long de la même avenue. La proximité de l'embouchure de la rivière Sainte-Anne-du-Nord maintient la nappe phréatique haute contre ces fondations jamais drainées, alors que leur mouvement reste une affaire de joints de mortier à refaire, pas de fissure de béton.",
+    "en": "In Sainte-Anne-de-Beaupré, the homes built before 1945 around the Sainte-Anne-de-Beaupré basilica and along avenue Royale sit on lime-mortar stone foundations with no original drain — the technique doesn't exist yet when this pilgrimage core is built, well before the inns and motels added later along the same avenue. The nearby mouth of the rivière Sainte-Anne-du-Nord keeps the water table high against these never-drained foundations, while their movement remains a matter of repointing mortar joints, not concrete cracking."
+  },
+  "sources": [
+    "https://histoire-du-quebec.ca/ste-anne-beaupre",
+    "https://www.sainteannedebeaupre.com/pages/histoire-et-patrimoine"
+  ],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

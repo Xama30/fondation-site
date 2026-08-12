@@ -1,0 +1,72 @@
+---
+/**
+ * Service section index, EN. Twin of `src/pages/fondation/index.astro`.
+ *
+ * SEO role: this is the page that gives every hub its inbound links. Without it,
+ * `link-audit` flags "1 inbound internal link" on all 11 hubs.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'serviceIndex' } as const;
+
+const written = await getCollection('services', (e) => e.data.locale === locale);
+const items = written
+  .map((e) => {
+    const key = e.data.service as ServiceKey;
+    return { key, data: serviceData[locale][key], order: e.data.order };
+  })
+  .sort((a, b) => a.order - b.order);
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Foundation repair services — Solage Capitale"
+  description="French drain, cracks, waterproofing, iron ochre, crawl spaces: what each type of work on a residential foundation covers in the Quebec City region."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Foundation", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Types of work on a residential foundation</h1>
+      <p>
+        A damp basement rarely has a single cause, and two problems that look alike from the
+        inside are sometimes fixed by two different trades. Each page below covers one type of
+        work: what you can observe, what a contractor does, and what public regulation lets you
+        demand before signing anything.
+      </p>
+
+      {
+        items.length === 0 ? (
+          <p>Service pages are being written.</p>
+        ) : (
+          <ul>
+            {items.map((s) => (
+              <li>
+                <a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.data.name}</a>
+                {" — "}
+                {s.data.shortDescription}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <p>
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Price ranges</a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

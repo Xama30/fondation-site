@@ -1,0 +1,122 @@
+{
+  "$schema_note": "Fourchettes de prix. Règle du projet : un chiffre sans source primaire vaut null (PLAYBOOK §2, honest nulls). La page /prix/ écrit « aucune fourchette publiée » plutôt qu'un chiffre repris d'un concurrent. Clés = SERVICE_SLUGS (src/data/slugs.ts). Chaque entrée : range null ou [min,max] en dollars canadiens, unit, sourceUrl, sourceLabel, checkedOn (ISO), todo.",
+
+  "$research_note": "Recherche menée le 2026-08-04, sans résultat publiable — ne pas la refaire à l'identique. Les requêtes « prix drain français Québec », « prix réparation fissure fondation Québec » ne ramènent que des sites de génération de prospects et des blogues d'entrepreneurs (RénoAssistance, Soumissions Québec, Oolong Media, blogues d'excavateurs). C'est exactement la couche C décrite dans COMPETITION.md : les citer violerait le standard de source primaire ET citerait des concurrents. Aucune donnée de prix de CAA-Québec, de l'APCHQ ni de Protégez-Vous n'a été trouvée en accès libre. Les chiffres qui circulent (15 000-35 000 $ pour un drain, 500-1 500 $ pour une injection de fissure) sont cohérents entre eux mais tous non sourcés primairement — cohérence n'est pas vérification, plusieurs de ces sites se recopiant.",
+
+  "$leads": [
+    "CAA-Québec — section habitation/rénovation : vérifier s'il existe un guide de coûts en accès libre.",
+    "APCHQ — publications aux membres ; possiblement payant, à confirmer.",
+    "Protégez-Vous — dossiers rénovation, souvent derrière abonnement.",
+    "Rôle d'évaluation et permis municipaux : ne donnent pas de prix de travaux, ne pas s'y attarder.",
+    "Une soumission réelle obtenue par le futur locataire serait une source primaire — voir HANDOFF-TENANT.md."
+  ],
+
+  "drain": {
+    "range": null,
+    "unit": "projet",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire trouvée. Les chiffres en circulation (15 000-35 000 $ par maison unifamiliale, 190-325 $ du pied linéaire dans le Grand Montréal) viennent tous de sites de génération de prospects, et la donnée au pied linéaire vise Montréal, pas la CMQ. Ne rien publier tant qu'une source primaire n'est pas ouverte et notée."
+  },
+
+  "fissure": {
+    "range": null,
+    "unit": "fissure",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire trouvée. Fourchettes en circulation : 400-2 000 $ par injection depuis l'intérieur, non sourcées primairement. Noter aussi qu'un prix « à la fissure » masque la vraie variable — une fissure structurale ne se traite pas par injection, donc une fourchette unique induirait en erreur même si elle était sourcée."
+  },
+
+  "impermeabilisation": {
+    "range": null,
+    "unit": "projet",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. Presque toujours vendue avec l'excavation d'un drain : une fourchette autonome serait trompeuse. Chercher plutôt le surcoût marginal quand la tranchée est déjà ouverte."
+  },
+
+  "infiltration": {
+    "range": null,
+    "unit": null,
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Ne pas chercher de fourchette : l'infiltration est un symptôme, et le coût est celui du service auquel elle renvoie (drain, fissure, margelle, drain intérieur). La page doit rediriger vers ces fourchettes-là, pas en inventer une."
+  },
+
+  "ocre": {
+    "range": null,
+    "unit": null,
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. À traiter comme un surcoût sur l'installation d'un drain (accès de nettoyage, entretien récurrent), pas comme un service à prix propre. Le coût récurrent d'entretien serait plus utile au lecteur qu'un prix d'installation."
+  },
+
+  "affaissement": {
+    "range": null,
+    "unit": "projet",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire, et la variance réelle est la plus forte de la liste (nombre de pieux, profondeur du bon sol, accès). Ajouter que l'étude d'ingénieur est un coût distinct, à demander séparément."
+  },
+
+  "humidite": {
+    "range": null,
+    "unit": null,
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. La décontamination de moisissure est un métier distinct avec sa propre tarification — ne pas la fondre dans une fourchette « fondation »."
+  },
+
+  "puisard": {
+    "range": null,
+    "unit": "projet",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. Distinguer le remplacement d'une pompe seule de l'installation d'un drain intérieur complet : deux ordres de grandeur différents souvent confondus dans les fourchettes en circulation."
+  },
+
+  "videSanitaire": {
+    "range": null,
+    "unit": "pi²",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. Le prix se donne normalement au pied carré ; vérifier l'unité avant de publier quoi que ce soit."
+  },
+
+  "inspection": {
+    "range": null,
+    "unit": "inspection",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire, mais c'est la fourchette la plus facile à vérifier et la plus utile au lecteur : elle chiffre l'écart entre diagnostiquer et excaver. À prioriser dès qu'une source s'ouvre."
+  },
+
+  "pyrite": {
+    "range": null,
+    "unit": "analyse",
+    "sourceUrl": null,
+    "sourceLabel": null,
+    "checkedOn": "2026-08-04",
+    "todo": "Aucune source primaire. Le coût pertinent est celui de l'analyse en laboratoire, pas des travaux — et il dépend du protocole, dont l'entrée regulations.json['ctq-m200'] est encore unverified. Résoudre CTQ-M200 avant de chiffrer quoi que ce soit ici."
+  },
+
+  "$aid_programs": {
+    "renoclimat-adaptation": {
+      "status": "unverified",
+      "sourceUrl": "https://www.quebec.ca/habitation-territoire/chauffage-consommation-energetique/aide-financiere-renovation/renoclimat",
+      "checkedOn": "2026-08-04",
+      "note": "Plusieurs blogues d'entrepreneurs affirment que « le drainage périphérique, dont le drain français, est explicitement admissible » à une enveloppe de 425 M$. LA SOURCE GOUVERNEMENTALE NE LE CONFIRME PAS. Au 2026-08-04, Rénoclimat–Adaptation est annoncé pour le 1er octobre 2026 — donc pas encore en vigueur — et la seule aide « drainage » actuellement listée vise la récupération de chaleur des eaux de drainage, ce qui n'a rien à voir avec un drain français.",
+      "todo": "Rouvrir après le 2026-10-01 : lire le guide du participant à jour et vérifier si le drainage périphérique devient admissible. Si oui, c'est un fait public vérifiable de première valeur pour /prix/ et pour le hub drain-francais — et il corrigerait une affirmation que la concurrence publie déjà à tort."
+    }
+  }
+}

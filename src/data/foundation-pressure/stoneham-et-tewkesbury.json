@@ -1,0 +1,37 @@
+{
+  "slug": "stoneham-et-tewkesbury",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1975-1990",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-ondule"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante 1975-1990 en PVC ondulé : la condition d'époque du §3 n'est pas remplie. La rivière Jacques-Cartier est bien nommée, mais un facteur aggravant ne hisse pas en high sans strate dominante ancienne — la strate avant-1945 n'est ici que minoritaire."
+    },
+    "fissure-de-fondation": {
+      "level": "high",
+      "why": "cohorte 1975-1990 dominante en béton coulé, fissures de retrait attendues sur ce type de solage; le noyau ancien de Saint-Adolphe en pierre reste minoritaire et ne fait pas fléchir le niveau porté par la vague de construction dominante"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le boom immobilier qui a suivi le développement de Vertmont-sur-le-lac au milieu des années 1970 a fait grimper la construction à environ 85 unités par année dans le secteur de Stoneham, en béton coulé posé sur un terrain qui descend vers la rivière Jacques-Cartier et vers le lac Beaumont. Le noyau ancien de Saint-Adolphe, bâti sur pierre avant 1945, reste minoritaire face à cette vague. Le drain de PVC ondulé installé durant ce boom approche aujourd'hui la fin de sa durée de vie utile, sur des lots où la pente naturelle vers les cours d'eau concentre l'eau de ruissellement contre le solage.",
+    "en": "The real-estate boom that followed the development of Vertmont-sur-le-lac in the mid-1970s pushed construction to roughly 85 units a year in the Stoneham sector, poured-concrete foundations set on land that slopes down toward the Jacques-Cartier River and Lac Beaumont. The older Saint-Adolphe core, built on stone before 1945, remains a minority against that wave. The corrugated PVC drain installed during that boom is now nearing the end of its service life, on lots where the natural slope toward the waterways concentrates runoff against the foundation wall."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

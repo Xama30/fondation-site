@@ -1,0 +1,34 @@
+{
+  "name": "solage-capitale",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build:fast": "astro build && node scripts/post-build.mjs",
+    "build": "astro check && astro build && node scripts/post-build.mjs && npm run audit",
+    "preview": "astro preview",
+    "audit": "node scripts/uniqueness-check.mjs && node scripts/link-audit.mjs && node scripts/seo-audit.mjs",
+    "keyword-map": "node scripts/keyword-map-gen.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^5.13.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^24.13.3",
+    "typescript": "5.9.2",
+    "wrangler": "^4.120.0"
+  },
+  "overrides": {
+    "@emnapi/core": "1.11.3",
+    "@emnapi/runtime": "1.11.3",
+    "@emnapi/wasi-threads": "1.2.3",
+    "vite": "6.4.3"
+  }
+}

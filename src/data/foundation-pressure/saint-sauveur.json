@@ -1,0 +1,31 @@
+{
+  "slug": "saint-sauveur",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1840-1900",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "solage de pierre dominant 1840-1900 sans drain d'origine — strate ancienne confirmée, mais aucun cours d'eau, plan d'eau ni marais n'est nommé dans localTerms/housingStock pour Saint-Sauveur ; le solage perméable et les lots étroits sont des traits de construction, pas le facteur hydrologique nommé qu'exige le critère resserré — niveau ramené à moderate"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre — les désordres attendus sont des joints de mortier qui cèdent, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les maisons ouvrières qui forment le tissu dense autour de la rue Saint-Vallier Ouest et de l'église Saint-Sauveur ont été bâties entre 1840 et 1900, rapidement et à moindre coût, à l'époque des chantiers navals et du commerce du bois. Sur des lots étroits, l'entrepreneur de l'époque montait un solage de pierre avec un mortier moins soigné que celui des quartiers plus aisés — d'où le solage perméable déjà identifié pour ce secteur. Le lot étroit limite en plus l'espace disponible pour dégager tout le pourtour d'un solage lors d'une intervention.",
+    "en": "The working-class houses that make up the dense fabric around rue Saint-Vallier Ouest and église Saint-Sauveur went up between 1840 and 1900, built fast and cheap in the era of the shipyards and the timber trade. On narrow lots, the era's builders laid stone foundations with mortar less carefully mixed than in wealthier neighbourhoods — the reason this sector is already flagged for a permeable foundation wall. The narrow lot also limits how much of a foundation's perimeter can be exposed during any repair."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

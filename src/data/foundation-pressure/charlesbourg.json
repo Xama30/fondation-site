@@ -1,0 +1,37 @@
+{
+  "slug": "charlesbourg",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    },
+    {
+      "span": "1960-1985",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "ceinture pavillonnaire 1960-1985 draine encore par tuile d'argile en sections vers la rivière du Berger, qui longe le parc des Moulins"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "solages de béton coulé de la ceinture pavillonnaire, fissures de retrait aux joints de coulée ; le noyau ancien du Trait-carré reste minoritaire et ne porte pas le niveau"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Autour du noyau patrimonial du Trait-carré, la vaste ceinture de bungalows élevée entre 1960 et 1985 s'appuie sur un solage de béton coulé, relié à l'origine à des tuiles d'argile en sections, sous les avant-toits et soffites typiques de l'époque. Ce réseau, aujourd'hui truffé de joints désalignés, se vidange vers la rivière du Berger qui longe le parc des Moulins — la pente naturelle vers ce cours d'eau retient l'eau contre le solage plus longtemps que dans le reste de l'arrondissement.",
+    "en": "Around the heritage Trait-carré core, the sprawling bungalow ring built between 1960 and 1985 sits on poured-concrete footings originally tied into sectioned clay-tile drains, under the overhanging eaves and soffits typical of the era. That network, now riddled with shifted joints, drains toward the rivière du Berger along the parc des Moulins — the natural slope toward that stream holds water against the footing longer than elsewhere in the borough."
+  },
+  "sources": [],
+  "todo": "ocre : aucune source primaire pour le potentiel de sol ferrugineux dans la vallée de la rivière du Berger — à vérifier (carte MELCCFP ou étude géotechnique municipale) avant d'assigner un niveau non nul",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

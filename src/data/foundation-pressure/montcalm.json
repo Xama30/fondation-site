@@ -1,0 +1,31 @@
+{
+  "slug": "montcalm",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1880-1920",
+      "weight": "dominant",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "strate dominante 1880-1920 en solage de pierre sans drain d'origine, mais aucun cours d'eau, plan d'eau, marais ni zone inondable nommé dans localTerms ou housingStock — Grande Allée et avenue Cartier n'y figurent qu'à titre d'artères commerciales ; niveau plafonné à moderate faute de facteur nommé, malgré les ouvertures percées dans le solage lors des conversions en duplex et triplex"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "solage de pierre des grandes résidences d'origine — les désordres attendus sont des joints de mortier cédant autour des ouvertures taillées pour la subdivision, pas des fissures de béton, absent de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Les grandes résidences de la fin du XIXe siècle et du début du XXe qui bordent la Grande Allée et l'avenue Cartier ont été loties en duplex et en triplex bien après leur construction, ce qui a exigé de percer une cage d'escalier commune ou une entrée secondaire à même le solage de pierre d'origine pour desservir les logements du sous-sol. Chaque ouverture ainsi taillée dans les moellons rompt le joint de mortier de chaux continu que la maison avait depuis plus d'un siècle, créant un point d'entrée d'eau que le reste du mur n'a pas. Les arbres matures plantés en bordure de trottoir, coincés entre la rue et des solages qui n'ont jamais reçu de membrane, ajoutent une pression racinaire sur ces joints déjà fragilisés par la conversion.",
+    "en": "The grand late-19th- and early-20th-century homes lining Grande Allée and avenue Cartier were carved into duplexes and triplexes long after they were built, which meant cutting a shared stairwell or a secondary entrance straight through the original stone foundation to serve the basement units. Each opening cut into the fieldstone breaks the continuous lime-mortar joint the house had held for over a century, creating a point of entry the rest of the wall doesn't have. The mature street trees wedged between the sidewalk and foundations that never received a membrane add root pressure onto joints already weakened by the conversion."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

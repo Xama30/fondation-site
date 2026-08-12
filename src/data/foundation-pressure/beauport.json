@@ -1,0 +1,37 @@
+{
+  "slug": "beauport",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1960-1985",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte 1960-1985 = drain de tuile d'argile en fin de vie, aggrave par la proximite nommee de la riviere Beauport et de la baie de Beauport qui maintiennent une nappe phreatique haute"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "beton coule dominant sur les bungalows 1960-1985, fissures de retrait verticales typiques de cette cohorte"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Dans Giffard, sur le flanc nord de l'arrondissement qui touche encore la zone agricole, les bungalows élevés entre 1960 et 1985 ont presque tous la même tuile d'argile en dessous : après soixante ans, ses sections se déboîtent et s'obstruent de sédiment plutôt que de simplement fuir. Le terrain y descend vers la baie de Beauport et la rivière Beauport, ce qui garde la nappe près de la surface toute l'année et ralentit l'évacuation de cette eau une fois le drain compromis. Le long de l'avenue Royale, les quelques maisons de pierre qui précèdent 1945 n'ont jamais eu ce drain à perdre.",
+    "en": "In Giffard, on the borough's north edge bordering the farmland, the bungalows built between 1960 and 1985 nearly all sit above the same clay tile: past the sixty-year mark, its sections separate and clog with sediment rather than simply leaking. The land here slopes toward the baie de Beauport and the rivière Beauport, keeping the water table close to the surface year-round and slowing the runoff once the drain has failed. Along avenue Royale, the handful of stone houses predating 1945 never had this drain to lose."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,35 @@
+---
+/**
+ * Page 404 localisée. Elle n'est pas indexable et n'a donc pas de ligne dans
+ * KEYWORD-MAP : la règle 2 vise les pages qui visent une requête, pas les pages
+ * d'erreur. `post-build.mjs` recopie la version EN en `dist/en/404.html` pour
+ * que le serveur trouve le bon 404 en remontant le chemin.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+
+const locale = 'en' as const;
+const ui = dict(locale);
+const ref = { type: 'home' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title={ui('error.404.title')}
+  description={ui('error.404.body')}
+  noindex
+>
+  <section class="contenant bloc-page-ample">
+    <div class="mesure">
+      <h1>{ui('error.404.title')}</h1>
+      <p>{ui('error.404.body')}</p>
+      <ul>
+        <li><a href={pathFor({ type: 'home' }, locale)}>{ui('error.404.home')}</a></li>
+        <li><a href={pathFor({ type: 'serviceIndex' }, locale)}>{ui('nav.services')}</a></li>
+        <li><a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>{ui('nav.sectors')}</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

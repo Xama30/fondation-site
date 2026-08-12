@@ -1,0 +1,37 @@
+{
+  "slug": "sainte-brigitte-de-laval",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "apres-2005",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "pvc-bnq-3661-500"
+    },
+    {
+      "span": "1945-1975",
+      "weight": "minoritaire",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "boom immobilier de 2009 à 2013 a doublé la population, cohorte dominante post-2005 en drain PVC conforme BNQ 3661-500 qui donnerait normalement low; ajusté à la hausse d'un cran par l'implantation en fond de la vallée de la Montmorency, près de la rue du Ruisseau, où la nappe reste haute même sous une construction récente"
+    },
+    "fissure-de-fondation": {
+      "level": "low",
+      "why": "béton coulé récent, cohorte post-2005 trop jeune pour avoir accumulé le retrait de béton observé sur la strate 1945-1975 du secteur Chantaube"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Le boom immobilier survenu entre 2009 et 2013 a doublé la population de Sainte-Brigitte-de-Laval, ajoutant un parc récent de fondations en béton coulé et de drains PVC conformes à la norme BNQ 3661-500 le long de l'avenue Sainte-Brigitte et de la rue des Monardes. Mais ce parc récent occupe le fond de la vallée de la Montmorency, près de la rue du Ruisseau, là où la nappe reste haute même pour une construction neuve. Le haut de la vallée, plus forestier, échappe davantage à cette pression parce qu'il est resté à l'écart de la vague 2009-2013.",
+    "en": "The real-estate boom between 2009 and 2013 doubled Sainte-Brigitte-de-Laval's population, adding a newer stock of poured-concrete foundations and PVC drains built to the BNQ 3661-500 standard along avenue Sainte-Brigitte and rue des Monardes. But that newer stock sits in the bottom of the Montmorency valley, near rue du Ruisseau, where the water table stays high even under new construction. The upper valley, more forested, largely escaped that pressure by staying outside the 2009-2013 wave."
+  },
+  "sources": [],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

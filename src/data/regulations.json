@@ -1,0 +1,198 @@
+{
+  "$note": "Le corpus réglementaire du site. C'est le moat : ces faits sont publics, vérifiables et presque absents des sites concurrents. RÈGLE 1 — chaque entrée est un DROIT DU LECTEUR, jamais une accréditation que le site détiendrait. Ne jamais écrire « notre travail conforme à la norme X » ; écrire « demandez que le devis nomme la norme X ». Toute entrée sans `sourceUrl` ouvert et lu ne se rend sur aucune page.",
+  "$verified": "2026-08-04",
+  "bnq-3661-500": {
+    "code": "BNQ 3661-500",
+    "status": "verified",
+    "sourceUrl": "https://bnq.qc.ca/fr/normalisation/genie-civil-et-infrastructures-urbaines/tuyaux.html",
+    "title": {
+      "fr": "Dépôts d'ocre dans les systèmes de drainage des bâtiments",
+      "en": "Ochre deposits in building drainage systems"
+    },
+    "facts": {
+      "fr": [
+        "La norme est en deux parties : la partie I porte sur l'évaluation du risque de formation de dépôts d'ocre pour un bâtiment neuf et sur le diagnostic pour un bâtiment existant ; la partie II présente les méthodes d'installation, pour le neuf comme pour l'existant.",
+        "Elle existe parce que les dépôts d'ocre sont un problème fréquent qui peut rendre un système de drainage complètement inopérant.",
+        "Une norme distincte, la BNQ 3624-130, vise les tuyaux perforés utilisés pour le drainage des bâtiments afin de réduire le risque de formation de dépôts d'ocre."
+      ],
+      "en": [
+        "The standard has two parts: Part I covers risk assessment for ochre deposit formation in a new building and diagnosis for an existing one; Part II sets out installation methods for both new and existing buildings.",
+        "It exists because ochre deposits are a frequent problem that can render a drainage system completely inoperative.",
+        "A separate standard, BNQ 3624-130, applies to the perforated pipe used for building drainage to reduce the risk of ochre deposit formation."
+      ]
+    },
+    "readerRight": {
+      "fr": "Demandez que la soumission nomme explicitement la norme et la partie applicable, et qu'elle précise le type de tuyau. « Un drain BNQ » sans numéro ne veut rien dire.",
+      "en": "Ask that the quote name the standard and the applicable part explicitly, and specify the pipe type. \"A BNQ drain\" with no number means nothing."
+    },
+    "todo": "Ouvrir la fiche produit de la norme sur bnq.qc.ca pour confirmer le millésime en vigueur et la date de publication de la partie II avant de dater quoi que ce soit sur une page."
+  },
+  "gcr": {
+    "code": "GCR",
+    "status": "verified",
+    "sourceUrl": "https://www.garantiegcr.com/fr/acheteur/conseils-gcr/ma-problematique-est-elle-couverte-1-an-3-ans-ou-5-ans-par-gcr/",
+    "sourceUrlSecondary": "https://www.rbq.gouv.qc.ca/vous-etes/citoyen/achat-ou-construction-dune-propriete/plan-de-garantie-des-batiments-residentiels-neufs/",
+    "title": {
+      "fr": "Plan de garantie des bâtiments résidentiels neufs",
+      "en": "New residential building warranty plan"
+    },
+    "facts": {
+      "fr": [
+        "Le plan couvre 1 an pour les malfaçons existantes et non apparentes suivant la réception du bâtiment.",
+        "Il couvre 3 ans pour les vices cachés suivant la réception du bâtiment.",
+        "Il couvre 5 ans pour les vices de conception, de construction ou de réalisation et les vices du sol, suivant la fin des travaux — c'est la fenêtre qui vise une fondation.",
+        "La problématique doit être dénoncée dans un « délai raisonnable » ; la jurisprudence a fixé ce délai à 6 mois suivant la découverte.",
+        "La garantie est transférable et s'applique lorsque l'entrepreneur est accrédité auprès de GCR."
+      ],
+      "en": [
+        "The plan covers 1 year for existing, non-apparent poor workmanship following acceptance of the building.",
+        "It covers 3 years for latent defects following acceptance of the building.",
+        "It covers 5 years for design, construction or workmanship defects and soil defects, following the end of the work — this is the window that applies to a foundation.",
+        "The problem must be reported within a \"reasonable time\"; case law has set that at 6 months from discovery.",
+        "The warranty is transferable and applies where the contractor is accredited with GCR."
+      ]
+    },
+    "readerRight": {
+      "fr": "Sur une maison de moins de 5 ans, vérifiez la couverture GCR AVANT de faire exécuter des travaux : faire réparer soi-même un vice couvert peut compromettre la réclamation.",
+      "en": "On a house under 5 years old, check GCR coverage BEFORE having work done: repairing a covered defect yourself can compromise the claim."
+    },
+    "todo": "Le « délai raisonnable de 6 mois » est présenté par GCR comme un acquis jurisprudentiel. Le formuler comme tel sur la page — « la jurisprudence a établi » — et non comme un délai réglementaire."
+  },
+  "rbq-licence": {
+    "code": "Licence RBQ",
+    "status": "verified",
+    "sourceUrl": "https://www.rbq.gouv.qc.ca/sous-categories",
+    "title": {
+      "fr": "Sous-catégories de licence d'entrepreneur",
+      "en": "Contractor licence subcategories"
+    },
+    "subcategories": {
+      "2.5": {
+        "annexe": "III",
+        "title": {
+          "fr": "Excavation et terrassement",
+          "en": "Excavation and earthwork"
+        },
+        "official": "le creusage, le déplacement, le compactage, le nivelage de terre ou de matériaux granulaires y compris les travaux relatifs aux petits ouvrages d'art",
+        "covers": [
+          "drain",
+          "impermeabilisation"
+        ]
+      },
+      "2.6": {
+        "annexe": "II",
+        "title": {
+          "fr": "Pieux et fondations spéciales",
+          "en": "Piles and special foundations"
+        },
+        "official": "la mécanique des sols, tels les pieux et les caissons, le soutènement des excavations, les tirants d'ancrage, la reprise en sous-oeuvre ou l'injection dans les sols et le roc",
+        "covers": [
+          "affaissement"
+        ]
+      },
+      "3.2": {
+        "annexe": "III",
+        "title": {
+          "fr": "Petits ouvrages de béton",
+          "en": "Small concrete works"
+        },
+        "official": "le coffrage à béton pour les assises et les murs de fondation de bâtiments visés à la partie 9 du Code national du bâtiment [...] et autres ouvrages de béton, bétonnage, armature et finition de béton",
+        "covers": [
+          "fissure",
+          "affaissement"
+        ]
+      },
+      "3.1": {
+        "annexe": "II",
+        "title": {
+          "fr": "Structures de béton",
+          "en": "Concrete structures"
+        },
+        "official": "le béton structural coulé ou préfabriqué",
+        "covers": []
+      },
+      "7": {
+        "annexe": "III",
+        "title": {
+          "fr": "Isolation, étanchéité, couvertures et revêtement extérieur",
+          "en": "Insulation, waterproofing, roofing and exterior cladding"
+        },
+        "official": "l'ignifugation, l'étanchéité, l'isolation, le calorifugeage, les couvertures, le revêtement mural extérieur autre qu'en maçonnerie",
+        "covers": [
+          "impermeabilisation"
+        ]
+      },
+      "4.2": {
+        "annexe": "III",
+        "title": {
+          "fr": "Travaux de maçonnerie non structurale",
+          "en": "Non-structural masonry work"
+        },
+        "official": "la maçonnerie non structurale, le marbre, le granit",
+        "covers": [
+          "fissure"
+        ]
+      }
+    },
+    "facts": {
+      "fr": [
+        "Les sous-catégories de l'annexe III — dont la 2.5 (excavation) — ne nécessitent pas, selon le texte de la RBQ, « une évaluation de la compétence en exécution de travaux de construction ». La 2.6 relève de l'annexe II, qui l'exige.",
+        "Un chantier de fondation ordinaire touche souvent trois sous-catégories distinctes : 2.5 pour creuser, 3.2 pour le béton, 7 pour l'étanchéité.",
+        "Pour un mur de fondation résidentiel visé par la partie 9 du Code national du bâtiment, la sous-catégorie nommée est la 3.2, pas la 3.1."
+      ],
+      "en": [
+        "Annex III subcategories — including 2.5 (excavation) — do not, per the RBQ's own wording, require \"an assessment of competency in carrying out construction work\". Subcategory 2.6 falls under Annex II, which does.",
+        "An ordinary foundation job often touches three distinct subcategories: 2.5 to dig, 3.2 for the concrete, 7 for waterproofing.",
+        "For a residential foundation wall covered by Part 9 of the National Building Code, the named subcategory is 3.2, not 3.1."
+      ]
+    },
+    "readerRight": {
+      "fr": "Demandez le numéro de licence, vérifiez-le au registre public de la RBQ, et vérifiez que les sous-catégories couvrent bien TOUS les travaux prévus — pas seulement l'excavation.",
+      "en": "Ask for the licence number, check it against the RBQ's public register, and confirm the subcategories actually cover ALL the planned work — not just the digging."
+    }
+  },
+  "ctq-m200": {
+    "code": "CTQ-M200",
+    "status": "unverified",
+    "sourceUrl": null,
+    "title": {
+      "fr": "Protocole d'expertise sur bâtiment existant — gonflement du remblai par la pyrite",
+      "en": "Expertise protocol for existing buildings — pyrite-related backfill swelling"
+    },
+    "todo": "NE PAS PUBLIER. Le protocole du Comité technique québécois établit l'IPPG (indice pétrographique du potentiel de gonflement) sur bâtiment existant. Vérifié uniquement contre des sources secondaires (ACQC, laboratoires). Trouver la source primaire — le CTQ lui-même ou un laboratoire accrédité citant le document — avant qu'un mot n'apparaisse sur la page pyrite. ⚠ Le brief initial parlait d'un « protocole de l'IRSST » : c'est faux, l'IRSST est l'institut en santé et sécurité du travail.",
+    "regionalNote": {
+      "fr": "Le gonflement du remblai par la pyrite est massivement un problème de la Montérégie et de la couronne de Montréal. Sur la CMQ, c'est un sujet de transaction immobilière, pas de volume de travaux. Aucune page pyrite × secteur.",
+      "en": "Pyrite-related backfill swelling is overwhelmingly a Montérégie and Greater Montreal problem. Around Quebec City it is a real-estate transaction topic, not a volume-of-work topic. No pyrite × sector pages."
+    }
+  },
+  "programme-aide-pyrite": {
+    "code": "Programme d'aide pyrite (SHQ)",
+    "status": "unverified",
+    "sourceUrl": null,
+    "todo": "NE PAS PUBLIER. Un programme d'aide gouvernemental pour les propriétaires de bâtiments résidentiels endommagés par la pyrite a existé. Vérifier auprès de la SHQ / quebec.ca s'il est ENCORE ACTIF en 2026. Un programme périmé annoncé comme actif est une erreur vérifiable contre nous.",
+    "title": {
+      "fr": "Programme d'aide financière aux propriétaires — pyrite",
+      "en": "Financial assistance program for owners — pyrite"
+    }
+  },
+  "profondeur-de-gel": {
+    "code": "Profondeur de gel — semelles",
+    "status": "unverified",
+    "sourceUrl": null,
+    "todo": "NE PAS PUBLIER. Code de construction du Québec, chapitre I — Bâtiment (CNB modifié Québec) + règlements municipaux. La profondeur exigée sous une semelle dans la région de Québec doit être lue dans le texte, pas reprise d'un blogue. Vérifier aussi si elle varie entre Ville de Québec et Ville de Lévis.",
+    "title": {
+      "fr": "Profondeur de gel sous les semelles",
+      "en": "Frost depth below footings"
+    }
+  },
+  "permis-excavation": {
+    "code": "Permis municipal d'excavation",
+    "status": "unverified",
+    "sourceUrl": null,
+    "todo": "NE PAS PUBLIER tel quel. VARIE PAR MUNICIPALITÉ — la CMQ compte plusieurs autorités distinctes (Québec, Lévis, Boischatel, Stoneham, Shannon, Wendake…). Écrire « vérifiez auprès de votre municipalité » et lier vers le service concerné, plutôt qu'un chiffre unique qui serait faux quelque part.",
+    "title": {
+      "fr": "Permis municipal d'excavation",
+      "en": "Municipal excavation permit"
+    }
+  }
+}

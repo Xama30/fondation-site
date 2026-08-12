@@ -1,0 +1,157 @@
+---
+/**
+ * Sitemap, EN. Twin of `src/pages/plan-du-site.astro`.
+ *
+ * Derived from `getCollection` and `STATIC_PAGES`, never hand-maintained.
+ * Not to be confused with `/sitemap.xml`, produced in phase 9 for crawlers —
+ * this one is for people.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import { STATIC_PAGES } from '@data/slugs.ts';
+import type { ServiceKey, StaticPageKey } from '@data/slugs.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'sitemap' } as const;
+
+const LABELS: Record<StaticPageKey, string> = {
+  quote: "Request a quote",
+  pricing: "Pricing",
+  emergency: "Emergency — water in the basement",
+  process: "How it works",
+  serviceArea: "Service area",
+  faq: "Frequently asked questions",
+  about: "About",
+  contact: "Contact",
+  terms: "Terms of use",
+  privacy: "Privacy policy",
+  sitemap: "Sitemap",
+  thankYou: "Request sent",
+};
+
+// `sitemap` is this page. `thankYou` is a noindex confirmation page reached only
+// by having submitted the form — listing it would make it browsable, and would
+// tell a visitor who sent nothing that their request had gone through.
+const OFF_MAP: StaticPageKey[] = ['sitemap', 'thankYou'];
+
+const staticPages = (Object.keys(STATIC_PAGES) as StaticPageKey[])
+  .filter((k) => !OFF_MAP.includes(k))
+  .map((k) => ({ key: k, label: LABELS[k] }));
+
+const services = (await getCollection('services', (e) => e.data.locale === locale))
+  .map((e) => ({ key: e.data.service as ServiceKey, name: serviceData[locale][e.data.service as ServiceKey].name }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+const sectors = (await getCollection('sectors', (e) => e.data.locale === locale))
+  .map((e) => ({ slug: e.data.sector, name: cities[e.data.sector]!.name[locale] }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+// Le blogue s'apparie par `translationKey`, jamais par slug (PLAYBOOK §7.2), et
+// seuls les articles dont la jumelle existe sont listés.
+const allBlog = await getCollection('blog');
+const blogTwins = new Map(
+  allBlog.filter((e) => e.data.locale === 'fr').map((e) => [e.data.translationKey, e]),
+);
+const posts = allBlog
+  .filter((e) => e.data.locale === 'en' && blogTwins.has(e.data.translationKey))
+  .map((e) => ({
+    h1: e.data.h1,
+    slugs: {
+      en: e.data.slug,
+      fr: blogTwins.get(e.data.translationKey)!.data.slug,
+    },
+  }))
+  .sort((a, b) => a.h1.localeCompare(b.h1, 'en'));
+
+const matrix = (await getCollection('matrix', (e) => e.data.locale === locale))
+  .map((e) => ({
+    service: e.data.service as ServiceKey,
+    sector: e.data.sector,
+    label: `${serviceData[locale][e.data.service as ServiceKey].name} — ${cities[e.data.sector]!.name[locale]}`,
+  }))
+  .sort((a, b) => a.label.localeCompare(b.label, 'en'));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Sitemap — Solage Capitale"
+  description="Every page on the site: the types of foundation work, the areas of the Quebec City region and the utility pages, gathered into a single list."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Sitemap", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Sitemap</h1>
+
+      <p class="chapeau">
+        {services.length} types of work, {sectors.length} areas and {matrix.length} pages
+        combining the two. This list is built from the pages that actually exist, rather than
+        maintained by hand.
+      </p>
+
+      <h2>Utility pages</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'home' }, locale)}>Home</a></li>
+        {
+          staticPages.map((p) => (
+            <li><a href={pathFor({ type: 'static', page: p.key }, locale)}>{p.label}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>Types of foundation work</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'serviceIndex' }, locale)}>All types of work</a></li>
+        {
+          services.map((s) => (
+            <li><a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+
+      {
+        matrix.length > 0 && (
+          <>
+            <h2>Work by area</h2>
+            <ul class="liens-liste">
+              {matrix.map((m) => (
+                <li>
+                  <a href={pathFor({ type: 'serviceSector', service: m.service, sector: m.sector }, locale)}>
+                    {m.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <h2>Blog</h2>
+      <ul class="liens-liste">
+        <li><a href={pathFor({ type: 'blogIndex' }, locale)}>All articles</a></li>
+        {
+          posts.map((p) => (
+            <li><a href={pathFor({ type: 'blogPost', slug: p.slugs }, locale)}>{p.h1}</a></li>
+          ))
+        }
+      </ul>
+
+      <h2>Areas</h2>
+      <ul class="liens-liste">
+        {
+          sectors.map((s) => (
+            <li><a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>{s.name}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

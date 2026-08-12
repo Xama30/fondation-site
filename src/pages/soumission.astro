@@ -1,0 +1,263 @@
+---
+/**
+ * Demande de soumission, FR. Jumelle : `src/pages/en/quote.astro`.
+ *
+ * ⚠ LE CONTRAT DES CHAMPS. Les `name=` des champs ci-dessous doivent
+ * correspondre EXACTEMENT aux clés de `FIELD_LABELS` dans
+ * `worker/lead-form.ts` : `name`, `email`, `phone`, `sector`, `service`,
+ * `building`, `urgency`, `message`, plus le pot de miel `website` et `locale`.
+ * Le handler ne met en forme que les clés qu'il connaît — un champ renommé ici
+ * n'échoue pas, il DISPARAÎT du courriel, et personne ne s'en aperçoit avant
+ * d'avoir perdu des demandes. Ces clés ont été décontaminées en session 4
+ * (elles nommaient encore le ravageur du site précédent) : ne pas les
+ * réinventer.
+ *
+ * ⚠ L'ACTION PORTE LA BARRE OBLIQUE FINALE et vient de `LEAD_ENDPOINT`, la même
+ * constante d'où `worker/index.ts` dérive sa table de routage. Le Worker accepte
+ * les deux orthographes exprès : un navigateur dégrade un POST en GET quand il
+ * suit un 301, donc une redirection perdrait la soumission en silence
+ * (`docs/DEPLOY.md` §5). Ne jamais « nettoyer » ça.
+ *
+ * RÈGLE 7 : aucun JavaScript. La validation visible est celle du navigateur, la
+ * vraie est côté serveur dans le Worker. La CSP du site interdit le script tout
+ * court (`public/_headers`), donc un formulaire qui aurait besoin de JS ne
+ * fonctionnerait tout simplement pas.
+ *
+ * RÈGLE 1bis : la page ne dit à personne quoi faire sur sa fondation. Les
+ * questions posées servent à ce qu'un professionnel arrive préparé, pas à
+ * poser un diagnostic à distance.
+ *
+ * Les listes de secteurs et d'interventions sont pilotées par `getCollection`,
+ * jamais par le JSON brut : on n'offre pas dans un menu un secteur ou un service
+ * dont la page n'existe pas.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { LEAD_ENDPOINT, PRIVACY_OFFICER } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import type { ServiceKey } from '@data/slugs.ts';
+
+const locale = 'fr' as const;
+const ref = { type: 'static', page: 'quote' } as const;
+
+const sectors = (await getCollection('sectors', (e) => e.data.locale === locale))
+  .map((e) => cities[e.data.sector]!.name[locale])
+  .sort((a, b) => a.localeCompare(b, 'fr'));
+
+const services = (await getCollection('services', (e) => e.data.locale === locale))
+  .map((e) => serviceData[locale][e.data.service as ServiceKey].name)
+  .sort((a, b) => a.localeCompare(b, 'fr'));
+
+const buildings = [
+  "Maison unifamiliale",
+  "Jumelé ou semi-détaché",
+  "Duplex, triplex ou plex",
+  "Condo ou copropriété",
+  "Chalet ou résidence secondaire",
+  "Autre",
+];
+
+const urgencies = [
+  "Il y a de l'eau en ce moment",
+  "C'est récent, mais c'est sec pour l'instant",
+  "Le problème dure depuis un moment",
+  "Je planifie des travaux, rien d'urgent",
+  "Je suis en processus d'achat ou de vente",
+];
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Demander une soumission — Solage Capitale"
+  description="Décrivez ce que vous observez sur votre fondation et un entrepreneur licencié de la région de Québec vous rappelle. Gratuit, sans engagement."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Demander une soumission", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Demander une soumission</h1>
+
+      <p class="chapeau">
+        Décrivez ce que vous observez. La demande est transmise à une entreprise indépendante
+        détentrice de sa propre licence RBQ, qui vous rappelle pour convenir d'une visite.
+        C'est gratuit et ça ne vous engage à rien.
+      </p>
+
+      <div class="encadre">
+        <p>
+          <strong>De l'eau entre dans le sous-sol en ce moment ?</strong> Un formulaire n'est pas
+          la bonne voie. La page
+          <a href={pathFor({ type: 'static', page: 'emergency' }, locale)}>Urgence</a> dit quoi
+          regarder d'abord, quand il faut composer le 311 plutôt qu'appeler un entrepreneur, et
+          pourquoi il vaut mieux prévenir l'assureur tôt.
+        </p>
+      </div>
+
+      <h2>Le formulaire</h2>
+
+      <form class="formulaire" method="post" action={LEAD_ENDPOINT} enctype="multipart/form-data">
+        {/*
+          `locale` décide de la langue du courriel et de la page de retour dans
+          `worker/lead-form.ts`. `page_url` lui permet d'écrire au bas du message
+          de quelle page la demande est partie — utile quand la même boîte reçoit
+          les demandes des 182 pages.
+        */}
+        <input type="hidden" name="locale" value={locale} />
+        <input type="hidden" name="page_url" value={pathFor(ref, locale)} />
+
+        {/*
+          Pot de miel. Une personne ne le voit pas et ne peut pas l'atteindre au
+          clavier ; un robot remplit tout ce qu'il trouve. Le Worker répond alors
+          exactement comme à un succès, pour que le robot n'apprenne rien.
+        */}
+        <div class="pot-de-miel" aria-hidden="true">
+          <label for="website">Ne pas remplir ce champ</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <fieldset>
+          <legend>Vous joindre</legend>
+
+          <div class="champ">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="champs-paire">
+            <div class="champ">
+              <label for="email">Courriel</label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+
+            <div class="champ">
+              <label for="phone">Téléphone <span class="facultatif">(facultatif)</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+              <span class="aide">Un rappel se fait plus vite au téléphone qu'à l'écrit.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Le bâtiment</legend>
+
+          <div class="champ">
+            <label for="sector">Secteur</label>
+            <select id="sector" name="sector" required>
+              <option value="">Choisissez un secteur</option>
+              {sectors.map((s) => <option value={s}>{s}</option>)}
+              <option value="Ailleurs dans la région">Ailleurs dans la région</option>
+            </select>
+            <span class="aide">
+              Le territoire couvert est la Communauté métropolitaine de Québec. La liste complète
+              est sur la page
+              <a href={pathFor({ type: 'static', page: 'serviceArea' }, locale)}>Territoire
+              desservi</a>.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="building">Type de bâtiment</label>
+            <select id="building" name="building" required>
+              <option value="">Choisissez un type</option>
+              {buildings.map((b) => <option value={b}>{b}</option>)}
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Ce que vous observez</legend>
+
+          <div class="champ">
+            <label for="service">Intervention <span class="facultatif">(si vous le savez)</span></label>
+            <select id="service" name="service">
+              <option value="">Je ne sais pas encore</option>
+              {services.map((s) => <option value={s}>{s}</option>)}
+            </select>
+            <span class="aide">
+              Aucune importance si vous hésitez : c'est l'entrepreneur qui établit de quoi il
+              s'agit, sur place. « Je ne sais pas » est une réponse parfaitement valable.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="urgency">Depuis quand</label>
+            <select id="urgency" name="urgency" required>
+              <option value="">Choisissez</option>
+              {urgencies.map((u) => <option value={u}>{u}</option>)}
+            </select>
+          </div>
+
+          <div class="champ">
+            <label for="message">Description</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+            <span class="aide">
+              Ce qui aide le plus : où ça se passe (quel mur, quel coin du sous-sol), depuis
+              quand vous le voyez, et si ça change avec la pluie ou la fonte. L'année de
+              construction, si vous la connaissez, en dit long à elle seule.
+            </span>
+          </div>
+
+          <div class="champ">
+            <label for="photo">Photo <span class="facultatif">(facultatif, 5 Mo maximum)</span></label>
+            <input type="file" id="photo" name="photo" accept="image/*" />
+            <span class="aide">
+              Une photo de la fissure ou de la trace d'eau, prise de loin puis de près, évite
+              souvent un aller-retour. Placer une règle ou une pièce de monnaie à côté donne
+              l'échelle.
+            </span>
+          </div>
+        </fieldset>
+
+        <button type="submit">Envoyer la demande</button>
+      </form>
+
+      <h2>Ce qui se passe ensuite</h2>
+      <p>
+        La demande part par courriel à l'entrepreneur qui traite les demandes de la région. C'est
+        lui qui vous rappelle, qui se déplace et qui chiffre — Solage Capitale ne touche pas à
+        votre fondation et ne vous facture rien. Les
+        <a href={pathFor({ type: 'static', page: 'process' }, locale)}>étapes d'une
+        réparation</a> décrivent le déroulement, et la règle qui compte : le diagnostic vient
+        avant le prix.
+      </p>
+      <p>
+        <strong>Un prix ferme donné au téléphone, sans que personne n'ait vu le bâtiment, est un
+        signal d'alarme.</strong> La page <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>Prix</a>
+        explique ce qui fait varier une facture et les cinq points qu'une soumission doit nommer
+        pour être comparable à une autre.
+      </p>
+
+      <h2>Avant de signer, quoi qu'il arrive</h2>
+      <p>
+        Demandez le numéro de licence de la Régie du bâtiment du Québec et vérifiez-le
+        vous-même au registre public, en contrôlant que la sous-catégorie couvre bien les travaux
+        proposés. Un chantier de fondation ordinaire en touche souvent trois, et une licence
+        d'excavation n'atteste d'aucune compétence évaluée en exécution de travaux. Comment le
+        vérifier, et pourquoi c'est le meilleur réflexe de tout le processus, est expliqué dans
+        les <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>questions fréquentes</a>.
+      </p>
+
+      <h2>Vos renseignements</h2>
+      <p>
+        Ce formulaire recueille le minimum nécessaire pour qu'on puisse vous rappeler, pour une
+        seule finalité : transmettre votre demande. Aucun compte n'est créé, aucun témoin de
+        suivi n'est déposé, et rien n'est revendu. Le détail est dans la
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>politique de
+        confidentialité</a>, et le responsable est nommé sur la page
+        <a href={pathFor({ type: 'static', page: 'contact' }, locale)}>Contact</a>.
+      </p>
+      <p>
+        Si le formulaire refuse de partir, écrivez directement à
+        <a href={`mailto:${PRIVACY_OFFICER.email}`}>{PRIVACY_OFFICER.email}</a> — la demande
+        arrive au même endroit.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

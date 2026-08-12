@@ -1,0 +1,249 @@
+{
+  "$schema_note": "Couche réutilisable des 11 services. La prose unique de chaque page vit dans src/content/services/fr/*.md (CLAUDE.md § Conventions). Les clés sont celles de SERVICE_SLUGS dans src/data/slugs.ts ; l'URL vient du registre, jamais d'ici. Le mappage sous-catégorie RBQ → service n'est PAS dupliqué ici : il est dans regulations.json['rbq-licence'].subcategories[*].covers. 'regulations' ne liste que des entrées status=verified ; 'regulationsPending' garde la trace des autres sans risquer un rendu (CLAUDE.md règle 1). 'signs' décrit ce qu'un lecteur OBSERVE ; 'whatProDoes' décrit ce qu'un professionnel fait, à la 3e personne — jamais d'impératif, jamais de méthode (règle 1bis).",
+  "drain": {
+    "name": "drain français",
+    "shortDescription": "Le tuyau perforé posé au pied de la fondation qui évacue l'eau du sol avant qu'elle ne pousse contre le mur. Il se colmate, s'écrase et cesse de drainer.",
+    "signs": [
+      "eau qui apparaît au bas du mur de sous-sol après une pluie soutenue ou à la fonte",
+      "cerne d'humidité ou efflorescence blanche en bas de mur, toujours au même endroit",
+      "odeur de terre humide persistante au sous-sol",
+      "margelle affaissée ou terrain qui pointe vers la maison plutôt que vers la rue"
+    ],
+    "whatProDoes": "L'entrepreneur inspecte d'abord le drain existant par caméra pour distinguer un colmatage d'un affaissement. S'il faut remplacer, il excave jusqu'à la semelle pour exposer le mur et l'ancien tuyau, pose un drain neuf sur lit de pierre avec sa membrane filtrante, puis remblaie. Le choix du tuyau et de la méthode d'installation relève de la norme BNQ 3661-500.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [
+      "permis-excavation"
+    ],
+    "related": [
+      "inspection",
+      "ocre",
+      "infiltration"
+    ],
+    "order": 10
+  },
+  "fissure": {
+    "name": "fissure de fondation",
+    "shortDescription": "Toutes les fissures ne se valent pas : celle de retrait du béton neuf n'a rien à voir avec celle qui s'élargit d'année en année. C'est la lecture de la fissure qui décide de la suite.",
+    "signs": [
+      "fissure verticale ou en escalier visible de l'intérieur du sous-sol",
+      "trace d'eau ou dépôt blanchâtre le long d'une fissure après la pluie",
+      "fissure dont l'écartement change entre l'hiver et l'été",
+      "porte ou fenêtre du sous-sol qui ferme moins bien qu'avant"
+    ],
+    "whatProDoes": "L'entrepreneur qualifie la fissure avant de la traiter : largeur, orientation, évolution dans le temps, et si elle traverse ou non le mur. Une fissure stable et non structurale se traite par injection depuis l'intérieur ; une fissure qui bouge relève d'abord de la cause, souvent un problème de drainage ou d'assise. Sur un bâtiment de moins de cinq ans, la garantie GCR peut couvrir le vice avant toute intervention.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "affaissement",
+      "infiltration",
+      "impermeabilisation"
+    ],
+    "order": 20
+  },
+  "impermeabilisation": {
+    "name": "imperméabilisation de fondation",
+    "shortDescription": "La barrière appliquée sur la face extérieure du mur enterré. Le goudron d'origine des maisons d'avant 1990 n'est pas une membrane, et il ne dure pas la vie du bâtiment.",
+    "signs": [
+      "mur de sous-sol humide au toucher sur toute une section, sans fissure visible",
+      "peinture ou scellant qui cloque et se décolle en bas de mur",
+      "travaux d'excavation déjà prévus pour un drain, qui exposent le mur",
+      "maison d'avant 1990 dont le mur enterré n'a jamais été rouvert"
+    ],
+    "whatProDoes": "L'entrepreneur profite de l'excavation — la même que pour un drain — pour nettoyer le mur, réparer les défauts du béton, puis appliquer la membrane et son panneau de drainage avant de remblayer. C'est pour cette raison que l'imperméabilisation et le drain français se planifient ensemble : rouvrir deux fois la même tranchée coûte deux fois.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [
+      "permis-excavation"
+    ],
+    "related": [
+      "drain",
+      "infiltration",
+      "fissure"
+    ],
+    "order": 30
+  },
+  "infiltration": {
+    "name": "infiltration d'eau au sous-sol",
+    "shortDescription": "Le symptôme, pas la cause. L'eau qui entre a toujours un chemin — fissure, drain mort, margelle, fenêtre — et le traiter sans l'avoir identifié revient à déplacer le problème.",
+    "signs": [
+      "flaque ou humidité qui revient au même endroit après chaque forte pluie",
+      "eau qui entre par le pourtour d'une fenêtre de sous-sol ou d'une porte de garage",
+      "tapis ou plancher flottant qui gondole en périphérie de la pièce",
+      "trace d'eau sur la dalle plutôt que sur le mur"
+    ],
+    "whatProDoes": "L'entrepreneur remonte au chemin de l'eau avant de proposer quoi que ce soit : point d'entrée, moment d'apparition, comportement du terrain en surface. Selon ce qu'il trouve, l'intervention relève du drain, de la fissure, de la margelle ou du drain intérieur — ce sont des travaux différents, à des coûts différents. Une soumission qui saute cette étape propose une solution avant d'avoir posé le problème.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "fissure",
+      "puisard"
+    ],
+    "order": 40
+  },
+  "ocre": {
+    "name": "ocre ferreuse",
+    "shortDescription": "Un dépôt orangé, gélatineux, produit par des bactéries ferrugineuses, qui obstrue un drain de l'intérieur. Il ne se répare pas : il se gère, et il change ce qu'on doit exiger d'une installation neuve.",
+    "signs": [
+      "dépôt orange ou rouille visible dans le regard de nettoyage ou la fosse de puisard",
+      "eau orangée à la sortie du drain",
+      "drain qui se colmate de nouveau peu après un nettoyage",
+      "voisinage où le problème est déjà connu"
+    ],
+    "whatProDoes": "L'entrepreneur confirme la présence d'ocre par inspection caméra avant tout diagnostic — un drain colmaté ne l'est pas forcément par de l'ocre. Là où l'ocre est confirmée, l'installation neuve se conçoit pour être entretenue : accès de nettoyage, choix du tuyau, fréquence d'entretien. La norme BNQ 3661-500 traite le sujet en deux parties, dont une consacrée au diagnostic sur bâtiment existant.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "inspection",
+      "puisard"
+    ],
+    "order": 50
+  },
+  "affaissement": {
+    "name": "affaissement de fondation",
+    "shortDescription": "Le mouvement de la fondation elle-même, par tassement du sol d'assise. C'est le seul sujet de cette liste où l'avis d'un ingénieur précède normalement les travaux.",
+    "signs": [
+      "fissure en escalier qui s'élargit vers le haut, ou décalage entre deux sections de mur",
+      "plancher qui penche ou qui a cessé d'être de niveau",
+      "cadres de portes et de fenêtres qui se déforment à l'étage",
+      "mur de fondation qui bombe vers l'intérieur"
+    ],
+    "whatProDoes": "L'entrepreneur ne reprend pas une fondation sans savoir pourquoi elle a bougé : la cause est dans le sol, pas dans le béton. Le diagnostic relève d'un ingénieur, et la reprise en sous-œuvre — pieux, vérins, micropieux — exige une sous-catégorie de licence RBQ distincte de celle de l'excavation. Demandez laquelle avant de signer.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "fissure",
+      "videSanitaire",
+      "pyrite"
+    ],
+    "order": 60
+  },
+  "humidite": {
+    "name": "humidité et moisissure au sous-sol",
+    "shortDescription": "Un sous-sol humide sans eau visible relève souvent de la vapeur, pas de l'infiltration. Les deux se règlent différemment, et les confondre fait dépenser au mauvais endroit.",
+    "signs": [
+      "odeur de moisi persistante sans flaque ni trace d'écoulement",
+      "condensation sur les tuyaux froids ou le bas des murs en été",
+      "taches noires ou verdâtres au bas d'un mur, derrière un meuble",
+      "linge ou carton entreposé au sous-sol qui reste humide"
+    ],
+    "whatProDoes": "L'entrepreneur distingue l'eau liquide de la vapeur avant de proposer : une infiltration se règle par le drainage ou l'enveloppe, un excès de vapeur par la ventilation, la déshumidification et le traitement de la dalle. La moisissure visible sur une surface importante relève d'une décontamination, un métier distinct — un entrepreneur en fondation n'a pas à s'en charger.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "videSanitaire",
+      "infiltration",
+      "impermeabilisation"
+    ],
+    "order": 70
+  },
+  "puisard": {
+    "name": "pompe de puisard et drain intérieur",
+    "shortDescription": "La solution quand l'eau ne peut pas partir par gravité, ou quand excaver le pourtour est impossible. C'est une gestion permanente, pas une réparation ponctuelle.",
+    "signs": [
+      "fosse de puisard existante dont la pompe démarre souvent, ou plus du tout",
+      "sous-sol plus bas que la conduite municipale, donc sans écoulement gravitaire",
+      "maison mitoyenne ou terrain trop étroit pour excaver le pourtour",
+      "eau qui remonte par la dalle plutôt que par le mur"
+    ],
+    "whatProDoes": "L'entrepreneur installe le drain le long du périmètre intérieur de la dalle et l'achemine vers une fosse, d'où une pompe évacue l'eau. Le point faible du système est la panne : une pompe dépend de l'électricité, et l'entrepreneur doit dire ce qui se passe lors d'une panne de courant — alarme, deuxième pompe, batterie de secours — avant que la question ne se pose un soir d'orage.",
+    "regulations": [
+      "rbq-licence",
+      "gcr"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "infiltration",
+      "drain",
+      "ocre"
+    ],
+    "order": 80
+  },
+  "videSanitaire": {
+    "name": "vide sanitaire",
+    "shortDescription": "L'espace bas sous le plancher, souvent sur sol nu. Ce qui s'y passe ne reste pas : l'air du vide sanitaire monte dans la maison.",
+    "signs": [
+      "sol de terre nu, sans pare-vapeur, sous le plancher",
+      "odeur qui monte dans la maison par les registres ou les planchers",
+      "plancher froid au-dessus du vide sanitaire en hiver",
+      "bois de charpente foncé ou taché au pourtour"
+    ],
+    "whatProDoes": "L'entrepreneur documente d'abord l'état du sol, de la charpente et de l'humidité avant de refermer quoi que ce soit. Les travaux vont du pare-vapeur au sol à l'isolation du pourtour, en passant par la gestion de l'eau qui y aboutit. Refermer un vide sanitaire humide sans avoir réglé d'où vient l'eau enferme le problème avec la charpente.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "humidite",
+      "affaissement",
+      "infiltration"
+    ],
+    "order": 90
+  },
+  "inspection": {
+    "name": "inspection de drain par caméra",
+    "shortDescription": "L'étape qui distingue un drain colmaté d'un drain écrasé — donc un nettoyage de quelques centaines de dollars d'une excavation de plusieurs milliers.",
+    "signs": [
+      "drain qui se colmate de façon répétée",
+      "achat d'une maison dont l'état du drain est inconnu",
+      "soumission de remplacement de drain reçue sans diagnostic préalable",
+      "présence soupçonnée d'ocre ferreuse"
+    ],
+    "whatProDoes": "L'entrepreneur passe une caméra dans le drain depuis un accès existant et enregistre le parcours. Le livrable qui compte est l'enregistrement et le rapport, pas la conclusion verbale : ils vous appartiennent, et ils vous permettent de comparer deux soumissions sur la même base. Exigez-les avant d'autoriser des travaux d'excavation.",
+    "regulations": [
+      "bnq-3661-500",
+      "rbq-licence"
+    ],
+    "regulationsPending": [],
+    "related": [
+      "drain",
+      "ocre",
+      "infiltration"
+    ],
+    "order": 100
+  },
+  "pyrite": {
+    "name": "pyrite sous la dalle",
+    "shortDescription": "Le gonflement du remblai de pierre sous la dalle de béton, par oxydation. Le problème est documenté surtout ailleurs au Québec : la première question est de savoir s'il concerne réellement la région.",
+    "signs": [
+      "dalle de sous-sol fissurée en étoile ou soulevée en son centre",
+      "cloisons du sous-sol qui coincent contre le plafond",
+      "fissures de dalle qui progressent d'une année à l'autre",
+      "achat d'une maison dont le remblai sous dalle est inconnu"
+    ],
+    "whatProDoes": "Le diagnostic ne se fait pas à l'œil : il exige un prélèvement du remblai sous la dalle et une analyse en laboratoire selon un protocole reconnu. Un entrepreneur qui affirme la présence de pyrite sans analyse affirme ce qu'il ne peut pas savoir. Les travaux, lorsqu'ils sont justifiés, consistent à retirer le remblai en cause et la dalle qui le couvre.",
+    "regulations": [
+      "rbq-licence"
+    ],
+    "regulationsPending": [
+      "ctq-m200",
+      "programme-aide-pyrite"
+    ],
+    "related": [
+      "affaissement",
+      "fissure"
+    ],
+    "order": 110
+  }
+}

@@ -1,0 +1,62 @@
+---
+/**
+ * CSS-only mobile menu. No JavaScript: the checkbox hack costs 0 KB and the
+ * site's competitive edge is shipping no client JS at all (rule 7).
+ */
+import type { Locale } from '@lib/constants.ts';
+import { SITE_NAME } from '@lib/constants.ts';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+
+interface Props { locale: Locale; switchHref: string }
+const { locale, switchHref } = Astro.props;
+const ui = dict(locale);
+
+const links = [
+  { href: pathFor({ type: 'serviceIndex' }, locale), label: ui('nav.services') },
+  // `serviceArea` (/territoire/), PAS `sectorIndex` (/secteurs/). La session 3b a
+  // tranché que `/secteurs/` reste un préfixe d'URL SANS page — les deux se
+  // concurrenceraient sur « secteurs desservis ». Les fils d'Ariane avaient été
+  // corrigés à ce moment-là, ce lien-ci avait été oublié : il pointait vers une
+  // page qui ne sera jamais construite, depuis les 87 pages du site.
+  { href: pathFor({ type: 'static', page: 'serviceArea' }, locale), label: ui('nav.sectors') },
+  { href: pathFor({ type: 'static', page: 'pricing' }, locale), label: ui('nav.pricing') },
+  { href: pathFor({ type: 'static', page: 'process' }, locale), label: ui('nav.process') },
+  { href: pathFor({ type: 'static', page: 'faq' }, locale), label: ui('nav.faq') },
+];
+---
+
+<header class="entete">
+  <div class="contenant entete-rangee">
+    <a class="marque" href={pathFor({ type: 'home' }, locale)}>{SITE_NAME}</a>
+
+    <input type="checkbox" id="menu-bascule" class="menu-bascule" />
+    <label for="menu-bascule" class="menu-etiquette">{ui('nav.menu')}</label>
+
+    <nav class="menu" aria-label={ui('nav.menu')}>
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href={switchHref} hreflang={locale === 'fr' ? 'en' : 'fr'} aria-label={ui('nav.languageSwitchLabel')}>{ui('nav.languageSwitch')}</a></li>
+        <li><a class="bouton" href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('nav.quote')}</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .entete { background: var(--primaire); color: #fff; }
+  .entete a { color: #fff; text-decoration: none; }
+  .entete-rangee { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding-block: 0.85rem; }
+  .marque { font-family: var(--font-titre); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; margin-right: auto; }
+  .menu ul { display: flex; gap: 1.25rem; list-style: none; align-items: center; margin: 0; padding: 0; flex-wrap: wrap; }
+  .menu a:hover { text-decoration: underline; }
+  .bouton { background: var(--accent); padding: 0.5rem 0.9rem; border-radius: 3px; font-weight: 600; }
+  .menu-bascule, .menu-etiquette { display: none; }
+
+  @media (max-width: 52rem) {
+    .menu-etiquette { display: block; cursor: pointer; border: 1px solid rgba(255,255,255,0.5); padding: 0.35rem 0.7rem; border-radius: 3px; }
+    .menu { display: none; width: 100%; }
+    .menu ul { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding-block: 0.75rem; }
+    .menu-bascule:checked ~ .menu { display: block; }
+  }
+</style>

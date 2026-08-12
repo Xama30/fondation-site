@@ -1,0 +1,34 @@
+{
+  "slug": "lange-gardien",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "moderate",
+      "why": "aucune cohorte dominante datée pour les résidences de L'Ange-Gardien : housingStock ne nomme que des granges et maisons de pierre pluriséculaires le long de l'avenue Royale et des « résidences plus récentes » sans date en bordure du fleuve — plafonné faute de strate dominante confirmée"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "même plafond : sans cohorte dominante confirmée pour les résidences récentes en bordure du fleuve, impossible d'assigner un niveau tranché"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "À L'Ange-Gardien, les granges et les quelques maisons de pierre qui longent l'avenue Royale depuis avant 1945 côtoient des résidences plus récentes construites en bordure du fleuve Saint-Laurent, face à l'île d'Orléans, sans qu'aucune de ces deux cohortes ne domine clairement le parc bâti. Cette absence de cohorte majoritaire signifie que la pression sur le drain varie d'une maison à l'autre selon qu'elle repose sur un ancien solage de pierre sans drain ou sur une fondation plus jeune raccordée à un système plus récent — un secteur où le diagnostic se fait au cas par cas plutôt que par génération de quartier.",
+    "en": "In L'Ange-Gardien, the barns and handful of stone houses lining avenue Royale since before 1945 sit alongside newer homes built along the St. Lawrence River facing Île d'Orléans, with neither cohort clearly dominating the building stock. This lack of a majority cohort means drain pressure varies house to house, depending on whether it sits on an old undrained stone foundation or a younger foundation tied to a more recent system — a sector where the read has to happen case by case rather than by subdivision generation."
+  },
+  "sources": [
+    "https://langegardien.qc.ca/la-municipalite/vivre-a-lange-gardien/une-histoire-de-plus-de-350-ans/",
+    "https://patrimoinecotedebeaupre.com/patrimoine-bati/fiche/625/"
+  ],
+  "todo": "Époque dominante du bâti résidentiel non confirmée pour L'Ange-Gardien : housingStock nomme des granges et maisons de pierre pluriséculaires le long de l'avenue Royale (bâti agricole, pas nécessairement résidentiel dominant) et des « résidences plus récentes en bordure du fleuve » sans date. Confirmer via le rôle d'évaluation municipal quelle cohorte domine réellement avant de dépasser moderate.",
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

@@ -1,0 +1,54 @@
+{
+  // Cloudflare Worker with static assets.
+  //
+  // `name` must match the Worker that already exists in the dashboard — it is what
+  // produces https://solage-capitale.<account>.workers.dev. Renaming it here
+  // creates a SECOND Worker rather than updating the existing one.
+  //
+  // (Ce commentaire annonçait `exterminateur-qc` jusqu'à la session 4, deux lignes
+  // au-dessus du bon nom : encore un fichier hérité qui documentait l'autre site.)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "solage-capitale",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-01",
+
+  // Le domaine, acheté le 2026-08-11. C'est le SEUL endroit du dépôt où il est
+  // écrit en dur, et il n'y est pas comme contenu : c'est la cible de
+  // déploiement. Tout le rendu (canoniques, hreflang, sitemap, JSON-LD,
+  // courriels sortants) passe par `SITE_URL` au build.
+  //
+  // `custom_domain: true` fait créer par Cloudflare l'enregistrement DNS de
+  // l'apex vers ce Worker. Ça exige que la zone `solagecapitale.ca` soit déjà
+  // dans le compte.
+  //
+  // ⚠ `www` n'est PAS déclaré ici, volontairement. Deux domaines personnalisés
+  // serviraient les 182 pages sous deux hôtes ; les canoniques pointent toutes
+  // vers l'apex, mais autant ne pas créer le doublon. `www` se règle par une
+  // Redirect Rule Cloudflare vers l'apex (301). Le handler de formulaire accepte
+  // déjà l'origine `www` (CANONICAL_HOSTS dans worker/lead-form.ts) au cas où
+  // une page serait servie de là.
+  "routes": [
+    {
+      "pattern": "solagecapitale.ca",
+      "custom_domain": true
+    }
+  ],
+
+  "assets": {
+    // `npm run build` emits a flat static tree here (no adapter, no dist/client).
+    "directory": "./dist",
+    "binding": "ASSETS",
+
+    // "none" = an asset miss falls through to worker/index.ts, which then serves
+    // the correct localized 404 with a real 404 status. The alternative,
+    // "404-page", would serve /404.html for everything, including URLs under /en/,
+    // handing English visitors a French error page.
+    "not_found_handling": "none"
+  },
+
+  // Surfaces console.error from the lead handler in the dashboard. Without this the
+  // only observability on a failed submission is nothing at all.
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,111 @@
+---
+/**
+ * Terms of use, EN. Twin of `src/pages/conditions-utilisation.astro`.
+ *
+ * Carries the mandatory statement from `docs/CLAUDE.md`: advertising and
+ * referral service, independent contractor, no technical or engineering advice.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'terms' } as const;
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Terms of use — Solage Capitale"
+  description="Solage Capitale is an advertising and referral service. What the site does, what it does not do, and who you are actually contracting with for work."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Terms of use", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Terms of use</h1>
+
+      <p class="chapeau">
+        Read this before using the form. It states exactly what this service is, what it is not,
+        and who you are committing to if work goes ahead.
+      </p>
+
+      <h2>What this site is</h2>
+      <p>
+        Solage Capitale is an <strong>advertising and referral service</strong>. It publishes
+        information about foundation problems in the Quebec City region and passes reader
+        enquiries on to a contractor.
+      </p>
+      <p>
+        <strong>Solage Capitale performs no construction work.</strong> It does not excavate,
+        install drains, inject cracks or apply membranes. It employs no contractor and
+        supervises no site.
+      </p>
+
+      <h2>Who you contract with</h2>
+      <p>
+        The provider who calls you back is an <strong>independent company</strong>, separate
+        from Solage Capitale, holding its own licence from the Régie du bâtiment du Québec. Any
+        contract, quote or warranty is formed <strong>between you and that company</strong>,
+        never with Solage Capitale.
+      </p>
+      <p>
+        You remain free to decline, to seek other quotes, and to verify the licence of anyone
+        who comes to your home. That is your right, and this site encourages you to exercise it:
+        <a href={pathFor({ type: 'static', page: 'faq' }, locale)}>how to check an RBQ
+        licence</a>.
+      </p>
+
+      <h2>No technical advice</h2>
+      <p>
+        Nothing on this site constitutes <strong>technical advice, a diagnosis or an engineering
+        opinion</strong>. The pages explain general phenomena, the applicable regulations and
+        what a professional does. They replace neither an inspection of your building nor the
+        judgement of an engineer or building technologist.
+      </p>
+      <p>
+        The site deliberately provides <strong>no execution instructions</strong>. Excavating
+        against a foundation, injecting a crack or applying a membrane are works that bear on
+        personal safety and structural integrity: they belong to a licensed contractor.
+      </p>
+
+      <h2>Accuracy of the information</h2>
+      <p>
+        Regulatory facts are tied to their public source and dated. They can change. Where no
+        primary source exists for a figure, the site says so rather than publishing one — which
+        is the case for price ranges, as explained on the
+        <a href={pathFor({ type: 'static', page: 'pricing' }, locale)}>pricing page</a>.
+      </p>
+
+      <h2>Limitation of liability</h2>
+      <p>
+        The information is provided as is, with no warranty of completeness. Solage Capitale
+        cannot be held responsible for decisions taken on the basis of the site's content, nor
+        for the execution, quality or price of work carried out by a third-party company.
+        Remedies relating to work are exercised against the company that performed it.
+      </p>
+
+      <h2>Ownership</h2>
+      <p>
+        The site's text and diagrams are its own property. Photographs come from freely licensed
+        archives; their provenance and licence are recorded and travel with the site.
+      </p>
+
+      <h2>Governing law and changes</h2>
+      <p>
+        These terms are governed by the law applicable in Quebec. They may be amended; the
+        version displayed is the one that applies. Use of the site constitutes acceptance.
+      </p>
+
+      <h2>Your information</h2>
+      <p>
+        How information submitted through the form is handled is described in the
+        <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>privacy policy</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

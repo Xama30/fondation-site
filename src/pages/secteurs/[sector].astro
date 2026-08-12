@@ -1,0 +1,191 @@
+---
+/**
+ * Hub de secteur, FR. Jumelle : `src/pages/en/areas/[sector].astro`.
+ *
+ * C'est la page qui consomme le travail de phase 2 : `whyHere` et
+ * `foundationPressure` viennent de `src/data/cities.json`, pas d'une rédaction
+ * libre. Le schéma force `localAngle` à être écrit ; la porte d'unicité exige
+ * ≥ 5 termes locaux du secteur dans le texte rendu.
+ *
+ * Les 29 combinaisons service × secteur rétrogradées apparaissent ici en TEXTE
+ * BRUT, jamais en lien (PLAYBOOK §7.3) : un lien vers une page non construite est
+ * un lien mort permanent que la dérogation « planifié » couvre à vie.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import SectorHero from '@components/SectorHero.astro';
+import { pathFor } from '@lib/routes.ts';
+import { dict } from '@lib/i18n.ts';
+import { breadcrumbSchema, faqSchema } from '@lib/schema.ts';
+import { cities, services as serviceData } from '@lib/data.ts';
+import { sectorServices } from '@lib/sector-services.ts';
+import { SERVICE_SLUGS } from '@data/slugs.ts';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('sectors', (e) => e.data.locale === 'fr');
+  return entries.map((entry) => ({ params: { sector: entry.data.sector }, props: { entry } }));
+}
+
+type Props = { entry: Awaited<ReturnType<typeof getCollection<'sectors'>>>[number] };
+
+const locale = 'fr' as const;
+const ui = dict(locale);
+const { entry } = Astro.props as Props;
+const city = cities[entry.data.sector]!;
+const ref = { type: 'sector', sector: entry.data.sector } as const;
+const { Content } = await render(entry);
+
+// Les deux services de la matrice, et leur niveau de pression POUR CE SECTEUR.
+// Le lien n'est posé que si la page matrice existe réellement.
+const builtMatrix = new Set(
+  (await getCollection('matrix', (e) => e.data.locale === locale)).map(
+    (e) => `${e.data.service}/${e.data.sector}`,
+  ),
+);
+const matrix = (['drain', 'fissure'] as const).map((key) => {
+  const slug = SERVICE_SLUGS[key].fr as 'drain-francais' | 'fissure-de-fondation';
+  return {
+    key,
+    name: serviceData[locale][key].name,
+    level: city.foundationPressure.services[slug].level,
+    why: city.foundationPressure.services[slug].why,
+    built: builtMatrix.has(`${key}/${entry.data.sector}`),
+  };
+});
+
+// Ne PAS lier les 11 services depuis chaque hub de secteur, et ne pas les dériver non plus
+// de `services.json[lead].related` : cette table est une relation GLOBALE entre sujets, donc
+// les 51 secteurs y surfaçaient le même jeu. `sectorServices()` les dérive des données du
+// secteur — strates d'époque, drain d'origine, niveaux de pression, mentions propres.
+// Filtré contre les pages réellement écrites, jamais contre le JSON brut.
+const writtenServices = new Set(
+  (await getCollection('services', (e) => e.data.locale === locale)).map((e) => e.data.service),
+);
+const serviceLinks = sectorServices(city)
+  .filter((k) => writtenServices.has(k))
+  .map((k) => ({ key: k, name: serviceData[locale][k].name }));
+
+const writtenSectors = new Set(
+  (await getCollection('sectors', (e) => e.data.locale === locale)).map((e) => e.data.sector),
+);
+const neighbours = city.neighbours
+  .filter((n) => writtenSectors.has(n) && cities[n])
+  .map((n) => ({ slug: n, name: cities[n]!.name[locale] }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title={entry.data.title}
+  description={entry.data.metaDescription}
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Accueil", ref: { type: 'home' } },
+      { name: "Territoire", ref: { type: 'static', page: 'serviceArea' } },
+      { name: city.name[locale], ref },
+    ]),
+    faqSchema(entry.data.faq),
+  ]}
+>
+  <article class="contenant bloc-page">
+    <div class="mesure">
+      <h1>{entry.data.h1}</h1>
+
+      <SectorHero
+        locale={locale}
+        sector={entry.data.sector}
+        sectorName={city.name[locale]}
+        eras={city.foundationPressure.eras}
+        heroImage={entry.data.heroImage}
+        heroAlt={entry.data.heroAlt}
+      />
+
+      <h2>{ui('sector.whyHere')}</h2>
+      <p>{city.whyHere[locale]}</p>
+      <p>{entry.data.localAngle}</p>
+
+      <Content />
+
+      {/*
+        La liste des époques a été retirée : elle affichait les JETONS BRUTS de
+        `cities.json` au lecteur (« avant-1945 (dominant) — fondation : pierre »),
+        et le hero `EraDiagram` rend exactement la même donnée, libellée. Marge
+        vérifiée avant de couper : la page de secteur la plus courte fait 805 mots
+        pour un seuil de 400.
+      */}
+      <h2>{ui('sector.pressure')}</h2>
+      <ul>
+        {
+          matrix.map((m) => (
+            <li>
+              {
+                m.built ? (
+                  <a href={pathFor({ type: 'serviceSector', service: m.key, sector: entry.data.sector }, locale)}>
+                    {m.name}
+                  </a>
+                ) : (
+                  <strong>{m.name}</strong>
+                )
+              }
+              {" — "}{m.why}
+            </li>
+          ))
+        }
+      </ul>
+
+      {
+        city.neighbourhoods.length > 0 && (
+          <>
+            <h2>{ui('sector.neighbourhoods')}</h2>
+            <p>{city.neighbourhoods.join(', ')}.</p>
+          </>
+        )
+      }
+
+      <h2>{ui('sector.publicRef')}</h2>
+      <p>{entry.data.publicReference}</p>
+
+      <h2>{ui('meta.faqTitle')}</h2>
+      {
+        entry.data.faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+
+      {
+        serviceLinks.length > 0 && (
+          <>
+            <h2>{ui('meta.relatedServices')}</h2>
+            <ul class="liens-liste">
+              {serviceLinks.map((s) => (
+                <li>
+                  <a href={pathFor({ type: 'service', service: s.key }, locale)}>{s.name}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      {
+        neighbours.length > 0 && (
+          <>
+            <h2>{ui('meta.nearbySectors')}</h2>
+            <ul class="liens-liste">
+              {neighbours.map((n) => (
+                <li><a href={pathFor({ type: 'sector', sector: n.slug }, locale)}>{n.name}</a></li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      <p class="cta-fin">
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>{ui('cta.quote')}</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,39 @@
+{
+  "slug": "lac-saint-charles",
+  "erasBasis": "housingStock",
+  "eras": [
+    {
+      "span": "1945-1975",
+      "weight": "dominant",
+      "foundation": "beton-coule",
+      "drain": "tuile-argile"
+    },
+    {
+      "span": "avant-1945",
+      "weight": "minoritaire",
+      "foundation": "pierre",
+      "drain": "aucun"
+    }
+  ],
+  "services": {
+    "drain-francais": {
+      "level": "high",
+      "why": "cohorte 1945-1975 de conversion des chalets en résidences permanentes = drain de tuile d'argile en fin de vie, aggravé par la proximité nommée du Marais du Nord et de la baie Charles-Talbot qui maintiennent la nappe près de la surface"
+    },
+    "fissure-de-fondation": {
+      "level": "moderate",
+      "why": "béton coulé ou blocs dominant sur la cohorte 1945-1975, fissures de retrait verticales typiques de cette génération de solage"
+    }
+  },
+  "ocre": null,
+  "pyrite": null,
+  "whyHere": {
+    "fr": "Autour du lac Saint-Charles, la formation de la municipalité en 1946 a déclenché la conversion des chalets en résidences permanentes le long de l'avenue du Lac-Saint-Charles et de la rue Delage, sur des solages de béton coulé ou de blocs raccordés à des drains de tuile d'argile typiques de cette vague 1945-1975. La proximité du Marais du Nord et de la baie Charles-Talbot maintient la nappe phréatique près de la surface, ce qui accélère le colmatage de ces drains vieillissants.",
+    "en": "Around Lac Saint-Charles, the municipality's creation in 1946 triggered the conversion of chalets into year-round homes along avenue du Lac-Saint-Charles and rue Delage, on poured-concrete or block foundations connected to the clay-tile drains typical of that 1945-1975 wave. The proximity of the Marais du Nord marsh and the baie Charles-Talbot keeps the water table close to the surface, speeding the clogging of these aging drains."
+  },
+  "sources": [
+    "https://fr.wikipedia.org/wiki/Lac-Saint-Charles"
+  ],
+  "todo": null,
+  "criterion": "2026-08-04-drain-facteur-nomme"
+}

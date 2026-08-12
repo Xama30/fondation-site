@@ -1,0 +1,83 @@
+---
+/**
+ * Geographic index, EN. Twin of `src/pages/territoire.astro`.
+ *
+ * This is `/en/service-area/`, not `/en/areas/`. Both would compete on the same
+ * intent ("areas served"): `/en/areas/` stays a URL prefix with no page of its
+ * own. Area hub breadcrumbs point here.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { pathFor } from '@lib/routes.ts';
+import { breadcrumbSchema } from '@lib/schema.ts';
+import { cities } from '@lib/data.ts';
+
+const locale = 'en' as const;
+const ref = { type: 'static', page: 'serviceArea' } as const;
+
+const written = await getCollection('sectors', (e) => e.data.locale === locale);
+const listed = written
+  .map((e) => ({ slug: e.data.sector, city: cities[e.data.sector]! }))
+  .filter((s) => s.city)
+  .sort((a, b) => a.city.name[locale].localeCompare(b.city.name[locale], 'en'));
+
+const groups = [
+  { tier: 'A' as const, label: "Boroughs and main cities" },
+  { tier: 'B' as const, label: "Surrounding municipalities" },
+  { tier: 'C' as const, label: "Neighbourhoods and districts" },
+].map((g) => ({ ...g, items: listed.filter((s) => s.city.tier === g.tier) }));
+---
+
+<BaseLayout
+  locale={locale}
+  ref={ref}
+  title="Service area — Quebec City region and Lévis"
+  description="Areas covered across the Quebec City region: boroughs, surrounding municipalities and neighbourhoods, with what characterises the building stock of each."
+  schema={[
+    breadcrumbSchema(locale, [
+      { name: "Home", ref: { type: 'home' } },
+      { name: "Service area", ref },
+    ]),
+  ]}
+>
+  <section class="contenant bloc-page">
+    <div class="mesure">
+      <h1>Areas across the Quebec City region</h1>
+      <p>
+        The housing stock of the Communauté métropolitaine de Québec was not built all at once.
+        A pre-1945 village core, a 1970s suburban belt and a recent subdivision do not produce
+        the same foundation problems, even a few streets apart. Each page below starts from the
+        area's construction period and its geography, not from interchangeable copy.
+      </p>
+
+      {
+        listed.length === 0 ? (
+          <p>Area pages are being written.</p>
+        ) : (
+          groups
+            .filter((g) => g.items.length > 0)
+            .map((g) => (
+              <>
+                <h2>{g.label}</h2>
+                <ul>
+                  {g.items.map((s) => (
+                    <li>
+                      <a href={pathFor({ type: 'sector', sector: s.slug }, locale)}>
+                        {s.city.name[locale]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ))
+        )
+      }
+
+      <p>
+        <a href={pathFor({ type: 'serviceIndex' }, locale)}>Types of foundation work</a>
+        {" · "}
+        <a href={pathFor({ type: 'static', page: 'quote' }, locale)}>Request a quote</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
