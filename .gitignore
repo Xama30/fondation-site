@@ -1,6 +1,11 @@
 dist/
 node_modules/
 .astro/
+
+# État local de miniflare, créé par `npx wrangler dev` — des SQLite de cache et
+# de traces, propres à cette machine. Rien à y récupérer, et les `.sqlite-wal`
+# changent à chaque exécution : commités, ils polluent chaque diff.
+.wrangler/
 .DS_Store
 *.log
 .env

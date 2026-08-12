@@ -2014,3 +2014,75 @@ Une photo améliore la confiance et le partage, pas la position.
 
 ⚠ **`og:image` reste absent des 190 pages.** Maintenant que l'accueil porte une image, c'est le
 prochain gain de distribution : un lien partagé donne encore une carte sans visuel.
+
+---
+
+## Session 6d — 11 août 2026 · ⚠ LE WORKER NE DÉMARRAIT PAS
+
+**Trouvé en lançant `npx wrangler dev` pour la première fois du projet**, pendant que le
+propriétaire configurait Mailgun. Le Worker levait à l'exécution :
+
+```
+✘ [ERROR] service core:user:solage-capitale:
+          Uncaught ReferenceError: process is not defined
+```
+
+### Ce que ça aurait cassé en production
+
+`src/lib/constants.ts` évaluait `process.env.SITE_URL` au niveau du module. **`process` n'existe
+pas dans le runtime des Workers**, et ce fichier est importé par `worker/lead-form.ts`
+(`SITE_NAME`) et par `worker/index.ts` (`LEAD_ENDPOINT`). L'erreur se produit donc **au
+chargement du module, sur chaque requête que le Worker traite** :
+
+- **le formulaire** — toute soumission perdue ;
+- **tous les 404** — c'est le Worker qui les sert (`not_found_handling: "none"`).
+
+Et le site aurait eu l'air parfaitement sain : Cloudflare sert les assets statiques **sans
+invoquer le code**, donc les 190 pages auraient répondu 200 normalement. Seuls le formulaire et
+les 404 étaient morts.
+
+**⚠ `npx wrangler deploy --dry-run` ne l'attrape pas.** Il bundle, il ne fait jamais tourner le
+code. Il était vert depuis la session 4 et n'a jamais rien prouvé sur l'exécution — exactement le
+`[uniqueness] 0 pages` de la session 1 et le `<set:html>` de la session 4. **On valide la SORTIE,
+jamais l'intention**, et pour du code la sortie c'est l'exécution, pas le bundle.
+
+Le bug est **antérieur à cette session** : `lead-form.ts` importait déjà `constants.ts` depuis la
+session 4. Personne n'avait jamais lancé le Worker.
+
+**Corrigé** par une garde `typeof process !== 'undefined'` (et la même pour `import.meta`).
+
+### Deuxième bug, révélé par le premier : le Worker n'a jamais vu `SITE_URL`
+
+Une fois la garde posée, `SITE_URL` retombait sur son défaut de développement,
+`http://localhost:4321` — parce que **`wrangler deploy` est une commande distincte de
+`npm run build` et n'hérite pas de la variable d'environnement**. Conséquence : chaque courriel
+de prospect aurait porté « Envoyé depuis : `http://localhost:4321/soumission/` », un lien
+sur lequel le locataire ne peut pas cliquer.
+
+**Corrigé** : `SITE_URL` est maintenant une `vars` de `wrangler.jsonc` — c'est une variable de
+déploiement, pas du contenu, donc sa place est à côté de la route. `lead-form.ts` la lit dans
+`env`, avec la constante en repli, et `CANONICAL_HOSTS` est calculé par requête au lieu du niveau
+module. Vérifié au `--dry-run` : `env.SITE_URL ("https://solagecapitale.ca")`.
+
+### Le test de bout en bout, désormais fait avant de déployer
+
+`wrangler dev` + `curl`, les 8 contrôles :
+
+| | Résultat |
+|---|---|
+| Page statique (Worker non invoqué) | 200 |
+| `GET /api/soumission/` | **405** + `Allow: POST` + `x-robots-tag: noindex` |
+| `POST /api/soumission/` | 200 (page d'erreur, Mailgun non configuré — attendu) |
+| `POST /api/soumission` **sans** barre oblique | 200, **aucune redirection** — le POST n'est pas dégradé |
+| Pot de miel rempli | **303 → `/merci/`**, indistinguable d'un succès |
+| Courriel invalide | **400** |
+| `/merci/` et `/en/thank-you/` | **200 tous les deux** — la cible du 303 existe enfin |
+| `/nexiste-pas/` · `/en/nexiste-pas/` | **404** réel, et `lang="en-CA"` du bon côté |
+
+Et le journal annonce bien
+`[lead] missing environment variables: MAILGUN_API_KEY, MAILGUN_DOMAIN, LEAD_TO_EMAIL — lead NOT sent`,
+ce qui est la seule observabilité du formulaire en production.
+
+**`wrangler dev` doit faire partie de la routine avant tout déploiement.** Ajouté à
+`docs/DEPLOY.md`. Le coût est de trente secondes ; il vient d'éviter une mise en ligne où le
+formulaire et les 404 étaient morts sans que rien ne le dise.

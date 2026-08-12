@@ -46,6 +46,21 @@
     "not_found_handling": "none"
   },
 
+  // ⚠ LE WORKER NE VOIT PAS LE `SITE_URL` DU BUILD.
+  //
+  // `SITE_URL=… npm run build` paramètre Astro, pas le Worker : `wrangler deploy`
+  // est une commande distincte et n'hérite pas de cette variable. Sans la ligne
+  // ci-dessous, `src/lib/constants.ts` retombe sur son défaut de développement et
+  // le Worker travaille avec `http://localhost:4321` — donc chaque courriel de
+  // prospect porterait un lien « Envoyé depuis : http://localhost:4321/… » et le
+  // locataire ne pourrait pas cliquer jusqu'à la page d'origine.
+  //
+  // C'est une variable de déploiement, pas du contenu : sa place est ici, au même
+  // titre que la route. Les secrets (MAILGUN_API_KEY) restent dans le dashboard.
+  "vars": {
+    "SITE_URL": "https://solagecapitale.ca"
+  },
+
   // Surfaces console.error from the lead handler in the dashboard. Without this the
   // only observability on a failed submission is nothing at all.
   "observability": {

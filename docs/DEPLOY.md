@@ -55,7 +55,7 @@ Cloudflare → le Worker → Settings → Variables and Secrets.
 | Nom | Type | Rôle |
 |---|---|---|
 | `MAILGUN_API_KEY` | **secret** | Clé privée Mailgun. **Jamais en clair**, jamais dans le dépôt. |
-| `MAILGUN_DOMAIN` | variable | `mg.<domaine>` — le sous-domaine Mailgun vérifié |
+| `MAILGUN_DOMAIN` | variable | `mg.solagecapitale.ca` — le **sous-domaine** Mailgun vérifié |
 | `LEAD_TO_EMAIL` | variable | Où arrivent les demandes |
 | `MAILGUN_BASE_URL` | variable, optionnel | `https://api.eu.mailgun.net` si le compte est en région UE |
 | `LEAD_BCC` | variable, optionnel | Copie pour le registre des demandes (voir `HANDOFF-TENANT.md`) |
@@ -68,17 +68,60 @@ et dans `npx wrangler tail` — c'est la seule observabilité du formulaire.
 visiteur. Envoyer `From:` l'adresse du visiteur échoue SPF/DKIM et part en indésirable. Ne pas
 « simplifier » ça.
 
+⚠ **VÉRIFIER MAILGUN SUR LE SOUS-DOMAINE `mg.`, JAMAIS SUR L'APEX.** Mailgun demande des
+enregistrements **MX** sur le domaine qu'on lui fait vérifier. Or `contact@solagecapitale.ca` —
+l'adresse du responsable publiée sur `/contact/`, celle dont dépend la promesse de
+`/confidentialite/` — passe par **Cloudflare Email Routing**, qui pose ses propres MX sur l'apex.
+Vérifier Mailgun sur `solagecapitale.ca` écraserait ces MX et **ferait disparaître l'adresse de
+contact**, en silence, pendant que le formulaire, lui, continuerait de fonctionner. Sur
+`mg.solagecapitale.ca` les deux cohabitent sans se voir.
+
+⚠ **Compte en région UE : `MAILGUN_BASE_URL=https://api.eu.mailgun.net` est obligatoire.** Sans
+lui, l'API répond 401 avec des identifiants pourtant valides, et le diagnostic part dans la
+mauvaise direction.
+
+⚠ **`LEAD_TO_EMAIL` se pose même si le reste attend.** Sans elle, la page d'erreur du formulaire
+n'a aucun repli à offrir : le code omet le paragraphe plutôt que d'afficher un `mailto:` vide —
+correct, mais le visiteur se retrouve sans issue.
+
 ---
 
 ## 3. Déployer
 
 ```bash
-SITE_URL=https://<domaine> npm run build   # les 3 portes doivent être vertes
+SITE_URL=https://solagecapitale.ca npm run build   # les 3 portes doivent être vertes
+npx wrangler dev                                   # ⚠ OBLIGATOIRE — voir ci-dessous
 npx wrangler deploy
 ```
 
 `npm run build` enchaîne `astro check` → build → `post-build` → les trois audits. **Si une porte
 est rouge, on ne déploie pas** — on corrige la page, jamais le seuil (règle 3).
+
+### ⚠ `wrangler dev` n'est pas facultatif, et `--dry-run` ne le remplace pas
+
+Le dry-run **bundle sans jamais exécuter**. Il était vert pendant que le Worker levait
+`ReferenceError: process is not defined` **au chargement du module** — donc sur chaque requête
+qu'il traite : le formulaire **et tous les 404**. Le site aurait eu l'air parfaitement sain,
+parce que Cloudflare sert les assets statiques sans invoquer le code et que les 190 pages
+répondaient 200. Trouvé le 2026-08-11, jamais détecté avant parce que personne n'avait lancé le
+Worker.
+
+Les 8 contrôles locaux, quelques secondes :
+
+```bash
+B=http://localhost:8788
+curl -s -o /dev/null -w "%{http_code}\n" $B/                       # 200, statique
+curl -sI $B/api/soumission/ | grep -i "^HTTP\|^allow"              # 405 + Allow: POST
+curl -s -o /dev/null -w "%{http_code}\n" -X POST $B/api/soumission/ \
+  -F "name=T" -F "email=t@e.com" -F "locale=fr"                    # 200 (ou 303 si Mailgun est prêt)
+curl -s -o /dev/null -w "%{http_code}\n" -X POST $B/api/soumission \
+  -F "name=T" -F "email=t@e.com" -F "locale=fr"                    # surtout PAS 301
+curl -s -o /dev/null -w "%{redirect_url}\n" -X POST $B/api/soumission/ \
+  -F "name=B" -F "email=b@e.com" -F "website=x" -F "locale=fr"     # 303 -> /merci/
+curl -s -o /dev/null -w "%{http_code}\n" $B/merci/                 # 200 — la cible du 303 existe
+curl -s -o /dev/null -w "%{http_code}\n" $B/nexiste-pas/           # 404 réel
+curl -s $B/en/nexiste-pas/ | grep -o '<html[^>]*>'                 # lang="en-CA"
+```
 
 ---
 

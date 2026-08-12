@@ -43,7 +43,28 @@ export const PRIVACY_OFFICER = {
  * Normalized at the boundary: an empty string is not an unset variable, and `??`
  * does not fall back on `''` (PLAYBOOK §10.4).
  */
-const rawSite = (import.meta.env?.SITE_URL ?? process.env.SITE_URL ?? '').trim();
+/**
+ * ⚠ `process` N'EXISTE PAS DANS LE RUNTIME DES WORKERS, et cette ligne y est
+ * évaluée : `worker/lead-form.ts` importe ce fichier pour `SITE_NAME`, et
+ * `worker/index.ts` pour `LEAD_ENDPOINT`.
+ *
+ * Sans la garde `typeof`, le Worker lève `ReferenceError: process is not
+ * defined` **au chargement du module**, donc sur CHAQUE requête qu'il traite —
+ * le formulaire ET les 404, puisque c'est lui qui les sert. Le site statique,
+ * lui, continue de fonctionner : Cloudflare sert les assets sans invoquer le
+ * code. La panne serait donc restée invisible sur toutes les pages normales.
+ *
+ * **`npx wrangler deploy --dry-run` ne l'attrape pas** : il bundle sans jamais
+ * exécuter. Trouvé le 2026-08-11 en lançant `wrangler dev` pour la première
+ * fois du projet — la troisième fois qu'un vert ne prouvait rien ici, après le
+ * `[uniqueness] 0 pages` et le `<set:html>`. **Valider la SORTIE, jamais
+ * l'intention.**
+ */
+const fromImportMeta =
+  typeof import.meta !== 'undefined' ? (import.meta.env?.SITE_URL as string | undefined) : undefined;
+const fromProcess =
+  typeof process !== 'undefined' ? (process.env?.SITE_URL as string | undefined) : undefined;
+const rawSite = (fromImportMeta ?? fromProcess ?? '').trim();
 export const SITE_URL = (rawSite || 'http://localhost:4321').replace(/\/$/, '');
 
 /**

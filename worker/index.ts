@@ -36,6 +36,8 @@ import { handleLeadForm } from './lead-form';
 interface Env {
   /** Static asset binding — `dist/`, served by Cloudflare. */
   ASSETS: { fetch(request: Request): Promise<Response> };
+  /** From `vars` in wrangler.jsonc — the Worker does not inherit the build's SITE_URL. */
+  SITE_URL?: string;
   MAILGUN_API_KEY?: string;
   MAILGUN_DOMAIN?: string;
   LEAD_TO_EMAIL?: string;

@@ -39,7 +39,7 @@
  * `npx wrangler tail`. It is the only observability this has.
  */
 
-import { SITE_NAME, SITE_URL } from '../src/lib/constants';
+import { SITE_NAME, SITE_URL as SITE_URL_FALLBACK } from '../src/lib/constants';
 
 /**
  * Minimal local typings for the Workers runtime.
@@ -54,6 +54,12 @@ import { SITE_NAME, SITE_URL } from '../src/lib/constants';
  * That mistake produced 96 errors on the first build of this file.)
  */
 interface LeadEnv {
+  /**
+   * Posé par `vars` dans wrangler.jsonc. Le Worker N'HÉRITE PAS du `SITE_URL`
+   * du build : `wrangler deploy` est une commande distincte de `npm run build`.
+   * Sans lui, les liens des courriels de prospects pointaient vers localhost.
+   */
+  SITE_URL?: string;
   MAILGUN_API_KEY?: string;
   MAILGUN_DOMAIN?: string;
   LEAD_TO_EMAIL?: string;
@@ -93,6 +99,7 @@ function normalize(value: string | undefined): string | undefined {
  */
 function readEnv(env: LeadEnv) {
   return {
+    SITE_URL: (normalize(env.SITE_URL) ?? SITE_URL_FALLBACK).replace(/\/$/, ''),
     MAILGUN_API_KEY: normalize(env.MAILGUN_API_KEY) ?? '',
     MAILGUN_DOMAIN: normalize(env.MAILGUN_DOMAIN) ?? '',
     LEAD_TO_EMAIL: normalize(env.LEAD_TO_EMAIL) ?? '',
@@ -129,8 +136,14 @@ function escapeHtml(s: string): string {
 /**
  * The canonical public hosts. Cloudflare may serve either apex or www, and both
  * must be accepted or a submission from the www variant is silently refused.
+ *
+ * Computed per request from the RESOLVED site URL rather than at module scope:
+ * the value now comes from the Worker's own `vars`, not from the build.
  */
-const CANONICAL_HOSTS = new Set([new URL(SITE_URL).host, `www.${new URL(SITE_URL).host}`]);
+function canonicalHosts(siteUrl: string): Set<string> {
+  const host = new URL(siteUrl).host;
+  return new Set([host, `www.${host}`]);
+}
 
 /**
  * CSRF check. Astro's `security.checkOrigin` does not apply here — this runs in the
@@ -159,7 +172,7 @@ const CANONICAL_HOSTS = new Set([new URL(SITE_URL).host, `www.${new URL(SITE_URL
  * the host that served it, so evil.example still cannot forge one. The canonical
  * set stays as an addition, so apex↔www cross-posting keeps working.
  */
-function isSameSite(request: Request): boolean {
+function isSameSite(request: Request, siteUrl: string): boolean {
   const origin = request.headers.get('origin');
   if (origin === null) return true;
 
@@ -173,7 +186,7 @@ function isSameSite(request: Request): boolean {
   // Same-origin: the form was served by the very host it is posting to.
   if (originHost === new URL(request.url).host) return true;
 
-  return CANONICAL_HOSTS.has(originHost);
+  return canonicalHosts(siteUrl).has(originHost);
 }
 
 /**
@@ -247,7 +260,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   const { request } = context;
   const env = readEnv(context.env);
 
-  if (!isSameSite(request)) {
+  if (!isSameSite(request, env.SITE_URL)) {
     return new Response('Cross-site POST form submissions are forbidden', { status: 403 });
   }
 
@@ -296,7 +309,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   // `page_url` is the pathname of the form page. Resolve it against the canonical
   // SITE_URL rather than the request URL so the tenant always gets a clickable
   // https link to the exact page the lead came from.
-  const sentFrom = new URL(get('page_url') || '/', SITE_URL).toString();
+  const sentFrom = new URL(get('page_url') || '/', env.SITE_URL).toString();
   lines.push(`\n— ${locale === 'fr' ? 'Envoyé depuis' : 'Sent from'}: ${sentFrom}`);
   lines.push(`${locale === 'fr' ? 'Langue' : 'Language'}: ${locale}`);
 
