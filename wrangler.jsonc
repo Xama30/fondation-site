@@ -1,14 +1,22 @@
 {
   // Cloudflare Worker with static assets.
   //
-  // `name` must match the Worker that already exists in the dashboard — it is what
-  // produces https://solage-capitale.<account>.workers.dev. Renaming it here
-  // creates a SECOND Worker rather than updating the existing one.
+  // `name` DOIT correspondre au nom du projet Workers Builds connecté au dépôt,
+  // qui est `fondation-site` — le nom créé dans Cloudflare au « Connect to Git ».
+  // `solage-capitale` est le nom du paquet npm et la racine du domaine : deux
+  // choses sans rapport avec le nom du Worker.
+  //
+  // Ce fichier disait `solage-capitale`, et le déploiement du 2026-08-12 a émis :
+  //   « Failed to match Worker name … the CI system expected "fondation-site".
+  //     Overriding using the CI provided Worker name. »
+  // Le CI passe outre, donc ce n'était qu'un avertissement — mais Cloudflare ouvre
+  // des pull requests pour résorber l'écart, et un `npx wrangler deploy` lancé
+  // depuis un poste local aurait, lui, créé un SECOND Worker portant l'autre nom.
   //
   // (Ce commentaire annonçait `exterminateur-qc` jusqu'à la session 4, deux lignes
   // au-dessus du bon nom : encore un fichier hérité qui documentait l'autre site.)
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "solage-capitale",
+  "name": "fondation-site",
   "main": "worker/index.ts",
   "compatibility_date": "2026-08-01",
 
@@ -57,8 +65,46 @@
   //
   // C'est une variable de déploiement, pas du contenu : sa place est ici, au même
   // titre que la route. Les secrets (MAILGUN_API_KEY) restent dans le dashboard.
+  // ⚠ CE BLOC DÉFINIT L'ENSEMBLE COMPLET DES VARIABLES EN CLAIR DU WORKER.
+  //
+  // Une variable en clair ajoutée UNIQUEMENT dans le tableau de bord est retirée
+  // au déploiement suivant, parce que le déploiement applique les liaisons de ce
+  // fichier. Le piège est vicieux : le formulaire marche le jour où on pose la
+  // variable à la main, puis meurt au prochain `git push` sans que rien ne change
+  // dans le dépôt. D'où : tout ce qui n'est pas secret vit ICI, versionné.
+  //
+  // **Les SECRETS ne sont pas concernés** — ils sont stockés à part et survivent
+  // aux déploiements. `MAILGUN_API_KEY` est donc le seul à poser dans le tableau
+  // de bord, en type « Secret ».
+  //
+  // Aucune de ces trois valeurs n'est confidentielle : le domaine est public,
+  // `mg.` est visible dans les en-têtes de tout courriel envoyé, et
+  // `contact@solagecapitale.ca` est déjà publié sur /contact/.
   "vars": {
-    "SITE_URL": "https://solagecapitale.ca"
+    // Le Worker N'HÉRITE PAS du SITE_URL du build : `wrangler deploy` et
+    // `npm run build` sont deux commandes distinctes. Sans ça, les courriels de
+    // prospects portaient « Envoyé depuis : http://localhost:4321/… ».
+    "SITE_URL": "https://solagecapitale.ca",
+
+    // Le SOUS-DOMAINE Mailgun vérifié — jamais l'apex. Mailgun exige des MX sur
+    // le domaine qu'il vérifie, et l'apex porte ceux de Cloudflare Email Routing
+    // qui font vivre contact@solagecapitale.ca. Vérifier Mailgun sur l'apex
+    // ferait disparaître l'adresse de contact en silence.
+    "MAILGUN_DOMAIN": "mg.solagecapitale.ca",
+
+    // Où arrivent les demandes. Devient la boîte du locataire au handoff
+    // (HANDOFF-TENANT.md §4) — un changement par commit, donc traçable.
+    "LEAD_TO_EMAIL": "contact@solagecapitale.ca"
+
+    // "MAILGUN_BASE_URL": "https://api.eu.mailgun.net"
+    //   ↑ À DÉCOMMENTER SI LE COMPTE MAILGUN EST EN RÉGION UE. Sans lui, l'API
+    //   répond 401 avec des identifiants pourtant valides, et on part chercher
+    //   le problème dans le DNS.
+    //
+    // "LEAD_BCC": "…"
+    //   ↑ Copie pour le registre des demandes. À convenir PAR ÉCRIT avec le
+    //   locataire : une copie non annoncée d'un courriel contenant des
+    //   renseignements personnels n'est pas acceptable (HANDOFF-TENANT.md §4).
   },
 
   // Surfaces console.error from the lead handler in the dashboard. Without this the

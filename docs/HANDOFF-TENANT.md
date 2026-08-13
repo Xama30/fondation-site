@@ -39,10 +39,24 @@ desserrées explicitement**, pas contournées.
 | `rbqLicence` | `null` | **Le numéro de licence RBQ du locataire** |
 
 ⚠ `domain` et `formEndpoint` ont été **retirés** de ce fichier le 2026-08-11 : aucun module ne
-l'importait, donc les deux valeurs étaient mortes, et `domain` était un second endroit où un
-domaine pouvait s'écrire en dur. Le domaine vient de `SITE_URL` au build ; l'endpoint du
-formulaire, de `LEAD_ENDPOINT` (`src/lib/constants.ts`). **Le responsable de la protection des
-renseignements personnels est dans `PRIVACY_OFFICER`, même fichier** — voir §4.1.
+l'importait, donc les deux valeurs étaient mortes. L'endpoint du formulaire vient de
+`LEAD_ENDPOINT` (`src/lib/constants.ts`). **Le responsable de la protection des renseignements
+personnels est dans `PRIVACY_OFFICER`, même fichier** — voir §4.1.
+
+### 2.1b Si le locataire change de domaine
+
+Le domaine est écrit en dur dans **exactement trois fichiers**, tous de la configuration, jamais
+du contenu. Les changer ensemble, dans le même commit :
+
+| Fichier | Ce qu'il porte |
+|---|---|
+| `astro.config.mjs` | `site` — le défaut du build (canoniques, hreflang, sitemap, JSON-LD) |
+| `src/lib/constants.ts` | `SITE_URL` — le défaut du runtime, lu par le Worker |
+| `wrangler.jsonc` | la route `custom_domain` **et** `vars.SITE_URL` |
+
+Puis `npm run build` : `seo-audit.mjs` vérifie que chaque canonique porte le bon hôte, donc un
+oubli sur l'un des trois se voit immédiatement. Aucun fichier de contenu n'est à toucher — c'est
+tout l'intérêt d'avoir tenu cette discipline depuis la phase 1.
 
 ⚠ **Le numéro de licence doit être celui du locataire, vérifié au registre public.** Le site
 explique les sous-catégories RBQ comme un droit du consommateur ; en revendiquer une sans la

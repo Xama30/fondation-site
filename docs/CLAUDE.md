@@ -157,12 +157,22 @@ finir par le secteur : `/fondation/{service}/{secteur}/`. Ne pas inverser.
 **`solagecapitale.ca`**, acheté le 2026-08-11. La discipline qui a permis de le brancher sans
 toucher un seul fichier de contenu reste en vigueur :
 
-- `SITE_URL` est la **constante unique**. Canonicals, hreflang, sitemap, JSON-LD et courriels
-  sortants en dérivent tous. `PLACEHOLDER_` reste une **erreur dure** de `seo-audit.mjs`.
-- Build de production : `SITE_URL=https://solagecapitale.ca npm run build`.
-  En local : `SITE_URL=http://localhost:4321 npm run build`.
-- **Le seul endroit du dépôt où le domaine est écrit est la route de `wrangler.jsonc`**, et ce
-  n'est pas du contenu — c'est la cible de déploiement. Ne jamais en écrire un ailleurs.
+- **`npm run build` suffit** : le domaine est le défaut. `SITE_URL` reste prioritaire si on la
+  pose, et c'est ce qui permet `SITE_URL=http://localhost:4321 npm run build` pour le local.
+- Canonicals, hreflang, sitemap, JSON-LD et courriels sortants en dérivent tous.
+  `PLACEHOLDER_` reste une **erreur dure** de `seo-audit.mjs`.
+- **Le domaine est écrit en dur dans TROIS fichiers, et nulle part ailleurs** :
+  `astro.config.mjs` (config du build), `src/lib/constants.ts` (config du runtime),
+  `wrangler.jsonc` (cible de déploiement + `vars` du Worker). **Aucun n'est du contenu.**
+  Ne jamais en écrire un dans une page, un markdown ou un JSON de données.
+- **Pourquoi en dur plutôt qu'en variable** : le défaut était `http://localhost:4321`, ce qui
+  était juste tant que le domaine n'existait pas. Une fois acheté, ce défaut est devenu le mode
+  de panne — un build sans la variable sortait 190 canoniques vers une machine locale, **et
+  sortait vert**. Depuis Workers Builds, le build tourne dans un CI où la variable s'oublie en
+  silence. Un défaut correct supprime le risque au lieu de le surveiller.
+- **La garde correspondante vérifie la SORTIE, pas l'intention** : `seo-audit.mjs` échoue en
+  erreur dure si une canonique pointe vers `localhost`/`127.0.0.1` **sans** que `SITE_URL` l'ait
+  demandé explicitement. Testée dans les trois cas.
 - L'endpoint du formulaire suit la même règle : `LEAD_ENDPOINT` dans `src/lib/constants.ts`,
   d'où `worker/index.ts` **et** les deux formulaires le dérivent.
 - ⚠ **Aucun attribut `style=` dans un gabarit.** La CSP de `public/_headers` pose

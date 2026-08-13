@@ -39,6 +39,37 @@ const DESC_MAX = 158;
 const report = createReport('seo-audit');
 const pages = await loadPages();
 
+/**
+ * ⚠ AUCUNE CANONIQUE NE DOIT POINTER VERS UNE MACHINE LOCALE.
+ *
+ * Une première version de cette garde vérifiait que `SITE_URL` était *défini*.
+ * C'était vérifier l'intention. Depuis que le défaut d'`astro.config.mjs` est le
+ * domaine réel, une variable absente est parfaitement normale — et la garde
+ * bloquait à tort. **On vérifie donc ce que les pages disent réellement**, ce qui
+ * attrape le problème quelle qu'en soit la cause : variable oubliée, défaut
+ * modifié, ou build lancé depuis un environnement mal configuré.
+ *
+ * Ce que ça évite : 190 pages annonçant `http://localhost:4321` aux moteurs —
+ * canoniques, hreflang, `sitemap.xml`, `llms.txt` et `@id` du JSON-LD compris.
+ * Vérifié le 2026-08-12, c'est exactement ce que produisait un build sans
+ * `SITE_URL`, et le build sortait VERT : le garde-fou `PLACEHOLDER_` ne se
+ * déclenche pas sur `localhost` et les pages sont par ailleurs valides.
+ *
+ * Le travail local reste possible : `SITE_URL=http://localhost:4321` est un choix
+ * explicite, et la garde s'efface alors — on ne bloque pas quelqu'un qui a
+ * demandé localhost, on bloque celui qui l'obtient sans l'avoir demandé.
+ */
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0', '[::1]']);
+const wantsLocal = (() => {
+  const raw = (process.env.SITE_URL ?? '').trim();
+  if (!raw) return false;
+  try {
+    return LOCAL_HOSTS.has(new URL(raw).hostname);
+  } catch {
+    return false;
+  }
+})();
+
 /* --- UI dictionary parity ------------------------------------------------- */
 
 function keyPaths(obj, prefix = '') {
@@ -164,6 +195,15 @@ for (const page of pages) {
   if (!canonical) {
     if (!noindex) report.error(url, 'missing canonical');
   } else {
+    // Voir la garde en tête de fichier : une canonique vers une machine locale
+    // est une erreur dure, sauf si localhost a été demandé explicitement.
+    if (!wantsLocal && LOCAL_HOSTS.has(new URL(canonical).hostname)) {
+      report.error(
+        url,
+        `canonical points at ${new URL(canonical).origin} — le build n'a pas vu le vrai domaine. ` +
+          'Vérifier SITE_URL, ou le défaut dans astro.config.mjs.',
+      );
+    }
     const canonicalPath = new URL(canonical).pathname;
     if (canonicalPath !== url) {
       report.error(url, `canonical points at ${canonicalPath}, not self`);

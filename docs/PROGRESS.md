@@ -2086,3 +2086,124 @@ ce qui est la seule observabilité du formulaire en production.
 **`wrangler dev` doit faire partie de la routine avant tout déploiement.** Ajouté à
 `docs/DEPLOY.md`. Le coût est de trente secondes ; il vient d'éviter une mise en ligne où le
 formulaire et les 404 étaient morts sans que rien ne le dise.
+
+---
+
+## Session 6e — 12 août 2026 · Workers Builds : deux endroits, et une garde de plus
+
+Le déploiement passe par **Workers Builds** (CI connecté au dépôt, Worker nommé
+`fondation-site`). Ça déplace le build du poste du propriétaire vers le CI de Cloudflare, et
+**ça crée deux emplacements de variables qu'on confond facilement** :
+
+| | Sert à | Contient |
+|---|---|---|
+| **Variables de build** | `npm run build` (Astro) | `SITE_URL` |
+| **Variables & secrets d'exécution** | le Worker, à chaque requête | `SITE_URL`, `MAILGUN_*`, `LEAD_TO_EMAIL` |
+
+### ⚠ La garde ajoutée : `SITE_URL` absent = 190 canoniques vers localhost
+
+`astro.config.mjs` retombe sur `http://localhost:4321` quand la variable manque. Vérifié en
+lançant un build sans elle :
+
+```
+<link rel="canonical" href="http://localhost:4321/">
+```
+
+**Aucun contrôle ne le voyait.** Le garde-fou `PLACEHOLDER_` ne se déclenche pas sur `localhost`,
+et les pages sont par ailleurs parfaitement valides : titres, hreflang, JSON-LD, tout passe. Le
+déploiement aurait réussi, et les 190 pages auraient annoncé aux moteurs une adresse locale —
+canoniques, hreflang, `sitemap.xml`, `llms.txt` et les `@id` du JSON-LD compris.
+
+Tant que le build tournait à la main avec `SITE_URL=…` en préfixe, le risque était théorique.
+**Avec un CI, il devient l'oubli le plus probable du projet.**
+
+`seo-audit.mjs` échoue désormais en **erreur dure** si `SITE_URL` est absent ou vide. La garde
+distingue « oublié » de « voulu » : un `SITE_URL=http://localhost:4321` explicite reste accepté,
+parce que c'est le mode de travail local documenté. **Testée dans les deux sens** — `exit=1` sans
+la variable, `exit=0` avec.
+
+### Les variables en clair vivent dans `wrangler.jsonc`, pas dans le tableau de bord
+
+Le bloc `vars` définit **l'ensemble complet** des variables en clair du Worker : une variable
+ajoutée uniquement dans le tableau de bord est retirée au déploiement suivant. Le piège est
+vicieux — le formulaire marche le jour où on la pose à la main, puis meurt au prochain
+`git push`, sans qu'une seule ligne du dépôt ait changé.
+
+Donc `SITE_URL`, `MAILGUN_DOMAIN` et `LEAD_TO_EMAIL` sont **versionnés dans `wrangler.jsonc`**.
+Aucune n'est confidentielle : le domaine est public, `mg.` apparaît dans les en-têtes de tout
+courriel envoyé, et `contact@solagecapitale.ca` est déjà publié sur `/contact/`.
+
+**`MAILGUN_API_KEY` reste le seul à poser dans le tableau de bord, en type « Secret ».** Les
+secrets sont stockés à part et survivent aux déploiements.
+
+`MAILGUN_BASE_URL` (région UE) et `LEAD_BCC` sont présents en commentaire, prêts à décommenter.
+
+Vérifié au `--dry-run` : les trois variables sont bien attachées au Worker.
+
+### `.wrangler/` ajouté à `.gitignore`
+
+État local de miniflare créé par `wrangler dev` — des SQLite de cache et de traces propres à la
+machine, dont les `-wal` changent à chaque exécution.
+
+---
+
+## Session 6f — 12 août 2026 · Le domaine devient le défaut
+
+Décision du propriétaire, et c'est un **durcissement**, pas un relâchement.
+
+`http://localhost:4321` était le défaut de `astro.config.mjs` et de `src/lib/constants.ts`.
+C'était juste tant que le domaine n'était pas acheté : ça rendait l'inconnue comptable. Une fois
+le domaine acquis, ce défaut est devenu **le mode de panne** — et le passage à Workers Builds l'a
+rendu probable, puisque le build tourne désormais dans un CI où une variable s'oublie sans bruit.
+
+**Mesuré avant de changer quoi que ce soit** : un build sans `SITE_URL` produit
+
+```
+<link rel="canonical" href="http://localhost:4321/">
+```
+
+sur les 190 pages — canoniques, hreflang, `sitemap.xml`, `llms.txt` et `@id` du JSON-LD compris —
+**et il sort vert**. Le garde-fou `PLACEHOLDER_` ne se déclenche pas sur `localhost`, et les
+pages sont par ailleurs valides.
+
+**Livré**
+
+- `astro.config.mjs` et `src/lib/constants.ts` : défaut = `https://solagecapitale.ca`.
+  La variable d'environnement reste prioritaire, donc `SITE_URL=http://localhost:4321 npm run build`
+  fonctionne toujours pour le local.
+- `wrangler.jsonc` : `vars` porte `SITE_URL`, `MAILGUN_DOMAIN` et `LEAD_TO_EMAIL`.
+- **Plus aucune variable de build à poser dans Workers Builds.** `npm run build` suffit.
+
+### La garde a changé de nature, et c'est la vraie leçon
+
+La première version vérifiait que `SITE_URL` était *défini*. **C'était vérifier l'intention**, et
+elle est devenue fausse dès que le défaut a changé : une variable absente est maintenant normale,
+et la garde bloquait à tort.
+
+La nouvelle vérifie **ce que les pages disent réellement** : une canonique vers
+`localhost` / `127.0.0.1` est une erreur dure, *sauf* si `SITE_URL` l'a demandé explicitement. Elle
+attrape le problème quelle qu'en soit la cause — variable oubliée, défaut modifié, environnement
+mal configuré — au lieu de surveiller un seul chemin.
+
+C'est la même leçon que le `<set:html>` et le `--dry-run` vert : **on valide la SORTIE, jamais
+l'intention.** Elle s'est appliquée trois fois de suite cette semaine, et ici elle a corrigé une
+garde que je venais moi-même d'écrire.
+
+**Testée dans les trois cas**, parce qu'une porte qu'on n'a pas vue échouer ne prouve rien :
+
+| Cas | Résultat |
+|---|---|
+| `npm run build` sans variable | canoniques `https://solagecapitale.ca/`, `exit=0` |
+| `SITE_URL=http://localhost:4321` explicite | canoniques localhost, `exit=0` — le local reste possible |
+| Canoniques localhost **sans** demande explicite | `exit=1`, build bloqué |
+
+### Le domaine est en dur dans trois fichiers, et c'est documenté comme tel
+
+`astro.config.mjs` (build), `src/lib/constants.ts` (runtime), `wrangler.jsonc` (cible de
+déploiement + `vars`). **Aucun n'est du contenu.** La règle « aucun domaine dans une page, un
+markdown ou un JSON de données » est inchangée et reste ce qui compte : c'est elle qui a permis de
+câbler le domaine sans toucher un seul fichier de contenu.
+
+`HANDOFF-TENANT.md` §2.1b liste les trois pour le jour où le locataire change de domaine, et
+`seo-audit` vérifie l'hôte de chaque canonique — donc un oubli sur l'un des trois se voit au
+premier build.

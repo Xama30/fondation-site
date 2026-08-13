@@ -27,19 +27,36 @@ formulaire, dans `worker/index.ts`.
 
 ## 1. Le domaine, d'abord
 
-Tout dérive d'une constante unique. Il n'y a **aucun domaine en dur** nulle part : canoniques,
-hreflang, sitemap, JSON-LD et courriels sortants passent tous par `SITE_URL`.
+Canoniques, hreflang, sitemap, JSON-LD et courriels sortants dérivent tous de la même valeur.
 
 ```bash
-SITE_URL=https://solagecapitale.ca npm run build
+npm run build        # le domaine est le défaut
 ```
 
-Le build échoue tant que `SITE_URL` contient `PLACEHOLDER_`. C'est le comportement voulu.
+**Le domaine est écrit en dur dans exactement TROIS fichiers, tous de la configuration :**
 
-**Pour travailler en local :** `SITE_URL=http://localhost:4321 npm run build`. **Ne jamais
-committer un domaine dans un fichier de contenu** — le seul endroit du dépôt où
-`solagecapitale.ca` est écrit est la route de `wrangler.jsonc`, et ce n'est pas du contenu,
-c'est la cible de déploiement.
+| Fichier | Ce qu'il porte |
+|---|---|
+| `astro.config.mjs` | `site` — le défaut du build |
+| `src/lib/constants.ts` | `SITE_URL` — le défaut du runtime, lu par le Worker |
+| `wrangler.jsonc` | la route `custom_domain` **et** `vars.SITE_URL` |
+
+**Aucun n'est du contenu.** Ne jamais écrire de domaine dans une page, un markdown ou un JSON de
+données. La liste sert aussi au handoff : `HANDOFF-TENANT.md` §2.1b.
+
+⚠ **Pourquoi en dur et non en variable obligatoire.** Le défaut était `http://localhost:4321`.
+C'était juste tant que le domaine n'existait pas ; une fois acheté, c'est devenu **le mode de
+panne** — un build sans `SITE_URL` sortait 190 canoniques vers une machine locale, **et sortait
+vert** (le garde-fou `PLACEHOLDER_` ne se déclenche pas sur `localhost`). Depuis Workers Builds,
+le build tourne dans un CI où la variable s'oublie en silence. Un défaut correct supprime le
+risque au lieu de le surveiller.
+
+**Pour travailler en local :** `SITE_URL=http://localhost:4321 npm run build` — la variable reste
+prioritaire. `seo-audit.mjs` échoue en erreur dure si une canonique pointe vers `localhost` **sans
+que `SITE_URL` l'ait demandé**, donc le cas « obtenu sans l'avoir voulu » est bloqué et le cas
+« demandé explicitement » passe.
+
+Le build échoue toujours si `PLACEHOLDER_` atteint une page.
 
 **Le `www`.** Il n'est **pas** déclaré en domaine personnalisé : deux domaines personnalisés
 serviraient les 188 pages sous deux hôtes. À régler par une **Redirect Rule** Cloudflare
@@ -50,15 +67,28 @@ serviraient les 188 pages sous deux hôtes. À régler par une **Redirect Rule**
 
 ## 2. Variables d'environnement du Worker
 
-Cloudflare → le Worker → Settings → Variables and Secrets.
+**Une seule est à poser à la main.** Les noms sont sensibles à la casse.
 
-| Nom | Type | Rôle |
+| Nom | Où | Valeur |
 |---|---|---|
-| `MAILGUN_API_KEY` | **secret** | Clé privée Mailgun. **Jamais en clair**, jamais dans le dépôt. |
-| `MAILGUN_DOMAIN` | variable | `mg.solagecapitale.ca` — le **sous-domaine** Mailgun vérifié |
-| `LEAD_TO_EMAIL` | variable | Où arrivent les demandes |
-| `MAILGUN_BASE_URL` | variable, optionnel | `https://api.eu.mailgun.net` si le compte est en région UE |
-| `LEAD_BCC` | variable, optionnel | Copie pour le registre des demandes (voir `HANDOFF-TENANT.md`) |
+| `MAILGUN_API_KEY` | **Dashboard → type Secret** | la clé privée. **Jamais dans le dépôt.** |
+| `MAILGUN_DOMAIN` | ✅ `wrangler.jsonc` → `vars` | `mg.solagecapitale.ca` — le **sous-domaine** vérifié |
+| `LEAD_TO_EMAIL` | ✅ `wrangler.jsonc` → `vars` | `contact@solagecapitale.ca` |
+| `SITE_URL` | ✅ `wrangler.jsonc` → `vars` | `https://solagecapitale.ca` |
+| `MAILGUN_BASE_URL` | `wrangler.jsonc`, en commentaire | `https://api.eu.mailgun.net` **si compte en région UE** |
+| `LEAD_BCC` | `wrangler.jsonc`, en commentaire | copie du registre — **à convenir par écrit** (`HANDOFF-TENANT.md` §4) |
+
+Chemin du secret : **Compute (Workers) → `fondation-site` → Settings → Variables and Secrets →
+Add → type Secret**.
+
+⚠ **POURQUOI LES NON-SECRÈTES SONT DANS LE DÉPÔT ET NON DANS LE TABLEAU DE BORD.** Le bloc `vars`
+définit **l'ensemble complet** des variables en clair du Worker : une variable ajoutée uniquement
+dans le tableau de bord est **retirée au déploiement suivant**. Le piège est vicieux — le
+formulaire marche le jour où on la pose à la main, puis meurt au prochain `git push` sans qu'une
+ligne du dépôt ait changé. **Les secrets ne sont pas concernés** : ils sont stockés à part et
+survivent aux déploiements. Aucune des trois valeurs versionnées n'est confidentielle — le
+domaine est public, `mg.` apparaît dans les en-têtes de tout courriel envoyé, et
+`contact@solagecapitale.ca` est déjà publié sur `/contact/`.
 
 Une variable manquante **ne fait pas planter silencieusement** : `lead-form.ts` les nomme dans le
 log du Worker et sert une page d'erreur lisible. `console.error` remonte dans le tableau de bord
@@ -89,10 +119,15 @@ correct, mais le visiteur se retrouve sans issue.
 ## 3. Déployer
 
 ```bash
-SITE_URL=https://solagecapitale.ca npm run build   # les 3 portes doivent être vertes
-npx wrangler dev                                   # ⚠ OBLIGATOIRE — voir ci-dessous
+npm run build        # le domaine est le défaut — plus besoin de préfixer SITE_URL
+npx wrangler dev     # ⚠ OBLIGATOIRE — voir ci-dessous
 npx wrangler deploy
 ```
+
+**Aucune variable de build à poser dans Workers Builds.** Le domaine est le défaut
+d'`astro.config.mjs` depuis le 2026-08-12, précisément pour qu'un CI ne puisse pas l'oublier.
+`SITE_URL` reste prioritaire si on la pose — c'est ce qui permet le travail local :
+`SITE_URL=http://localhost:4321 npm run build`.
 
 `npm run build` enchaîne `astro check` → build → `post-build` → les trois audits. **Si une porte
 est rouge, on ne déploie pas** — on corrige la page, jamais le seuil (règle 3).

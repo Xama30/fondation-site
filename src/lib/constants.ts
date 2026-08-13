@@ -64,8 +64,16 @@ const fromImportMeta =
   typeof import.meta !== 'undefined' ? (import.meta.env?.SITE_URL as string | undefined) : undefined;
 const fromProcess =
   typeof process !== 'undefined' ? (process.env?.SITE_URL as string | undefined) : undefined;
+/**
+ * Le défaut est le domaine réel depuis le 2026-08-12 — même raison qu'en tête
+ * d'`astro.config.mjs`, et il faut que les deux restent identiques : un défaut
+ * `localhost` ici mettrait des liens localhost dans les courriels de prospects
+ * si jamais la `vars` du Worker disparaissait.
+ *
+ * La variable d'environnement reste prioritaire pour le travail local.
+ */
 const rawSite = (fromImportMeta ?? fromProcess ?? '').trim();
-export const SITE_URL = (rawSite || 'http://localhost:4321').replace(/\/$/, '');
+export const SITE_URL = (rawSite || 'https://solagecapitale.ca').replace(/\/$/, '');
 
 /**
  * L'URL du seul endpoint exécutable du site. Le `action` des deux formulaires
