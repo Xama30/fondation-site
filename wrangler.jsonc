@@ -80,6 +80,11 @@
   // Aucune de ces trois valeurs n'est confidentielle : le domaine est public,
   // `mg.` est visible dans les en-têtes de tout courriel envoyé, et
   // `contact@solagecapitale.ca` est déjà publié sur /contact/.
+  // Registre anonyme des demandes (2026-10-07) : une ligne par soumission, sans
+  // donnée personnelle. Jeu de données partagé par tous les sites du propriétaire,
+  // créé automatiquement à la première écriture. Voir recordLead() dans worker/lead-form.ts.
+  "analytics_engine_datasets": [{ "binding": "LEADS", "dataset": "rr_leads" }],
+
   "vars": {
     // Le Worker N'HÉRITE PAS du SITE_URL du build : `wrangler deploy` et
     // `npm run build` sont deux commandes distinctes. Sans ça, les courriels de

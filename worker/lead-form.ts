@@ -54,6 +54,8 @@ import { SITE_NAME, SITE_URL as SITE_URL_FALLBACK } from '../src/lib/constants';
  * That mistake produced 96 errors on the first build of this file.)
  */
 interface LeadEnv {
+  /** Analytics Engine — registre anonyme des demandes, voir recordLead(). */
+  LEADS?: AnalyticsEngine;
   /**
    * Posé par `vars` dans wrangler.jsonc. Le Worker N'HÉRITE PAS du `SITE_URL`
    * du build : `wrangler deploy` est une commande distincte de `npm run build`.
@@ -256,9 +258,46 @@ ${contact}
   });
 }
 
+/** Workers Analytics Engine binding (`analytics_engine_datasets` in wrangler.jsonc). */
+interface AnalyticsEngine {
+  writeDataPoint(point: { blobs?: string[]; doubles?: number[]; indexes?: string[] }): void;
+}
+
+/**
+ * Registre anonyme des demandes (ajouté le 2026-10-07).
+ *
+ * Une ligne par soumission dans le jeu de données Analytics Engine `rr_leads`,
+ * partagé par tous les sites du propriétaire : site, issue, page d'origine,
+ * service, secteur, segment, langue. AUCUN nom, courriel, téléphone ni message :
+ * rien qui identifie la personne (Loi 25). Sert à compter les demandes par page
+ * (ce que la Search Console ne voit pas) et à repérer un formulaire qui échoue en
+ * silence (issue `mailgun_rejected`, `mailgun_failed`, `config_missing`).
+ * Lecture : ~/claude/rank-and-rent/stats/leads.py. Ne bloque jamais la demande.
+ */
+function recordLead(ae: AnalyticsEngine | undefined, outcome: string, form?: FormData): void {
+  if (!ae) return;
+  const g = (k: string) => String(form?.get(k) ?? '').trim().slice(0, 96);
+  let path = '';
+  try {
+    path = new URL(g('page_url') || '/', 'https://site.invalid').pathname;
+  } catch {
+    path = '';
+  }
+  try {
+    ae.writeDataPoint({
+      indexes: ['solagecapitale.ca'],
+      blobs: ['solagecapitale.ca', outcome, path, g('pest') || g('service'), g('sector'), g('segment'), g('locale') || 'fr'],
+      doubles: [1],
+    });
+  } catch (err) {
+    console.error('[lead] analytics write failed', err);
+  }
+}
+
 export const handleLeadForm = async (context: LeadRequestContext): Promise<Response> => {
   const { request } = context;
   const env = readEnv(context.env);
+  const ae = context.env.LEADS;
 
   if (!isSameSite(request, env.SITE_URL)) {
     return new Response('Cross-site POST form submissions are forbidden', { status: 403 });
@@ -277,6 +316,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   // Honeypot: a real person never sees or fills this. Bots fill every input they
   // find. Redirect exactly like a success so the bot learns nothing, and drop it.
   if (String(form.get('website') ?? '').trim() !== '') {
+    recordLead(ae, 'spam', form);
     return redirect(thankYou);
   }
 
@@ -287,6 +327,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   // Server-side validation. The HTML `required` attributes are a convenience for
   // people, not a guarantee — anything can POST here directly.
   if (!name || !email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    recordLead(ae, 'invalid', form);
     return errorPage(locale, env.LEAD_TO_EMAIL, 400);
   }
 
@@ -298,6 +339,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   );
   if (missing.length > 0) {
     console.error(`[lead] missing environment variables: ${missing.join(', ')} — lead NOT sent`);
+    recordLead(ae, 'config_missing', form);
     return errorPage(locale, env.LEAD_TO_EMAIL);
   }
 
@@ -351,13 +393,16 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
     });
     if (!res.ok) {
       console.error('[lead] mailgun rejected', res.status, await res.text());
+      recordLead(ae, 'mailgun_rejected', form);
       return errorPage(locale, env.LEAD_TO_EMAIL);
     }
   } catch (err) {
     console.error('[lead] mailgun request failed', err);
+    recordLead(ae, 'mailgun_failed', form);
     return errorPage(locale, env.LEAD_TO_EMAIL);
   }
 
   // 303 so a refresh on the thank-you page does not re-submit the form.
+  recordLead(ae, 'sent', form);
   return redirect(thankYou);
 };
