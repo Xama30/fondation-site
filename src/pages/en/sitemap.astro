@@ -80,6 +80,7 @@ const matrix = (await getCollection('matrix', (e) => e.data.locale === locale))
   ref={ref}
   title="Sitemap — Solage Capitale"
   description="Every page on the site: the types of foundation work, the areas of the Quebec City region and the utility pages, gathered into a single list."
+  noindex
   schema={[
     breadcrumbSchema(locale, [
       { name: "Home", ref: { type: 'home' } },

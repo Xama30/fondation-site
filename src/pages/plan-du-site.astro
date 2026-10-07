@@ -91,6 +91,7 @@ const matrix = (await getCollection('matrix', (e) => e.data.locale === locale))
   ref={ref}
   title="Plan du site — Solage Capitale"
   description="Toutes les pages du site : les interventions sur une fondation, les secteurs de la région de Québec et les pages utilitaires, en une seule liste."
+  noindex
   schema={[
     breadcrumbSchema(locale, [
       { name: "Accueil", ref: { type: 'home' } },
