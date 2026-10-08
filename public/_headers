@@ -17,7 +17,9 @@
   # Le site sort 0 octet de JS client (règle 7), donc la CSP peut être stricte
   # au point d'interdire le script tout court. Le JSON-LD n'est pas exécuté —
   # c'est un bloc de données, pas un script — et reste lisible par les moteurs.
-  Content-Security-Policy: default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests
+  # Web Analytics (2026-10-07) : Cloudflare injecte son beacon en mode automatique ; la CSP
+  # « script-src 'none' » le bloquait et aucune visite n'était comptée. Seule cette origine est permise.
+  Content-Security-Policy: default-src 'self'; script-src https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests
   # Redondant avec `frame-ancestors 'none'`, gardé pour les navigateurs anciens.
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
