@@ -264,6 +264,24 @@ interface AnalyticsEngine {
 }
 
 /**
+ * Page qui a mené au formulaire de soumission. scripts/tag-quote-links.mjs ajoute
+ * `?depuis=<chemin>` à chaque lien vers la soumission ; le navigateur renvoie cette
+ * URL dans le Referer du POST (Referrer-Policy strict-origin-when-cross-origin :
+ * URL complète entre pages du même site). Sert seulement au registre anonyme
+ * (recordLead) : jamais dans le courriel, que le propriétaire transfère à l'acheteur.
+ */
+function depuisFrom(request: Request): string {
+  try {
+    const ref = new URL(request.headers.get('referer') ?? '');
+    if (ref.host !== new URL(request.url).host) return '';
+    const d = ref.searchParams.get('depuis') ?? '';
+    return /^\/[a-z0-9/-]*$/.test(d) ? d.slice(0, 96) : '';
+  } catch {
+    return '';
+  }
+}
+
+/**
  * Registre anonyme des demandes (ajouté le 2026-10-07).
  *
  * Une ligne par soumission dans le jeu de données Analytics Engine `rr_leads`,
@@ -274,7 +292,7 @@ interface AnalyticsEngine {
  * silence (issue `mailgun_rejected`, `mailgun_failed`, `config_missing`).
  * Lecture : ~/claude/rank-and-rent/stats/leads.py. Ne bloque jamais la demande.
  */
-function recordLead(ae: AnalyticsEngine | undefined, outcome: string, form?: FormData): void {
+function recordLead(ae: AnalyticsEngine | undefined, outcome: string, form?: FormData, depuis = ''): void {
   if (!ae) return;
   const g = (k: string) => String(form?.get(k) ?? '').trim().slice(0, 96);
   let path = '';
@@ -286,7 +304,7 @@ function recordLead(ae: AnalyticsEngine | undefined, outcome: string, form?: For
   try {
     ae.writeDataPoint({
       indexes: ['solagecapitale.ca'],
-      blobs: ['solagecapitale.ca', outcome, path, g('pest') || g('service'), g('sector'), g('segment'), g('locale') || 'fr'],
+      blobs: ['solagecapitale.ca', outcome, path, g('pest') || g('service'), g('sector'), g('segment'), g('locale') || 'fr', depuis],
       doubles: [1],
     });
   } catch (err) {
@@ -298,6 +316,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   const { request } = context;
   const env = readEnv(context.env);
   const ae = context.env.LEADS;
+  const depuis = depuisFrom(request);
 
   if (!isSameSite(request, env.SITE_URL)) {
     return new Response('Cross-site POST form submissions are forbidden', { status: 403 });
@@ -316,7 +335,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   // Honeypot: a real person never sees or fills this. Bots fill every input they
   // find. Redirect exactly like a success so the bot learns nothing, and drop it.
   if (String(form.get('website') ?? '').trim() !== '') {
-    recordLead(ae, 'spam', form);
+    recordLead(ae, 'spam', form, depuis);
     return redirect(thankYou);
   }
 
@@ -327,7 +346,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   // Server-side validation. The HTML `required` attributes are a convenience for
   // people, not a guarantee — anything can POST here directly.
   if (!name || !email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    recordLead(ae, 'invalid', form);
+    recordLead(ae, 'invalid', form, depuis);
     return errorPage(locale, env.LEAD_TO_EMAIL, 400);
   }
 
@@ -339,7 +358,7 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
   );
   if (missing.length > 0) {
     console.error(`[lead] missing environment variables: ${missing.join(', ')} — lead NOT sent`);
-    recordLead(ae, 'config_missing', form);
+    recordLead(ae, 'config_missing', form, depuis);
     return errorPage(locale, env.LEAD_TO_EMAIL);
   }
 
@@ -348,11 +367,6 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
     const v = get(key);
     if (v) lines.push(`${label[locale]}: ${v}`);
   }
-  // `page_url` is the pathname of the form page. Resolve it against the canonical
-  // SITE_URL rather than the request URL so the tenant always gets a clickable
-  // https link to the exact page the lead came from.
-  const sentFrom = new URL(get('page_url') || '/', env.SITE_URL).toString();
-  lines.push(`\n— ${locale === 'fr' ? 'Envoyé depuis' : 'Sent from'}: ${sentFrom}`);
   lines.push(`${locale === 'fr' ? 'Langue' : 'Language'}: ${locale}`);
 
   const subject =
@@ -393,16 +407,16 @@ export const handleLeadForm = async (context: LeadRequestContext): Promise<Respo
     });
     if (!res.ok) {
       console.error('[lead] mailgun rejected', res.status, await res.text());
-      recordLead(ae, 'mailgun_rejected', form);
+      recordLead(ae, 'mailgun_rejected', form, depuis);
       return errorPage(locale, env.LEAD_TO_EMAIL);
     }
   } catch (err) {
     console.error('[lead] mailgun request failed', err);
-    recordLead(ae, 'mailgun_failed', form);
+    recordLead(ae, 'mailgun_failed', form, depuis);
     return errorPage(locale, env.LEAD_TO_EMAIL);
   }
 
   // 303 so a refresh on the thank-you page does not re-submit the form.
-  recordLead(ae, 'sent', form);
+  recordLead(ae, 'sent', form, depuis);
   return redirect(thankYou);
 };

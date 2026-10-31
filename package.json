@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build:fast": "astro build && node scripts/post-build.mjs",
-    "build": "astro check && astro build && node scripts/post-build.mjs && npm run audit",
+    "build": "astro check && astro build && node scripts/post-build.mjs && node scripts/tag-quote-links.mjs && npm run audit",
     "preview": "astro preview",
     "audit": "node scripts/uniqueness-check.mjs && node scripts/link-audit.mjs && node scripts/seo-audit.mjs",
     "keyword-map": "node scripts/keyword-map-gen.mjs"
