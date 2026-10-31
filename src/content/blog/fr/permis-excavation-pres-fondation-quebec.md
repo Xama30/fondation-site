@@ -3,9 +3,10 @@ locale: fr
 translationKey: excavation-permit
 slug: permis-excavation-pres-fondation-quebec
 title: "Permis d'excavation à Québec : le règlement qui compte"
-h1: "Refaire un drain à Québec : le permis n'est pas ce que vous croyez"
-metaDescription: "À Québec, une excavation de fondation ordinaire n'exige pas de certificat d'autorisation. Le règlement qui vous concerne vise le raccordement du drain."
+h1: "Refaire un drain à Québec : le permis n'est pas celui que vous croyez"
+metaDescription: "À Québec, creuser autour d'une fondation n'exige pas de certificat d'autorisation, mais installer un drain de fondation exige un permis (R.V.Q. 2978)."
 published: 2026-08-11
+updated: 2026-10-30
 sources:
   - label: "Ville de Québec — Règlement R.V.Q. 102 sur l'administration des règlements d'urbanisme"
     url: "https://reglements.ville.quebec.qc.ca/fr/showdoc/an/R.V.Q.%20102"
@@ -14,9 +15,13 @@ sources:
 ---
 
 « Est-ce qu'il me faut un permis ? » est la première question posée quand on parle de creuser
-autour d'une maison, et c'est presque toujours la mauvaise. À Québec, la réponse est le plus
-souvent **non** — et pendant que tout le monde regarde le permis, le règlement qui décide
-réellement de la qualité de l'ouvrage passe inaperçu.
+autour d'une maison. À Québec, elle a deux réponses : **creuser** ne demande généralement pas de
+certificat d'autorisation, mais **installer un drain de fondation demande un permis**. Et le
+règlement qui exige ce permis est aussi celui qui décide de la qualité de l'ouvrage.
+
+*Mise à jour du 30 octobre 2026 : la première version de ce texte laissait entendre qu'aucun permis
+n'était généralement requis. C'est vrai pour l'excavation, pas pour le drain ; la section sur
+l'article 61 a été ajoutée.*
 
 ## Ce que le règlement d'urbanisme exige vraiment
 
@@ -41,6 +46,17 @@ Deux précisions qui comptent, et qui ne s'improvisent pas :
   compte plusieurs municipalités, et Wendake relève du Conseil de la Nation huronne-wendat. Les
   chiffres ci-dessus sont ceux de la Ville de Québec et ne se transposent pas ailleurs.
 
+## Le permis qui s'applique : celui du drain
+
+L'article **61** du **R.V.Q. 2978** est sans ambiguïté : sauf entente de travaux municipaux avec la
+Ville, « le propriétaire doit obtenir un permis pour : [...] 2° installer un drain de fondation ».
+Le même article vise aussi l'installation, le remplacement ou la modification d'un branchement
+d'égout, et le fait de débrancher ou de mettre à découvert un branchement.
+
+Un drain neuf posé lors d'une réfection est un drain qu'on installe. Avant les travaux, demandez à
+l'entrepreneur **qui fait la demande de permis** et faites-le écrire dans la soumission ; pour un
+cas limite, c'est la Ville qui tranche pour votre adresse.
+
 ## Le règlement qui mord vraiment : le raccordement du drain
 
 C'est le **R.V.Q. 2978**, sur les branchements privés et la gestion des eaux pluviales, qui
@@ -64,7 +80,7 @@ réfection. Il se raccorde alors directement au branchement pluvial, sans siphon
 rétention et pompage. Et là où il n'y a pas de collecteur pluvial, l'article 38 dirige le rejet
 vers un ouvrage de gestion des eaux pluviales ou un fossé — jamais vers le sanitaire.
 
-## Pourquoi ces deux chiffres valent plus qu'un permis
+## Pourquoi ces deux chiffres comptent autant que le permis
 
 Le regard de nettoyage et la cheminée d'accès ont l'air d'un détail de plomberie. Ils décident en
 réalité de ce qui pourra être fait dans dix ans.
@@ -92,7 +108,7 @@ du raccordement intérieur en même temps que vous.
 
 ## Le point à retenir
 
-Le permis est la mauvaise inquiétude. Ce qui décide de la durée de vie de l'ouvrage tient dans un
-règlement de branchement que presque personne ne lit : **où va l'eau, par où on y accède, et ce qui
+Le permis du drain se demande ; le certificat d'excavation, rarement. Mais ce qui décide de la
+durée de vie de l'ouvrage tient dans le même règlement de branchement, que presque personne ne lit : **où va l'eau, par où on y accède, et ce qui
 l'empêche de revenir**. Ces trois réponses se demandent avant de signer, elles sont publiques, et
 elles ne coûtent rien à vérifier.

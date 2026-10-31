@@ -3,9 +3,10 @@ locale: en
 translationKey: excavation-permit
 slug: foundation-drain-connection-rules-quebec-city
 title: "Foundation drain connection rules in Quebec City"
-h1: "The permit is the wrong worry — the connection rules are not"
-metaDescription: "In Quebec City an ordinary foundation excavation needs no authorization certificate. The bylaw that governs the work is the drain connection one."
+h1: "Digging needs no certificate — the foundation drain needs a permit"
+metaDescription: "In Quebec City, digging around a foundation needs no authorization certificate, but installing a foundation drain requires a permit (R.V.Q. 2978)."
 published: 2026-08-11
+updated: 2026-10-30
 sources:
   - label: "Ville de Québec — By-law R.V.Q. 102 on the administration of planning by-laws"
     url: "https://reglements.ville.quebec.qc.ca/fr/showdoc/an/R.V.Q.%20102"
@@ -14,8 +15,12 @@ sources:
 ---
 
 "Do I need a permit?" is the first question people ask about digging around a house, and it is
-almost always the wrong one. In Quebec City the answer is usually **no** — and while everyone
-watches the permit, the by-law that actually decides how good the work will be goes unread.
+In Quebec City it has two answers: **digging** does not usually need an authorization certificate,
+but **installing a foundation drain requires a permit**. And the by-law that requires that permit is
+also the one that decides how good the work will be.
+
+*Updated October 30, 2026: the first version of this text implied that no permit was usually
+needed. That holds for the excavation, not for the drain; the section on article 61 was added.*
 
 ## What the planning by-law really requires
 
@@ -38,6 +43,17 @@ Two qualifications that matter, and that nobody should improvise:
 - **This territory is not one city.** The Quebec City Metropolitan Community covers several
   municipalities, and Wendake comes under the Huron-Wendat Nation Council. The figures above are
   Quebec City's and do not transfer elsewhere.
+
+## The permit that does apply: the drain's
+
+Article **61** of **R.V.Q. 2978** is unambiguous: unless the work is covered by a municipal works
+agreement with the City, the owner must obtain a permit to, among other things, install a
+foundation drain. The same article also covers installing, replacing or modifying a sewer
+connection, and disconnecting or exposing one.
+
+A new drain laid during a repair is a drain being installed. Before the work, ask the contractor
+**who files the permit application** and have it written into the quote; for a borderline case,
+the City decides for your address.
 
 ## The by-law that actually bites: how the drain is connected
 
@@ -62,7 +78,7 @@ access chimney 100 millimetres in diameter located near the foundation**.
 pumping. And where there is no storm collector at all, article 38 sends the discharge to a
 stormwater management structure or a ditch — never to the sanitary sewer.
 
-## Why those two figures are worth more than a permit
+## Why those two figures matter as much as the permit
 
 The cleanout and the access chimney look like plumbing trivia. They actually decide what will be
 possible ten years from now.
@@ -90,6 +106,6 @@ the same time you do.
 
 ## The thing to take away
 
-The permit is the wrong worry. What decides how long the work lasts sits in a connection by-law
-almost nobody reads: **where the water goes, how you reach it, and what stops it coming back**.
+The drain permit gets filed; the excavation certificate rarely does. But what decides how long the
+work lasts sits in that same connection by-law, which almost nobody reads: **where the water goes, how you reach it, and what stops it coming back**.
 All three are public, they are asked before signing, and checking them costs nothing.
