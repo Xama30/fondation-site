@@ -30,20 +30,21 @@ const ref = { type: 'static', page: 'thankYou' } as const;
       <h1>Your request has been sent</h1>
 
       <p class="chapeau">
-        It has gone to the contractor handling enquiries for the region. There is nothing else
+        It will be routed to a licensed company serving your area, if there is one; no callback
+        or timeline is guaranteed. There is nothing else
         for you to do right now, and you have signed nothing.
       </p>
 
       <h2>What happens next</h2>
       <p>
-        The contractor calls you back to understand the situation and arrange a visit. The
-        diagnosis is made on site: that is what comes before the price, and what makes one quote
+        If a company takes the request, it contacts you to understand the situation and arrange
+        a visit. The diagnosis is made on site: that is what comes before the price, and what makes one quote
         comparable to another. The full sequence is set out in the
         <a href={pathFor({ type: 'static', page: 'process' }, locale)}>repair process</a>.
       </p>
       <p>
-        If you gave a phone number, that is where the callback will arrive fastest. Otherwise the
-        reply comes by email — worth checking your junk folder, which is where most replies get
+        If you gave a phone number, that is where a reply will arrive fastest. Otherwise it
+        comes by email — worth checking your junk folder, which is where most replies get
         lost.
       </p>
 

@@ -64,7 +64,7 @@ const urgencies = [
   locale={locale}
   ref={ref}
   title="Request a quote — Solage Capitale"
-  description="Describe what you are seeing on your foundation and a licensed contractor in the Quebec City region calls you back. Free, with no obligation."
+  description="Describe what you are seeing on your foundation: the request is routed to a licensed contractor in the Quebec City region. Free, no obligation."
   schema={[
     breadcrumbSchema(locale, [
       { name: "Home", ref: { type: 'home' } },
@@ -77,9 +77,9 @@ const urgencies = [
       <h1>Request a quote</h1>
 
       <p class="chapeau">
-        Describe what you are seeing. The request goes to an independent company holding its own
-        RBQ licence, which calls you back to arrange a visit. It is free and carries no
-        obligation.
+        Describe what you are seeing. The request is routed to an independent company holding its
+        own RBQ licence, when one serves your area. No callback or timeline is guaranteed. It is
+        free and carries no obligation.
       </p>
 
       <div class="encadre">
@@ -208,8 +208,8 @@ const urgencies = [
 
       <h2>What happens next</h2>
       <p>
-        The request is emailed to the contractor handling enquiries for the region. That company
-        calls you back, visits and prices the work — Solage Capitale does not touch your
+        The request is received by email, then routed to a licensed company serving your area, if
+        there is one. That company contacts you, visits and prices the work — Solage Capitale does not touch your
         foundation and bills you nothing. The
         <a href={pathFor({ type: 'static', page: 'process' }, locale)}>repair process</a> sets
         out how it unfolds, and the rule that matters: diagnosis comes before price.
@@ -234,8 +234,8 @@ const urgencies = [
 
       <h2>Your information</h2>
       <p>
-        This form collects the minimum needed to call you back, for a single purpose: passing on
-        your request. No account is created, no tracking cookie is set, and nothing is resold.
+        This form collects the minimum needed to handle your request, for a single purpose: routing
+        it. No account is created, no tracking cookie is set, and nothing is resold.
         The detail is in the
         <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>privacy policy</a>, and
         the person responsible is named on the

@@ -72,7 +72,7 @@ const urgencies = [
   locale={locale}
   ref={ref}
   title="Demander une soumission — Solage Capitale"
-  description="Décrivez ce que vous observez sur votre fondation et un entrepreneur licencié de la région de Québec vous rappelle. Gratuit, sans engagement."
+  description="Décrivez ce que vous observez sur votre fondation : la demande est acheminée à un entrepreneur licencié de la région de Québec. Gratuit, sans engagement."
   schema={[
     breadcrumbSchema(locale, [
       { name: "Accueil", ref: { type: 'home' } },
@@ -85,9 +85,9 @@ const urgencies = [
       <h1>Demander une soumission</h1>
 
       <p class="chapeau">
-        Décrivez ce que vous observez. La demande est transmise à une entreprise indépendante
-        détentrice de sa propre licence RBQ, qui vous rappelle pour convenir d'une visite.
-        C'est gratuit et ça ne vous engage à rien.
+        Décrivez ce que vous observez. La demande est acheminée à une entreprise indépendante
+        détentrice de sa propre licence RBQ, lorsqu'une entreprise dessert votre secteur. Aucun
+        rappel ni délai n'est garanti. C'est gratuit et ça ne vous engage à rien.
       </p>
 
       <div class="encadre">
@@ -220,9 +220,10 @@ const urgencies = [
 
       <h2>Ce qui se passe ensuite</h2>
       <p>
-        La demande part par courriel à l'entrepreneur qui traite les demandes de la région. C'est
-        lui qui vous rappelle, qui se déplace et qui chiffre — Solage Capitale ne touche pas à
-        votre fondation et ne vous facture rien. Les
+        La demande est reçue par courriel, puis acheminée à une entreprise licenciée qui dessert
+        votre secteur, s'il y en a une. C'est cette entreprise qui communique avec vous, se
+        déplace et chiffre — Solage Capitale ne touche pas à votre fondation et ne vous facture
+        rien. Les
         <a href={pathFor({ type: 'static', page: 'process' }, locale)}>étapes d'une
         réparation</a> décrivent le déroulement, et la règle qui compte : le diagnostic vient
         avant le prix.
@@ -246,8 +247,8 @@ const urgencies = [
 
       <h2>Vos renseignements</h2>
       <p>
-        Ce formulaire recueille le minimum nécessaire pour qu'on puisse vous rappeler, pour une
-        seule finalité : transmettre votre demande. Aucun compte n'est créé, aucun témoin de
+        Ce formulaire recueille le minimum nécessaire pour traiter votre demande, pour une
+        seule finalité : l'acheminer. Aucun compte n'est créé, aucun témoin de
         suivi n'est déposé, et rien n'est revendu. Le détail est dans la
         <a href={pathFor({ type: 'static', page: 'privacy' }, locale)}>politique de
         confidentialité</a>, et le responsable est nommé sur la page
